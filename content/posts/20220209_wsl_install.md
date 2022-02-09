@@ -34,8 +34,22 @@ PowerShellのコマンドプロンプトで、以下を実行します。
 wsl
 ```
 
-Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行します。
+Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 
 ```sh
 python3 --version
+```
+
+### pip3のインストール
+
+Ubuntuのコマンドプロンプトで以下を実行します。
+
+```sh
+yes | apt update && apt install python3-pip
+```
+
+以下を実行して、pip3が有効か確認します。
+
+```sh
+pip --version
 ```
