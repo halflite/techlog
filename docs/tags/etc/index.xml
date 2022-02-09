@@ -6,7 +6,21 @@
     <description>Recent content in etc on ひとり開発日記。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 27 Oct 2021 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/etc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/etc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows10にWSL/Ubuntuを最短でインストールしたい</title>
+      <link>https://halflite.github.io/techlog/posts/20220209_wsl_install/</link>
+      <pubDate>Wed, 09 Feb 2022 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20220209_wsl_install/</guid>
+      <description>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+カーネルアップデート実行 PowerShellのコマンドプロンプトを実行します、
+Invoke-WebRequest -Uri &amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34; -OutFile &amp;#34;wsl_update_x64.msi&amp;#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。
+wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
+wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行します。
+python3 --version </description>
+    </item>
+    
     <item>
       <title>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</title>
       <link>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</link>

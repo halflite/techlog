@@ -55,6 +55,22 @@
   
   <div>
     <div>
+      <a href="/techlog/posts/20220209_wsl_install/">
+        <h3>Windows10にWSL/Ubuntuを最短でインストールしたい</h3>
+      </a>
+      <small>https://halflite.github.io/techlog/posts/20220209_wsl_install/</small>
+      2022-02-09
+    </div>
+    全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+カーネルアップデート実行 PowerShellのコマンドプロンプトを実行します、
+Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34; -OutFile &#34;wsl_update_x64.msi&#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。
+wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
+wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行します。
+python3 --version 
+  </div>
+  
+  <div>
+    <div>
       <a href="/techlog/posts/20211027_hugo_docker/">
         <h3>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</h3>
       </a>
@@ -210,21 +226,6 @@ Chromeのdev-toolで、リクエストとかを見ていると、確かにAmazon
 今、自分で作るとするなら、こんな感じかな
  ある程度枯れた、よく使われる軽量ライブラリの組合せで作る  GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M   変数を、環境変数や実行時変数から注入できる仕組みを組み込む  VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration   ビジネスロジックをTDDで作るために、モックとか差し替えしたい  軽量DIコンテナを採用する Dagger   Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する  Rundeck   そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる  意外とやらないといけないこと多いですわ。
  参考 Serverless時代のJavaについて    あるある案件&#160;&#x21a9;&#xfe0e;
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20200504_eclipse_setting_utf8/">
-        <h3>MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/</small>
-      2020-05-04
-    </div>
-    WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
-Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
-解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
-&lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;!-- Eclipse --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
-mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow   旧blog 2018/10/12 の記事に加筆訂正して再掲しました。
   </div>
   
 

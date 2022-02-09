@@ -57,6 +57,48 @@
 <div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
   <div class="Subhead mb-2">
     <div class="Subhead-heading">
+      <a href="/techlog/posts/20220209_wsl_install/">
+        <div class="h2 mt-1 mb-1">Windows10にWSL/Ubuntuを最短でインストールしたい</div>
+      </a>
+    </div>
+    <div class="Subhead-description">
+      
+
+
+
+
+<a href='/techlog/tags/etc' class="muted-link">
+  <span class="Label Label--gray">etc</span>
+</a>
+
+<a href='/techlog/tags/linux' class="muted-link">
+  <span class="Label Label--gray">linux</span>
+</a>
+
+
+      <div class="float-md-right">
+        <span>2022-02-09</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-gray">
+    
+    全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+カーネルアップデート実行 PowerShellのコマンドプロンプトを実行します、
+Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34; -OutFile &#34;wsl_update_x64.msi&#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。
+wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
+wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行します。
+python3 --version 
+    <a class="muted-link" href="/techlog/posts/20220209_wsl_install/">…</a>
+  </div>
+</div>
+
+  
+    
+    
+<div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
+  <div class="Subhead mb-2">
+    <div class="Subhead-heading">
       <a href="/techlog/posts/20201225_git_2/">
         <div class="h2 mt-1 mb-1">2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</div>
       </a>
@@ -158,7 +200,7 @@ MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って
     
      CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!! Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!! git --version って、まだ1.x系なの? しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール… え&hellip;??? 依存ライブラリが無いの…???  sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install git --enablerepo=ius --disablerepo=base上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!
 結局、こうなりますわ。
-sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates
+sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates
     <a class="muted-link" href="/techlog/posts/20200117_git_ver/">…</a>
   </div>
 </div>
@@ -193,7 +235,7 @@ sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/etc" class="link-gray text-emphasized css-truncate-target"><span class="">Etc</span></a>
-      <span class="text-right Counter">4</span>
+      <span class="text-right Counter">5</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
@@ -203,7 +245,7 @@ sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/linux" class="link-gray text-emphasized css-truncate-target"><span class="">Linux</span></a>
-      <span class="text-right Counter">3</span>
+      <span class="text-right Counter">4</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">

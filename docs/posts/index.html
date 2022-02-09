@@ -57,6 +57,48 @@
 <div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
   <div class="Subhead mb-2">
     <div class="Subhead-heading">
+      <a href="/techlog/posts/20220209_wsl_install/">
+        <div class="h2 mt-1 mb-1">Windows10にWSL/Ubuntuを最短でインストールしたい</div>
+      </a>
+    </div>
+    <div class="Subhead-description">
+      
+
+
+
+
+<a href='/techlog/tags/etc' class="muted-link">
+  <span class="Label Label--gray">etc</span>
+</a>
+
+<a href='/techlog/tags/linux' class="muted-link">
+  <span class="Label Label--gray">linux</span>
+</a>
+
+
+      <div class="float-md-right">
+        <span>2022-02-09</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-gray">
+    
+    全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+カーネルアップデート実行 PowerShellのコマンドプロンプトを実行します、
+Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34; -OutFile &#34;wsl_update_x64.msi&#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。
+wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
+wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行します。
+python3 --version 
+    <a class="muted-link" href="/techlog/posts/20220209_wsl_install/">…</a>
+  </div>
+</div>
+
+  
+    
+    
+<div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
+  <div class="Subhead mb-2">
+    <div class="Subhead-heading">
       <a href="/techlog/posts/20211027_hugo_docker/">
         <div class="h2 mt-1 mb-1">Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</div>
       </a>
@@ -413,43 +455,6 @@ Chromeのdev-toolで、リクエストとかを見ていると、確かにAmazon
 </div>
 
   
-    
-    
-<div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
-  <div class="Subhead mb-2">
-    <div class="Subhead-heading">
-      <a href="/techlog/posts/20200504_eclipse_setting_utf8/">
-        <div class="h2 mt-1 mb-1">MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</div>
-      </a>
-    </div>
-    <div class="Subhead-description">
-      
-
-
-
-
-<a href='/techlog/tags/java' class="muted-link">
-  <span class="Label Label--gray">java</span>
-</a>
-
-
-      <div class="float-md-right">
-        <span>2020-05-04</span>
-      </div>
-    </div>
-  </div>
-  <div class="text-gray">
-    
-    WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
-Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
-解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
-&lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;!-- Eclipse --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
-mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow   旧blog 2018/10/12 の記事に加筆訂正して再掲しました。
-    <a class="muted-link" href="/techlog/posts/20200504_eclipse_setting_utf8/">…</a>
-  </div>
-</div>
-
-  
 
   
   
@@ -522,7 +527,7 @@ mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as 
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/etc" class="link-gray text-emphasized css-truncate-target"><span class="">Etc</span></a>
-      <span class="text-right Counter">4</span>
+      <span class="text-right Counter">5</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
@@ -532,7 +537,7 @@ mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as 
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/linux" class="link-gray text-emphasized css-truncate-target"><span class="">Linux</span></a>
-      <span class="text-right Counter">3</span>
+      <span class="text-right Counter">4</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">

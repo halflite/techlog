@@ -55,6 +55,21 @@
   
   <div>
     <div>
+      <a href="/techlog/posts/20200504_eclipse_setting_utf8/">
+        <h3>MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</h3>
+      </a>
+      <small>https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/</small>
+      2020-05-04
+    </div>
+    WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
+Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
+解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
+&lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;!-- Eclipse --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
+mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow   旧blog 2018/10/12 の記事に加筆訂正して再掲しました。
+  </div>
+  
+  <div>
+    <div>
       <a href="/techlog/posts/20200222_temporary_file_delete_on_close/">
         <h3>Java NIO2 で一時ファイルを作成、処理後に削除</h3>
       </a>
@@ -103,7 +118,7 @@ mvn archetype:generate ^-DarchetypeArtifactId=maven-archetype-quickstart ^-Din
     </div>
      CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!! Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!! git --version って、まだ1.x系なの? しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール… え&hellip;??? 依存ライブラリが無いの…???  sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install git --enablerepo=ius --disablerepo=base上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!
 結局、こうなりますわ。
-sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates
+sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates
   </div>
   
   <div>

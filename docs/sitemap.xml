@@ -3,18 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://halflite.github.io/techlog/tags/etc/</loc>
-    <lastmod>2021-10-27T00:00:00+09:00</lastmod>
+    <lastmod>2022-02-09T00:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://halflite.github.io/techlog/tags/linux/</loc>
+    <lastmod>2022-02-09T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/posts/</loc>
-    <lastmod>2021-10-27T00:00:00+09:00</lastmod>
+    <lastmod>2022-02-09T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/tags/</loc>
-    <lastmod>2021-10-27T00:00:00+09:00</lastmod>
+    <lastmod>2022-02-09T00:00:00+09:00</lastmod>
   </url><url>
-    <loc>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</loc>
-    <lastmod>2021-10-27T00:00:00+09:00</lastmod>
+    <loc>https://halflite.github.io/techlog/posts/20220209_wsl_install/</loc>
+    <lastmod>2022-02-09T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/</loc>
+    <lastmod>2022-02-09T00:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</loc>
     <lastmod>2021-10-27T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/posts/20210627_java_dev/</loc>
@@ -27,9 +33,6 @@
     <lastmod>2021-05-30T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/posts/20201225_git_2/</loc>
-    <lastmod>2020-12-25T00:00:00+09:00</lastmod>
-  </url><url>
-    <loc>https://halflite.github.io/techlog/tags/linux/</loc>
     <lastmod>2020-12-25T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/posts/20200918_postgres_local/</loc>
