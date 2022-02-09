@@ -1,5 +1,5 @@
 ---
-title: "Windows10にWSL/Ubuntuを最短でインストールしたい"
+title: "Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい"
 date: 2022-02-09T00:00:00+09:00
 draft: false
 tags:

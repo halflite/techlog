@@ -8,7 +8,7 @@
     <language>ja</language>
     <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Windows10にWSL/Ubuntuを最短でインストールしたい</title>
+      <title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</title>
       <link>https://halflite.github.io/techlog/posts/20220209_wsl_install/</link>
       <pubDate>Wed, 09 Feb 2022 00:00:00 +0900</pubDate>
       
