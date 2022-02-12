@@ -14,13 +14,15 @@
       
       <guid>https://halflite.github.io/techlog/posts/20220209_wsl_install/</guid>
       <description>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
-カーネルアップデート実行 PowerShellのコマンドプロンプトを実行します、
-Invoke-WebRequest -Uri &amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34; -OutFile &amp;#34;wsl_update_x64.msi&amp;#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。
+カーネルアップデート実行 PowerShellのコマンドプロンプトで、以下を実行します。1
+Invoke-WebRequest -Uri &amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34; -OutFile &amp;#34;wsl_update_x64.msi&amp;#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
 wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
 wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
 yes | apt update &amp;amp;&amp;amp; apt install python3-pip 以下を実行して、pip3が有効か確認します。
-pip --version </description>
+pip --version   英語のウィンドウが出ますが、&amp;lsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+ &amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+   </description>
     </item>
     
     <item>

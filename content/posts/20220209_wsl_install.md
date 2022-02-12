@@ -11,7 +11,7 @@ tags:
 
 ### カーネルアップデート実行
 
-PowerShellのコマンドプロンプトを実行します、
+PowerShellのコマンドプロンプトで、以下を実行します。[^1]
 
 ```powershell
 Invoke-WebRequest -Uri "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi" -OutFile "wsl_update_x64.msi"
@@ -19,7 +19,7 @@ Invoke-WebRequest -Uri "https://wslstorestorage.blob.core.windows.net/wslblob/ws
 ```
 ### WSL/Ubuntuインストール
 
-PowerShellのコマンドプロンプトで、以下を実行します。
+PowerShellのコマンドプロンプトで、以下を実行します。[^2]
 
 ```powershell
 wsl --install -d Ubuntu
@@ -53,3 +53,6 @@ yes | apt update && apt install python3-pip
 ```sh
 pip --version
 ```
+
+[^1]: 英語のウィンドウが出ますが、'next'をクリックして、'finish'まで行けば大丈夫です。
+[^2]: "Retype new password:"と言うウィンドウが出ますが、それは、そのまま閉じて下さい。
