@@ -89,7 +89,7 @@ Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblo
 wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
 wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
-yes | apt update &amp;&amp; apt install python3-pip 以下を実行して、pip3が有効か確認します。
+apt -y update &amp;&amp; apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
 pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;&#x21a9;&#xfe0e;
  &ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;&#x21a9;&#xfe0e;
    

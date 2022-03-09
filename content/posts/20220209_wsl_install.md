@@ -45,7 +45,7 @@ python3 --version
 Ubuntuのコマンドプロンプトで以下を実行します。
 
 ```sh
-yes | apt update && apt install python3-pip
+apt -y update && apt -y install python3-pip
 ```
 
 以下を実行して、pip3が有効か確認します。
