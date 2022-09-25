@@ -48,7 +48,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
   public App() {
     Injector injector = Guice.createInjector(new AppModule());
-    this.uploadService = injector.getInstance(AnyService.class);
+    this.anyService = injector.getInstance(AnyService.class);
   }
 }
 ```
