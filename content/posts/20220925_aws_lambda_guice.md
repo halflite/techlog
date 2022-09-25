@@ -68,6 +68,7 @@ public class AppModule extends AbstractModule {
         .forEach(props::putAll);
     Names.bindProperties(this.binder(), props);
   }
+}
 ```
 
 まぁー、こんな感じですかね？
