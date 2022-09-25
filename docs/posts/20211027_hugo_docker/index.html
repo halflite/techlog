@@ -13,13 +13,13 @@
     
     <meta name="description" property="og:description" content="bitter*smooth と言う音楽レビューサイトを作っています。
 この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！
-   Windows Terminalインストール
-  WSL2インストール
- Windows Terminal を管理者権限で起動    wsl --install wsl --set-default-version 2 wsl --install -d Ubuntu   VSCodeインストール
-  Windows に Docker Desktop をインストール
-   まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？
+Windows Terminalインストール
+WSL2インストール
+Windows Terminal を管理者権限で起動 wsl --install wsl --set-default-version 2 wsl --install -d Ubuntu VSCodeインストール
+Windows に Docker Desktop をインストール
+まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？
 で、プロジェクトのトップで、 .devcontainer ディレクトリを作り、その配下に、 Dockerfile devcontainer.json の2つのファイルを作ります。
- .devcontainer/Dockerfile 1  FROMklakegg/hugo:0.88.0-alpineRUN apk update &amp;amp;&amp;amp; apk --no-cache add git .devcontainer/devcontainer.json 2  { &amp;#34;name&amp;#34;: &amp;#34;bittersmooth&amp;#34;, &amp;#34;build&amp;#34;: { &amp;#34;dockerfile&amp;#34;: &amp;#34;Dockerfile&amp;#34;, }, &amp;#34;extensions&amp;#34;: [ &amp;#34;mhutchie.|">
+.devcontainer/Dockerfile 1 FROM klakegg/hugo:0.88.0-alpine RUN apk update &amp;amp;&amp;amp; apk --no-cache add git .devcontainer/devcontainer.json 2 { &amp;#34;name&amp;#34;: &amp;#34;bittersmooth&amp;#34;, &amp;#34;build&amp;#34;: { &amp;#34;dockerfile&amp;#34;: &amp;#34;Dockerfile&amp;#34;, }, &amp;#34;extensions&amp;#34;: [ &amp;#34;mhutchie.git-graph&amp;#34; ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。|">
     
 
     <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
@@ -64,7 +64,7 @@
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
@@ -98,10 +98,10 @@
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">wsl --install
-wsl --set-default-version 2
-wsl --install -d Ubuntu
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>wsl --install
+</span></span><span style="display:flex;"><span>wsl --set-default-version 2
+</span></span><span style="display:flex;"><span>wsl --install -d Ubuntu
+</span></span></code></pre></div><ul>
 <li>
 <p><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code/" title="Visual Studio Code – コード エディター | Microsoft Azure">VSCodeインストール</a></p>
 </li>
@@ -115,36 +115,36 @@ wsl --install -d Ubuntu
 <ul>
 <li><code>.devcontainer/Dockerfile</code> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> klakegg/hugo:0.88.0-alpine</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apk update <span style="color:#f92672">&amp;&amp;</span> apk --no-cache add git<span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> klakegg/hugo:0.88.0-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apk update <span style="color:#f92672">&amp;&amp;</span> apk --no-cache add git<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
 <li><code>.devcontainer/devcontainer.json</code> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-	<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;bittersmooth&#34;</span>,
-	<span style="color:#f92672">&#34;build&#34;</span>: {
-		<span style="color:#f92672">&#34;dockerfile&#34;</span>: <span style="color:#e6db74">&#34;Dockerfile&#34;</span>,
-	},
-	<span style="color:#f92672">&#34;extensions&#34;</span>: [
-		<span style="color:#e6db74">&#34;mhutchie.git-graph&#34;</span>
-	]
-}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;bittersmooth&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;build&#34;</span>: {
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&#34;dockerfile&#34;</span>: <span style="color:#e6db74">&#34;Dockerfile&#34;</span>,
+</span></span><span style="display:flex;"><span>	},
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;extensions&#34;</span>: [
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;mhutchie.git-graph&#34;</span>
+</span></span><span style="display:flex;"><span>	]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li><a href="https://docs.microsoft.com/ja-jp/learn/modules/use-docker-container-dev-env-vs-code/" title="Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs">Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs</a></li>
 </ul>
 <hr>
 <p>簡単に <code>Hugo</code> の環境が手に入るのですが、コレひとつだけ落とし穴があって、 <code>hugo server -w</code> でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ <code>hugo server -w</code> で確認すれば良いのかな？と言う感じでやっています。</p>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p>alpineベースのイメージだと、Gitすら入っていないので <code>apk --no-cache add git</code> が、必要なのです。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:2" role="doc-endnote">
+<li id="fn:2">
 <p>拡張機能、 <a href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph" title="Git Graph - Visual Studio Marketplace">Git Graph</a> 位は欲しいですよね…。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
   </section>
 

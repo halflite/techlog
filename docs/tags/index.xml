@@ -6,7 +6,25 @@
     <description>Recent content in Tags on ひとり開発日記。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Sep 2022 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>aws</title>
+      <link>https://halflite.github.io/techlog/tags/aws/</link>
+      <pubDate>Sun, 25 Sep 2022 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>java</title>
+      <link>https://halflite.github.io/techlog/tags/java/</link>
+      <pubDate>Sun, 25 Sep 2022 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/tags/java/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>etc</title>
       <link>https://halflite.github.io/techlog/tags/etc/</link>
@@ -26,29 +44,11 @@
     </item>
     
     <item>
-      <title>java</title>
-      <link>https://halflite.github.io/techlog/tags/java/</link>
-      <pubDate>Sun, 27 Jun 2021 00:00:00 +0900</pubDate>
-      
-      <guid>https://halflite.github.io/techlog/tags/java/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>vagrant</title>
       <link>https://halflite.github.io/techlog/tags/vagrant/</link>
       <pubDate>Fri, 18 Sep 2020 00:00:00 +0900</pubDate>
       
       <guid>https://halflite.github.io/techlog/tags/vagrant/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>aws</title>
-      <link>https://halflite.github.io/techlog/tags/aws/</link>
-      <pubDate>Wed, 08 Jul 2020 00:00:00 +0900</pubDate>
-      
-      <guid>https://halflite.github.io/techlog/tags/aws/</guid>
       <description></description>
     </item>
     

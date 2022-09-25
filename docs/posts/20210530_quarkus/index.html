@@ -11,18 +11,19 @@
     </title>
     
     
-    <meta name="description" property="og:description" content="Quarkusに入門してみた  Quarkus - Creating Your First Application  Quarkus を、ちょろっと触っています。
+    <meta name="description" property="og:description" content="Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
 入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
-最初に触った感想  とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな  とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
+最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
 mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
 色々揃っているよな、でも外れると何も出来ないよな 色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 2
 プレゼンテーション層、(所謂)「HTMLテンプレート」は Qute Templating Engine があるんですが、マジでこれしかないの…？ Thymeleaf はおろか、 FreeMarker にも届かないんでは…。
 DBアクセスには、 Hibernate/JPA とか、そのラッパー Panache とかあるんですが、それ以外は…。
 まぁ、そもそも Quarkus の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。
-Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x  は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
+Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
 でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
 このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
-  Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.|">
+Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+Quarkus - Guides - Latest https://quarkus.|">
     
 
     <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
@@ -67,7 +68,7 @@ Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServlet�
 
 
 
-<a href='/techlog/tags/java' class="muted-link">
+<a href='/tags/java' class="muted-link">
   <span class="Label Label--gray">java</span>
 </a>
 
@@ -101,8 +102,8 @@ Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServlet�
 </ul>
 <h3 id="とりあえず簡単に出来るよな">とりあえず、簡単に出来るよな</h3>
 <p>とりあえず、mavenでプロジェクト作って、 <code>Hello, World!</code> とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">mvn clean compile quarkus:dev
-</code></pre></div><p>で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mvn clean compile quarkus:dev
+</span></span></code></pre></div><p>で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <h3 id="色々揃っているよなでも外れると何も出来ないよな">色々揃っているよな、でも外れると何も出来ないよな</h3>
 <p>色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 <p>プレゼンテーション層、(所謂)「HTMLテンプレート」は <a href="https://quarkus.io/guides/qute" title="Quarkus - Qute Templating Engine">Qute Templating Engine</a> があるんですが、マジでこれしかないの…？ <code>Thymeleaf</code> はおろか、 <code>FreeMarker</code> にも届かないんでは…。</p>
@@ -113,20 +114,20 @@ Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServlet�
 <h3 id="でもね">でもね</h3>
 <p>とは言え、新しい技術に触れると、ホントにワクワクしますわ。</p>
 <p>このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p>Maven testをeclipseでデバッグ | infoScoop開発者ブログ <a href="https://bit.ly/2TJzH6W">https://bit.ly/2TJzH6W</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:2" role="doc-endnote">
+<li id="fn:2">
 <p>Quarkus - Guides - Latest <a href="https://quarkus.io/guides/">https://quarkus.io/guides/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:3" role="doc-endnote">
+<li id="fn:3">
 <p>MicroProfile 4.0への道 <a href="https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/">https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
   </section>
 

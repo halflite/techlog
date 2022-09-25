@@ -67,11 +67,11 @@
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
-<a href='/techlog/tags/linux' class="muted-link">
+<a href='/tags/linux' class="muted-link">
   <span class="Label Label--gray">linux</span>
 </a>
 
@@ -90,9 +90,8 @@ wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellの�
 wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
 apt -y update &amp;&amp; apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
-pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;&#x21a9;&#xfe0e;
- &ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;&#x21a9;&#xfe0e;
-   
+pip --version 英語のウィンドウが出ますが、&rsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;&#x21a9;&#xfe0e;
+&ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;&#x21a9;&#xfe0e;
     <a class="muted-link" href="/techlog/posts/20220209_wsl_install/">…</a>
   </div>
 </div>
@@ -113,7 +112,7 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
 
 
 
-<a href='/techlog/tags/linux' class="muted-link">
+<a href='/tags/linux' class="muted-link">
   <span class="Label Label--gray">linux</span>
 </a>
 
@@ -126,8 +125,8 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
   <div class="text-gray">
     
     前回から、また変わったので。
-sudo yum -y remove git sudo yum -y install https://repo.ius.io/ius-release-el7.rpm sudo yum -y install git224 git --version  元ネタ
- iusの最新リンクが変更になったので注意 - Qiita CentOS7にGit2系をyumでインストール - Qiita  
+sudo yum -y remove git sudo yum -y install https://repo.ius.io/ius-release-el7.rpm sudo yum -y install git224 git --version 元ネタ
+iusの最新リンクが変更になったので注意 - Qiita CentOS7にGit2系をyumでインストール - Qiita 
     <a class="muted-link" href="/techlog/posts/20201225_git_2/">…</a>
   </div>
 </div>
@@ -148,11 +147,11 @@ sudo yum -y remove git sudo yum -y install https://repo.ius.io/ius-release-el7.r
 
 
 
-<a href='/techlog/tags/linux' class="muted-link">
+<a href='/tags/linux' class="muted-link">
   <span class="Label Label--gray">linux</span>
 </a>
 
-<a href='/techlog/tags/vagrant' class="muted-link">
+<a href='/tags/vagrant' class="muted-link">
   <span class="Label Label--gray">vagrant</span>
 </a>
 
@@ -167,9 +166,8 @@ sudo yum -y remove git sudo yum -y install https://repo.ius.io/ius-release-el7.r
     Heroku で、小さいアプリケーションを作りたいと思っていて。
 MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。
 という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。
- https://github.com/halflite/postgresql-win-local  こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
-  ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
-   
+https://github.com/halflite/postgresql-win-local こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
+ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
     <a class="muted-link" href="/techlog/posts/20200918_postgres_local/">…</a>
   </div>
 </div>
@@ -190,7 +188,7 @@ MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って
 
 
 
-<a href='/techlog/tags/linux' class="muted-link">
+<a href='/tags/linux' class="muted-link">
   <span class="Label Label--gray">linux</span>
 </a>
 
@@ -202,9 +200,9 @@ MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って
   </div>
   <div class="text-gray">
     
-     CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!! Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!! git --version って、まだ1.x系なの? しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール… え&hellip;??? 依存ライブラリが無いの…???  sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install git --enablerepo=ius --disablerepo=base上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!
+     CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!! Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!! git --version って、まだ1.x系なの? しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール… え&hellip;??? 依存ライブラリが無いの…??? sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install git --enablerepo=ius --disablerepo=base 上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!
 結局、こうなりますわ。
-sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates
+sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates 
     <a class="muted-link" href="/techlog/posts/20200117_git_ver/">…</a>
   </div>
 </div>
@@ -234,7 +232,7 @@ sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/aws" class="link-gray text-emphasized css-truncate-target"><span class="">Aws</span></a>
-      <span class="text-right Counter">1</span>
+      <span class="text-right Counter">2</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
@@ -244,7 +242,7 @@ sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/java" class="link-gray text-emphasized css-truncate-target"><span class="">Java</span></a>
-      <span class="text-right Counter">8</span>
+      <span class="text-right Counter">9</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">

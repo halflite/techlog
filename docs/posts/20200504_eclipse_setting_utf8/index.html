@@ -15,7 +15,7 @@
 Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
 解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
 &amp;lt;properties&amp;gt; &amp;lt;project.build.sourceEncoding&amp;gt;UTF-8&amp;lt;/project.build.sourceEncoding&amp;gt; &amp;lt;/properties&amp;gt; &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;!-- Eclipse --&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-eclipse-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.10&amp;lt;/version&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;downloadSources&amp;gt;true&amp;lt;/downloadSources&amp;gt; &amp;lt;downloadJavadocs&amp;gt;true&amp;lt;/downloadJavadocs&amp;gt; &amp;lt;additionalConfig&amp;gt; &amp;lt;file&amp;gt; &amp;lt;name&amp;gt;.settings/org.eclipse.core.resources.prefs&amp;lt;/name&amp;gt; &amp;lt;content&amp;gt; &amp;lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&amp;lt;project&amp;gt;=${project.build.sourceEncoding}${line.separator}]]&amp;gt; &amp;lt;/content&amp;gt; &amp;lt;/file&amp;gt; &amp;lt;/additionalConfig&amp;gt; &amp;lt;/configuration&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
-mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow   旧blog 2018/10/12 の記事に加筆訂正して再掲しました。|">
+mvn eclipse:clean eclipse:eclipse 元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow 旧blog 2018/10/12 の記事に加筆訂正して再掲しました。|">
     
 
     <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
@@ -60,7 +60,7 @@ mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as 
 
 
 
-<a href='/techlog/tags/java' class="muted-link">
+<a href='/tags/java' class="muted-link">
   <span class="Label Label--gray">java</span>
 </a>
 
@@ -83,35 +83,35 @@ mvn eclipse:clean eclipse:eclipse  元ネタ Define Eclipse project encoding as 
     <p>WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？</p>
 <p>Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。</p>
 <p>解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">  <span style="color:#f92672">&lt;properties&gt;</span>
-    <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
-  <span style="color:#f92672">&lt;/properties&gt;</span>
-
-  <span style="color:#f92672">&lt;build&gt;</span>
-    <span style="color:#f92672">&lt;plugins&gt;</span>
-      <span style="color:#75715e">&lt;!-- Eclipse --&gt;</span>
-      <span style="color:#f92672">&lt;plugin&gt;</span>
-        <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
-        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-eclipse-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
-        <span style="color:#f92672">&lt;version&gt;</span>2.10<span style="color:#f92672">&lt;/version&gt;</span>
-        <span style="color:#f92672">&lt;configuration&gt;</span>
-          <span style="color:#f92672">&lt;downloadSources&gt;</span>true<span style="color:#f92672">&lt;/downloadSources&gt;</span>
-          <span style="color:#f92672">&lt;downloadJavadocs&gt;</span>true<span style="color:#f92672">&lt;/downloadJavadocs&gt;</span>
-          <span style="color:#f92672">&lt;additionalConfig&gt;</span>
-            <span style="color:#f92672">&lt;file&gt;</span>
-              <span style="color:#f92672">&lt;name&gt;</span>.settings/org.eclipse.core.resources.prefs<span style="color:#f92672">&lt;/name&gt;</span>
-              <span style="color:#f92672">&lt;content&gt;</span>
-<span style="color:#75715e">&lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt;</span>
-              <span style="color:#f92672">&lt;/content&gt;</span>
-            <span style="color:#f92672">&lt;/file&gt;</span>
-          <span style="color:#f92672">&lt;/additionalConfig&gt;</span>
-        <span style="color:#f92672">&lt;/configuration&gt;</span>
-      <span style="color:#f92672">&lt;/plugin&gt;</span>
-    <span style="color:#f92672">&lt;/plugins&gt;</span>
-  <span style="color:#f92672">&lt;/build&gt;</span>
-</code></pre></div><p>で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">mvn eclipse:clean eclipse:eclipse
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>  <span style="color:#f92672">&lt;properties&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/properties&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">&lt;!-- Eclipse --&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-eclipse-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;version&gt;</span>2.10<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;downloadSources&gt;</span>true<span style="color:#f92672">&lt;/downloadSources&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;downloadJavadocs&gt;</span>true<span style="color:#f92672">&lt;/downloadJavadocs&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;additionalConfig&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;file&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;name&gt;</span>.settings/org.eclipse.core.resources.prefs<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;content&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;/content&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/file&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/additionalConfig&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/build&gt;</span>
+</span></span></code></pre></div><p>で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mvn eclipse:clean eclipse:eclipse
+</span></span></code></pre></div><ul>
 <li>元ネタ <a href="https://stackoverflow.com/a/7605915" title="Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow">Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow</a></li>
 </ul>
 <hr>

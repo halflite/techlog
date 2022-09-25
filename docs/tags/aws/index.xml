@@ -6,18 +6,31 @@
     <description>Recent content in aws on ひとり開発日記。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 08 Jul 2020 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Sep 2022 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS Lambda FunctionでJavaを採用したい</title>
+      <link>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</link>
+      <pubDate>Sun, 25 Sep 2022 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</guid>
+      <description>承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Daggaer を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
+実行時コンパイルでも、かなり速い。 まぁ、そもそも AWS Lambda Function って、小さいですしね 2
+設定注入は、Apache Geronimo Configかな。
+ケース まぁまぁ、よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
+public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&amp;gt; { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.</description>
+    </item>
+    
     <item>
       <title>2020年7月 Amazon Cognito経由でYahoo!Japanのユーザ認証をやりたかっただけだった。</title>
       <link>https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/</link>
       <pubDate>Wed, 08 Jul 2020 00:00:00 +0900</pubDate>
       
       <guid>https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/</guid>
-      <description>TL;DR  できません
-  Amazon Cognitoの外部フェデレーテッドIDプロバイダとして、Yahoo!Japanを登録できますが、認証が通りません。 stateプロパティの値が長過ぎて、Yahoo!Japanからエラーで返ってきます。
-   Amazon Cognito とは - Amazon Cognito  AWSって、以前、S3をちょっと触ったレベルだったので、全く浦島太郎状態だったんですね。 最新技術のキャッチアップを兼ねて、ちょっと小さいプロジェクトで試すかな。 それなら、初っ端に必要になるログインとか認証である、Amazon Cognitoから触ってみるか～、って触ってみたんです。
+      <description>TL;DR できません
+Amazon Cognitoの外部フェデレーテッドIDプロバイダとして、Yahoo!Japanを登録できますが、認証が通りません。 stateプロパティの値が長過ぎて、Yahoo!Japanからエラーで返ってきます。
+Amazon Cognito とは - Amazon Cognito AWSって、以前、S3をちょっと触ったレベルだったので、全く浦島太郎状態だったんですね。 最新技術のキャッチアップを兼ねて、ちょっと小さいプロジェクトで試すかな。 それなら、初っ端に必要になるログインとか認証である、Amazon Cognitoから触ってみるか～、って触ってみたんです。
 「…なるほど!! 全く分からん!!」
- [Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO 【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita  上記記事を参考に、ちまちまいじっていて、なんとなく分かった!! 「Amazon Cognitoってアカウント管理してくれて、外部プロバイダとの連携とも整合をとってくれて、一意なIDを払い出してくれる。」 「Amazon Cognitoそれ自体は、OpenID Connect/OAuth2のプロバイダとして振る舞ってくれる」 なんですね!!
+[Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO 【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita 上記記事を参考に、ちまちまいじっていて、なんとなく分かった!! 「Amazon Cognitoってアカウント管理してくれて、外部プロバイダとの連携とも整合をとってくれて、一意なIDを払い出してくれる。」 「Amazon Cognitoそれ自体は、OpenID Connect/OAuth2のプロバイダとして振る舞ってくれる」 なんですね!!
 上記記事を参考に、試しにYahoo!JapanとのID連携やってみるかー、って思って、IDプロバイダの設定までは、サクサクできたんです。
 でも、実際のログイン画面が出てきて、クリックすると、コールバックにエラーが返ってきます。 &amp;ldquo;state is too long value&amp;rdquo; って何???
 Chromeのdev-toolで、リクエストとかを見ていると、確かにAmazon Cognitoが生成するstateって、1,200文字程度あります。 自分では、どっちが妥当か判断できないし、しゃーないので、Yahoo!デベロッパーネットワークのお問合せフォームから、質問投げちゃいましたよ…。

@@ -18,9 +18,8 @@ wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellの�
 wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
 apt -y update &amp;amp;&amp;amp; apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
-pip --version   英語のウィンドウが出ますが、&amp;lsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
- &amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-   |">
+pip --version 英語のウィンドウが出ますが、&amp;rsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+&amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&amp;#x21a9;&amp;#xfe0e;|">
     
 
     <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
@@ -65,11 +64,11 @@ pip --version   英語のウィンドウが出ますが、&amp;lsquo;next&amp;rs
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
-<a href='/techlog/tags/linux' class="muted-link">
+<a href='/tags/linux' class="muted-link">
   <span class="Label Label--gray">linux</span>
 </a>
 
@@ -92,33 +91,33 @@ pip --version   英語のウィンドウが出ますが、&amp;lsquo;next&amp;rs
     <p>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。</p>
 <h3 id="カーネルアップデート実行">カーネルアップデート実行</h3>
 <p>PowerShellのコマンドプロンプトで、以下を実行します。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-WebRequest -Uri <span style="color:#e6db74">&#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34;</span> -OutFile <span style="color:#e6db74">&#34;wsl_update_x64.msi&#34;</span>
-./wsl_update_x64.msi
-</code></pre></div><h3 id="wslubuntuインストール">WSL/Ubuntuインストール</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Invoke-WebRequest -Uri <span style="color:#e6db74">&#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34;</span> -OutFile <span style="color:#e6db74">&#34;wsl_update_x64.msi&#34;</span>
+</span></span><span style="display:flex;"><span>./wsl_update_x64.msi
+</span></span></code></pre></div><h3 id="wslubuntuインストール">WSL/Ubuntuインストール</h3>
 <p>PowerShellのコマンドプロンプトで、以下を実行します。<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">wsl --install -d Ubuntu
-wsl --set-default Ubuntu
-</code></pre></div><h3 id="ubuntuに入る">Ubuntuに入る</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>wsl --install -d Ubuntu
+</span></span><span style="display:flex;"><span>wsl --set-default Ubuntu
+</span></span></code></pre></div><h3 id="ubuntuに入る">Ubuntuに入る</h3>
 <p>PowerShellのコマンドプロンプトで、以下を実行します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">wsl
-</code></pre></div><p>Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">python3 --version
-</code></pre></div><h3 id="pip3のインストール">pip3のインストール</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>wsl
+</span></span></code></pre></div><p>Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python3 --version
+</span></span></code></pre></div><h3 id="pip3のインストール">pip3のインストール</h3>
 <p>Ubuntuのコマンドプロンプトで以下を実行します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">apt -y update <span style="color:#f92672">&amp;&amp;</span> apt -y install python3-pip
-</code></pre></div><p>以下を実行して、pip3が有効か確認します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">pip --version
-</code></pre></div><section class="footnotes" role="doc-endnotes">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt -y update <span style="color:#f92672">&amp;&amp;</span> apt -y install python3-pip
+</span></span></code></pre></div><p>以下を実行して、pip3が有効か確認します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip --version
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>英語のウィンドウが出ますが、&lsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<li id="fn:1">
+<p>英語のウィンドウが出ますが、&rsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:2" role="doc-endnote">
+<li id="fn:2">
 <p>&ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
   </section>
 

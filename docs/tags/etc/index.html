@@ -67,11 +67,11 @@
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
-<a href='/techlog/tags/linux' class="muted-link">
+<a href='/tags/linux' class="muted-link">
   <span class="Label Label--gray">linux</span>
 </a>
 
@@ -90,9 +90,8 @@ wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellの�
 wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
 apt -y update &amp;&amp; apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
-pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;&#x21a9;&#xfe0e;
- &ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;&#x21a9;&#xfe0e;
-   
+pip --version 英語のウィンドウが出ますが、&rsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;&#x21a9;&#xfe0e;
+&ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;&#x21a9;&#xfe0e;
     <a class="muted-link" href="/techlog/posts/20220209_wsl_install/">…</a>
   </div>
 </div>
@@ -113,7 +112,7 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
@@ -127,13 +126,13 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
     
     bitter*smooth と言う音楽レビューサイトを作っています。
 この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！
-   Windows Terminalインストール
-  WSL2インストール
- Windows Terminal を管理者権限で起動    wsl --install wsl --set-default-version 2 wsl --install -d Ubuntu   VSCodeインストール
-  Windows に Docker Desktop をインストール
-   まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？
+Windows Terminalインストール
+WSL2インストール
+Windows Terminal を管理者権限で起動 wsl --install wsl --set-default-version 2 wsl --install -d Ubuntu VSCodeインストール
+Windows に Docker Desktop をインストール
+まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？
 で、プロジェクトのトップで、 .devcontainer ディレクトリを作り、その配下に、 Dockerfile devcontainer.json の2つのファイルを作ります。
- .devcontainer/Dockerfile 1  FROMklakegg/hugo:0.88.0-alpineRUN apk update &amp;&amp; apk --no-cache add git .devcontainer/devcontainer.json 2  { &#34;name&#34;: &#34;bittersmooth&#34;, &#34;build&#34;: { &#34;dockerfile&#34;: &#34;Dockerfile&#34;, }, &#34;extensions&#34;: [ &#34;mhutchie.
+.devcontainer/Dockerfile 1 FROM klakegg/hugo:0.88.0-alpine RUN apk update &amp;&amp; apk --no-cache add git .devcontainer/devcontainer.json 2 { &#34;name&#34;: &#34;bittersmooth&#34;, &#34;build&#34;: { &#34;dockerfile&#34;: &#34;Dockerfile&#34;, }, &#34;extensions&#34;: [ &#34;mhutchie.git-graph&#34; ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。
     <a class="muted-link" href="/techlog/posts/20211027_hugo_docker/">…</a>
   </div>
 </div>
@@ -154,7 +153,7 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
@@ -166,11 +165,9 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
   </div>
   <div class="text-gray">
     
-    
- ImgBB — フリーなスマイリー / アニメエモコン  たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
+    ImgBB — フリーなスマイリー / アニメエモコン たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
 という事で、適当にググって、適当にアップロードして、上記サイトを試してみることにしました。 1
-  まぁ、削除されても、そんなに重要な画像でもないし…。&#160;&#x21a9;&#xfe0e;
-   
+まぁ、削除されても、そんなに重要な画像でもないし…。&#160;&#x21a9;&#xfe0e;
     <a class="muted-link" href="/techlog/posts/20200831_imgbb/">…</a>
   </div>
 </div>
@@ -191,7 +188,7 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
@@ -204,13 +201,13 @@ pip --version   英語のウィンドウが出ますが、&lsquo;next&rsquo;を�
   <div class="text-gray">
     
     一瞬、LivedoorBlogで作った時期もあるんですけど、やっぱり技術ブログなので…。
- Markdownで書きたい シンタックスハイライトが欲しい ブログパーツとかいらない  やはり、上記3条件は必須ですかねぇ。
- 毎度忘れてしまうので、hugoの操作メモ
+Markdownで書きたい シンタックスハイライトが欲しい ブログパーツとかいらない やはり、上記3条件は必須ですかねぇ。
+毎度忘れてしまうので、hugoの操作メモ
 新規記事作成
 hugo new posts/article.md ローカルサーバーで確認
 hugo server 記事書き出し
-hugo -D  以下、参考にした記事
- Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita 【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita Hugoのテーマ「Theer」を作成しました – qqhann  すっきり見やすいHugoテーマ。 ありがたく使ってます    
+hugo -D 以下、参考にした記事
+Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita 【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita Hugoのテーマ「Theer」を作成しました – qqhann すっきり見やすいHugoテーマ。 ありがたく使ってます 
     <a class="muted-link" href="/techlog/posts/buildwithhugo/">…</a>
   </div>
 </div>
@@ -231,7 +228,7 @@ hugo -D  以下、参考にした記事
 
 
 
-<a href='/techlog/tags/etc' class="muted-link">
+<a href='/tags/etc' class="muted-link">
   <span class="Label Label--gray">etc</span>
 </a>
 
@@ -243,10 +240,10 @@ hugo -D  以下、参考にした記事
   </div>
   <div class="text-gray">
     
-     はてなグループの終了日を2020年1月31日(金)に決定しました - はてなグループ日記 - 機能変更、お知らせなど  …ということなので、技術ブログも、お引越しです。
+     はてなグループの終了日を2020年1月31日(金)に決定しました - はてなグループ日記 - 機能変更、お知らせなど …ということなので、技術ブログも、お引越しです。
 旧ブログは、こちら。
- ひとり開発日記。 - プログラマの秘密のあれこれ  web.archive.org    このブログの連絡先は、こちら。
- about me  
+ひとり開発日記。 - プログラマの秘密のあれこれ web.archive.org このブログの連絡先は、こちら。
+about me 
     <a class="muted-link" href="/techlog/posts/helloworld/">…</a>
   </div>
 </div>
@@ -276,7 +273,7 @@ hugo -D  以下、参考にした記事
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/aws" class="link-gray text-emphasized css-truncate-target"><span class="">Aws</span></a>
-      <span class="text-right Counter">1</span>
+      <span class="text-right Counter">2</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
@@ -286,7 +283,7 @@ hugo -D  以下、参考にした記事
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/java" class="link-gray text-emphasized css-truncate-target"><span class="">Java</span></a>
-      <span class="text-right Counter">8</span>
+      <span class="text-right Counter">9</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
