@@ -14,8 +14,8 @@
       
       <guid>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</guid>
       <description>承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
-設定注入は、Apache Geronimo Configかな。
-Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 2 そうすると、コードや設定少ないGuiceの方がいいですよね。
+設定注入は、Apache Geronimo Configかな 2
+Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。
 ケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
 public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&amp;gt; { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.</description>
     </item>
