@@ -14,7 +14,7 @@ tags:
     * `Spring-Framawaork` はやめておけ、と公式でも言われてますね。[^1]
 * `Java` で何かしらする時は、背骨(フレームワーク)欲しいですよね
     * `DI(DependencyInjection)` 無いと、もう無理ですよね
-* `Guice`/`Daggaer` を使えと言われていますが、どっち使ったらいいの？
+* `Guice`/`Dagger` を使えと言われていますが、どっち使ったらいいの？
     * 色々なケースがありますが
 
 ### 自分でやったこと
@@ -26,13 +26,15 @@ tags:
 
 で、どうやってビジネスロジック注入する？を考えて、やっぱり[google/guice](https://github.com/google/guice/wiki)かなぁって。
 
-実行時コンパイルでも、かなり速い。 まぁ、そもそも `AWS Lambda Function` って、小さいですしね [^2]
-
 設定注入は、[Apache Geronimo Config](https://geronimo.apache.org/microprofile/index.html)かな。
+
+`Dagger`はコンパイル時DI、`Guice`実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、`Java`は起動するとかなり速いので、あまり差が無いのですね。 
+まぁ、そもそも `AWS Lambda Function` って、プロダクション的に小さいですし [^2]
+そうすると、コードや設定少ない`Guice`の方がいいですよね。 
 
 ### ケース
 
-まぁまぁ、よくあるケースですが、 `API Gateway` で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
+よくあるケースですが、 `API Gateway` で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
 
 ```java
 public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -71,7 +73,8 @@ public class AppModule extends AbstractModule {
 }
 ```
 
-まぁー、こんな感じですかね？
+まぁー、こんな感じですかね？[^3]
 
 [^1]: [AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html "AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda")
 [^2]: 小さく作るべきですよね
+[^3]: たまに、こういう(所謂)「黒魔術」成分少ない、手組みのものを作ると、本当に勉強になります。

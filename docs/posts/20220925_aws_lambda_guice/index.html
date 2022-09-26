@@ -11,10 +11,10 @@
     </title>
     
     
-    <meta name="description" property="og:description" content="承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Daggaer を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
-実行時コンパイルでも、かなり速い。 まぁ、そもそも AWS Lambda Function って、小さいですしね 2
+    <meta name="description" property="og:description" content="承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
 設定注入は、Apache Geronimo Configかな。
-ケース まぁまぁ、よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
+Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 2 そうすると、コードや設定少ないGuiceの方がいいですよね。
+ケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
 public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&amp;gt; { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.|">
     
 
@@ -97,7 +97,7 @@ public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, A
 <li><code>DI(DependencyInjection)</code> 無いと、もう無理ですよね</li>
 </ul>
 </li>
-<li><code>Guice</code>/<code>Daggaer</code> を使えと言われていますが、どっち使ったらいいの？
+<li><code>Guice</code>/<code>Dagger</code> を使えと言われていますが、どっち使ったらいいの？
 <ul>
 <li>色々なケースがありますが</li>
 </ul>
@@ -114,10 +114,12 @@ public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, A
 </li>
 </ul>
 <p>で、どうやってビジネスロジック注入する？を考えて、やっぱり<a href="https://github.com/google/guice/wiki">google/guice</a>かなぁって。</p>
-<p>実行時コンパイルでも、かなり速い。 まぁ、そもそも <code>AWS Lambda Function</code> って、小さいですしね <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 <p>設定注入は、<a href="https://geronimo.apache.org/microprofile/index.html">Apache Geronimo Config</a>かな。</p>
+<p><code>Dagger</code>はコンパイル時DI、<code>Guice</code>実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、<code>Java</code>は起動するとかなり速いので、あまり差が無いのですね。 
+まぁ、そもそも <code>AWS Lambda Function</code> って、プロダクション的に小さいですし <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>
+そうすると、コードや設定少ない<code>Guice</code>の方がいいですよね。</p>
 <h3 id="ケース">ケース</h3>
-<p>まぁまぁ、よくあるケースですが、 <code>API Gateway</code> で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。</p>
+<p>よくあるケースですが、 <code>API Gateway</code> で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">App</span> <span style="color:#66d9ef">implements</span> RequestHandler<span style="color:#f92672">&lt;</span>APIGatewayProxyRequestEvent<span style="color:#f92672">,</span> APIGatewayProxyResponseEvent<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> AnyService anyService<span style="color:#f92672">;</span>
@@ -149,7 +151,7 @@ public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, A
 </span></span><span style="display:flex;"><span>    Names<span style="color:#f92672">.</span><span style="color:#a6e22e">bindProperties</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">binder</span><span style="color:#f92672">(),</span> props<span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>まぁー、こんな感じですかね？</p>
+</span></span></code></pre></div><p>まぁー、こんな感じですかね？<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -158,6 +160,9 @@ public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, A
 </li>
 <li id="fn:2">
 <p>小さく作るべきですよね&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>たまに、こういう(所謂)「黒魔術」成分少ない、手組みのものを作ると、本当に勉強になります。&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
