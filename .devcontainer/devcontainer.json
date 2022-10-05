@@ -1,7 +1,7 @@
 {
 	"name": "techlog",
 	"build": {
-		"dockerfile": "Dockerfile",
+		"dockerfile": "Dockerfile"
 	},
 	"extensions": [
     "mhutchie.git-graph"

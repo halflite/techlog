@@ -56,6 +56,16 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 ```
 
 ```java
+@Singleton
+public class AnyService {
+
+  public void execute(APIGatewayProxyRequestEvent input) {
+    // do something
+  }
+}
+```
+
+```java
 public class AppModule extends AbstractModule {
 
   @Override
