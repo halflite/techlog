@@ -12,6 +12,7 @@ tags:
 
 - `ブラウザ->ウェブアプリ->ActiveMQ->ApacheCamel->AWS S3` と言うルートを考えてみましょう。
     - ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。
+        - 非同期で、イベント駆動で処理したいですよね。
     - ウェブアプリはDockerで建てているのだから、`ActiveMQ`[^1] も Consumerである `ApacheCamel` もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。
     - …と、思ったら、意外と大変だった、と言う感じです。
 
@@ -31,11 +32,11 @@ tags:
 
 - [JMSの使用 - Quarkus](https://ja.quarkus.io/guides/jms)
     - 依存関係に [Quarkus Artemis JMS Runtime](https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms)を忘れずに。
-    - `application.properties`に`quarkus.artemis.***=`を記述することを忘れないように
-    - そうすると、`ConnectionFactory`もDI対象になりますよ
+    - `application.properties`に`quarkus.artemis.***=`を記述することを忘れないように。
+    - そうすると、`ConnectionFactory`もDI対象になりますよ。
 
 ```java
-  public void uploadImage(String fineName, InputStream file) {
+  public void uploadImage(String fileName, InputStream file) {
     try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE);
         ByteArrayOutputStream out = new ByteArrayOutputStream()) {
       // ファイル読み込み
@@ -44,7 +45,7 @@ tags:
 
       // メッセージ作成
       BytesMessage message = context.createBytesMessage();
-      message.setStringProperty("fineName", fineName);
+      message.setStringProperty("fileName", fileName);
       message.writeBytes(out.toByteArray());
       
       // トピックを送信
