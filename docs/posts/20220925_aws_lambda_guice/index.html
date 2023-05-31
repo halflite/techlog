@@ -115,7 +115,7 @@ public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, A
 </ul>
 <p>で、どうやってビジネスロジック注入する？を考えて、やっぱり<a href="https://github.com/google/guice/wiki">google/guice</a>かなぁって。</p>
 <p>設定注入は、<a href="https://geronimo.apache.org/microprofile/index.html">Apache Geronimo Config</a>かな <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<p><code>Dagger</code>はコンパイル時DI、<code>Guice</code>実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、<code>Java</code>は起動するとかなり速いので、あまり差が無いのですね。 
+<p><code>Dagger</code>はコンパイル時DI、<code>Guice</code>実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、<code>Java</code>は起動するとかなり速いので、あまり差が無いのですね。
 まぁ、そもそも <code>AWS Lambda Function</code> って、プロダクション的に小さいですし <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>
 そうすると、コードや設定少ない<code>Guice</code>の方がいいですよね。</p>
 <h3 id="ケース">ケース</h3>

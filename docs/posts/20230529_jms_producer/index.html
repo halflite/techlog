@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 &ndash; ひとり開発日記。
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="承前 ブラウザ-&amp;gt;ウェブアプリ-&amp;gt;ActiveMQ-&amp;gt;ApacheCamel-&amp;gt;AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである ApacheCamel もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer-&amp;gt;ActiveMQ-&amp;gt;Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように そうすると、ConnectionFactoryもDI対象になりますよ public void uploadImage(String fineName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.createBytesMessage(); message.|">
+    
+
+    <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
+    
+    
+    
+    
+
+
+    <link rel="stylesheet" href="/techlog/assets/syntax.css">
+    <link rel="stylesheet" href="/techlog/assets/primer-build.css">
+    <link rel="stylesheet" href="/techlog/assets/style.css">
+    <link rel="stylesheet" href="/techlog/assets/custom_style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="https://halflite.github.io/techlog/">
+    ひとり開発日記。
+  </a>
+
+  
+  
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+
+
+<a href='/tags/java' class="muted-link">
+  <span class="Label Label--gray">java</span>
+</a>
+
+<a href='/tags/quarkus' class="muted-link">
+  <span class="Label Label--gray">quarkus</span>
+</a>
+
+<a href='/tags/apache-camel' class="muted-link">
+  <span class="Label Label--gray">apache-camel</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2023-05-29. Published at: 2023-05-29.">
+        
+          Published: 2023-05-29
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <h3 id="承前">承前</h3>
+<ul>
+<li><code>ブラウザ-&gt;ウェブアプリ-&gt;ActiveMQ-&gt;ApacheCamel-&gt;AWS S3</code> と言うルートを考えてみましょう。
+<ul>
+<li>ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。</li>
+<li>ウェブアプリはDockerで建てているのだから、<code>ActiveMQ</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> も Consumerである <code>ApacheCamel</code> もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。</li>
+<li>…と、思ったら、意外と大変だった、と言う感じです。</li>
+</ul>
+</li>
+</ul>
+<h3 id="jmsjava-message-service-と-producer-と-consumer">JMS(Java Message Service) と Producer と Consumer</h3>
+<ul>
+<li>JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。</li>
+<li>まぁ、シンプルに<code>Producer-&gt;ActiveMQ-&gt;Consumer</code>で、送信元<code>Producer</code>が、受信元<code>Consumer</code>に向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。
+<ul>
+<li>今回は<code>ウェブアプリ</code>が<code>Producer</code>の役割ですね。</li>
+</ul>
+</li>
+</ul>
+<h3 id="ウェブアプリケーションに画像アップロード">ウェブアプリケーションに画像アップロード</h3>
+<ul>
+<li>結局、ファイル名と拡張子を文字列で取れて、画像のデータを<code>byte[]</code>か、<code>InputStream</code>で取れれば良いと思います。
+<ul>
+<li><a href="https://ja.quarkus.io/guides/rest-client-multipart">マルチパートでのRESTクライアントの使用 - Quarkus</a>
+<ul>
+<li>依存関係に <a href="https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-multipart">Quarkus RESTEasy Multipart Runtime</a>を忘れずに。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="画像データをactivemqに送信する">画像データをActiveMQに送信する</h3>
+<ul>
+<li><a href="https://ja.quarkus.io/guides/jms">JMSの使用 - Quarkus</a>
+<ul>
+<li>依存関係に <a href="https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms">Quarkus Artemis JMS Runtime</a>を忘れずに。</li>
+<li><code>application.properties</code>に<code>quarkus.artemis.***=</code>を記述することを忘れないように</li>
+<li>そうすると、<code>ConnectionFactory</code>もDI対象になりますよ</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">uploadImage</span><span style="color:#f92672">(</span>String fineName<span style="color:#f92672">,</span> InputStream file<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">(</span>JMSContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">connectionFactory</span><span style="color:#f92672">.</span><span style="color:#a6e22e">createContext</span><span style="color:#f92672">(</span>JMSContext<span style="color:#f92672">.</span><span style="color:#a6e22e">AUTO_ACKNOWLEDGE</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        ByteArrayOutputStream out <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ByteArrayOutputStream<span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// ファイル読み込み
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      file<span style="color:#f92672">.</span><span style="color:#a6e22e">transferTo</span><span style="color:#f92672">(</span>out<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>      out<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// メッセージ作成
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      BytesMessage message <span style="color:#f92672">=</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">createBytesMessage</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>      message<span style="color:#f92672">.</span><span style="color:#a6e22e">setStringProperty</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;fineName&#34;</span><span style="color:#f92672">,</span> fineName<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>      message<span style="color:#f92672">.</span><span style="color:#a6e22e">writeBytes</span><span style="color:#f92672">(</span>out<span style="color:#f92672">.</span><span style="color:#a6e22e">toByteArray</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// トピックを送信
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      context<span style="color:#f92672">.</span><span style="color:#a6e22e">createProducer</span><span style="color:#f92672">().</span><span style="color:#a6e22e">send</span><span style="color:#f92672">(</span>context<span style="color:#f92672">.</span><span style="color:#a6e22e">createTopic</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;upload.image&#34;</span><span style="color:#f92672">),</span> message<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException <span style="color:#f92672">|</span> JMSException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://activemq.apache.org/components/artemis/" title="ActiveMQ Artemis">ActiveMQ Artemis</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+  </section>
+
+  <section>
+    
+      
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編</b><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#承前">承前</a></li>
+        <li><a href="#jmsjava-message-service-と-producer-と-consumer">JMS(Java Message Service) と Producer と Consumer</a></li>
+        <li><a href="#ウェブアプリケーションに画像アップロード">ウェブアプリケーションに画像アップロード</a></li>
+        <li><a href="#画像データをactivemqに送信する">画像データをActiveMQに送信する</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
+    
+  </body>
+</html>
