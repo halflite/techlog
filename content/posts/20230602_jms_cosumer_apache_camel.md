@@ -56,6 +56,7 @@ public class Routes extends EndpointRouteBuilder {
     from(sjms2("topic:upload.image").connectionFactory(this.connectionFactory))
         // TODO 何かを処理
         .end();
+  }
 
   @Inject
   public MainRoute(ConnectionFactory connectionFactory,) {
