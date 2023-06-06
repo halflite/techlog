@@ -2,25 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://halflite.github.io/techlog/posts/20230529_jms_producer/</loc>
-    <lastmod>2023-05-29T00:00:00+09:00</lastmod>
+    <loc>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</loc>
+    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/tags/apache-camel/</loc>
-    <lastmod>2023-05-29T00:00:00+09:00</lastmod>
+    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/tags/java/</loc>
-    <lastmod>2023-05-29T00:00:00+09:00</lastmod>
+    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/posts/</loc>
-    <lastmod>2023-05-29T00:00:00+09:00</lastmod>
+    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/tags/quarkus/</loc>
-    <lastmod>2023-05-29T00:00:00+09:00</lastmod>
+    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/tags/</loc>
-    <lastmod>2023-05-29T00:00:00+09:00</lastmod>
+    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/</loc>
+    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
+  </url><url>
+    <loc>https://halflite.github.io/techlog/posts/20230529_jms_producer/</loc>
     <lastmod>2023-05-29T00:00:00+09:00</lastmod>
   </url><url>
     <loc>https://halflite.github.io/techlog/tags/aws/</loc>

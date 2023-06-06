@@ -1,5 +1,5 @@
 ---
-title: "ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編"
+title: "ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編"
 date: 2023-05-29T00:00:00+09:00
 draft: false
 tags:
@@ -13,7 +13,7 @@ tags:
 - `ブラウザ->ウェブアプリ->ActiveMQ->ApacheCamel->AWS S3` と言うルートを考えてみましょう。
     - ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。
         - 非同期で、イベント駆動で処理したいですよね。
-    - ウェブアプリはDockerで建てているのだから、`ActiveMQ`[^1] も Consumerである `ApacheCamel` もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。
+    - ウェブアプリはDockerで建てているのだから、`ActiveMQ`[^1] も Consumerである `Apache Camel`[^2] もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。
     - …と、思ったら、意外と大変だった、と言う感じです。
 
 ### JMS(Java Message Service) と Producer と Consumer
@@ -57,5 +57,5 @@ tags:
 ```
 
 [^1]: [ActiveMQ Artemis](https://activemq.apache.org/components/artemis/ "ActiveMQ Artemis")
-
+[^2]: [Apache Camel user manual :: Apache Camel](https://camel.apache.org/manual/index.html "Apache Camel user manual :: Apache Camel")
 

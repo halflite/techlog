@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-  ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 &ndash; ひとり開発日記。
+  ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編 &ndash; ひとり開発日記。
 
     </title>
     
     
-    <meta name="description" property="og:description" content="承前 ブラウザ-&amp;gt;ウェブアプリ-&amp;gt;ActiveMQ-&amp;gt;ApacheCamel-&amp;gt;AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 非同期で、イベント駆動で処理したいですよね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである ApacheCamel もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer-&amp;gt;ActiveMQ-&amp;gt;Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように。 そうすると、ConnectionFactoryもDI対象になりますよ。 public void uploadImage(String fileName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.|">
+    <meta name="description" property="og:description" content="承前 ブラウザ-&amp;gt;ウェブアプリ-&amp;gt;ActiveMQ-&amp;gt;ApacheCamel-&amp;gt;AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 非同期で、イベント駆動で処理したいですよね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである Apache Camel2 もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer-&amp;gt;ActiveMQ-&amp;gt;Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように。 そうすると、ConnectionFactoryもDI対象になりますよ。 public void uploadImage(String fileName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.|">
     
 
     <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
@@ -48,7 +48,7 @@
 
 <div class="Subhead">
   <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編</div>
+    <div class="h1 mt-3 mb-1">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</div>
   </div>
   <div class="Subhead-description">
     
@@ -93,7 +93,7 @@
 <li>非同期で、イベント駆動で処理したいですよね。</li>
 </ul>
 </li>
-<li>ウェブアプリはDockerで建てているのだから、<code>ActiveMQ</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> も Consumerである <code>ApacheCamel</code> もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。</li>
+<li>ウェブアプリはDockerで建てているのだから、<code>ActiveMQ</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> も Consumerである <code>Apache Camel</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。</li>
 <li>…と、思ったら、意外と大変だった、と言う感じです。</li>
 </ul>
 </li>
@@ -153,6 +153,9 @@
 <li id="fn:1">
 <p><a href="https://activemq.apache.org/components/artemis/" title="ActiveMQ Artemis">ActiveMQ Artemis</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
+<li id="fn:2">
+<p><a href="https://camel.apache.org/manual/index.html" title="Apache Camel user manual :: Apache Camel">Apache Camel user manual :: Apache Camel</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
 </ol>
 </div>
 
@@ -172,7 +175,7 @@
           
   
     <div id="toc" class="Box Box--blue mb-3">
-      <b>ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編</b><nav id="TableOfContents">
+      <b>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</b><nav id="TableOfContents">
   <ul>
     <li>
       <ul>

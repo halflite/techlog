@@ -57,6 +57,46 @@
 <div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
   <div class="Subhead mb-2">
     <div class="Subhead-heading">
+      <a href="/techlog/posts/20200728_eclipse_pe/">
+        <div class="h2 mt-1 mb-1">2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</div>
+      </a>
+    </div>
+    <div class="Subhead-description">
+      
+
+
+
+
+<a href='/tags/java' class="muted-link">
+  <span class="Label Label--gray">java</span>
+</a>
+
+
+      <div class="float-md-right">
+        <span>2020-07-28</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-gray">
+    
+    TL;DR インストール用リポジトリーURLは、以下です
+https://propedit.osdn.jp/eclipse/updates/ 諸々など 現在、 Google Guice ベースで Bean Validation を入れようとしていて。 独自メッセージファイル ValidationMessages_ja.properties を作ろうかと思ったら、あれ、 Unicode でないとダメなのか…。 Spring-Boot だと、フツーに UTF-8 を読んでくれるんですけどね。
+Validator を DI する時に、設定を注入出来ないかな？って思ったのですが、どこにも情報が無い!! まぁ、仕方ないですわ。 Unicodeのまま実装しますかね。
+なので、Eclipse に PropertiesEditor をインストールしようと思って、 ぐぐって Eclipseで文字化けするプロパティファイルを編集する方法 を参考にインストール…、しようと思っても入らない!!
+まぁ、そういう事情もありましたよね 1 2 で、ドメイン/ホストを色々打ち替えて、上記のリポジトリーURLが分かった次第。
+本質的には、 JakartaEE / Hibernate が、メッセージファイルのフォーマットをUTF-8に公式対応してくれれば、それが良いのでしょうが…。
+ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&#160;&#x21a9;&#xfe0e;
+OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&#160;&#x21a9;&#xfe0e;
+    <a class="muted-link" href="/techlog/posts/20200728_eclipse_pe/">…</a>
+  </div>
+</div>
+
+  
+    
+    
+<div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
+  <div class="Subhead mb-2">
+    <div class="Subhead-heading">
       <a href="/techlog/posts/20200708_cognito_yahoo_integration/">
         <div class="h2 mt-1 mb-1">2020年7月 Amazon Cognito経由でYahoo!Japanのユーザ認証をやりたかっただけだった。</div>
       </a>
@@ -454,7 +494,7 @@ about me
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/apache-camel" class="link-gray text-emphasized css-truncate-target"><span class="">Apache camel</span></a>
-      <span class="text-right Counter">1</span>
+      <span class="text-right Counter">2</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
@@ -469,7 +509,7 @@ about me
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/java" class="link-gray text-emphasized css-truncate-target"><span class="">Java</span></a>
-      <span class="text-right Counter">10</span>
+      <span class="text-right Counter">11</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
@@ -479,7 +519,7 @@ about me
     
     <span class="css-truncate no-wrap m-1 pl-1">
       <a href="/techlog/tags/quarkus" class="link-gray text-emphasized css-truncate-target"><span class="">Quarkus</span></a>
-      <span class="text-right Counter">1</span>
+      <span class="text-right Counter">2</span>
     </span>
     
     <span class="css-truncate no-wrap m-1 pl-1">
