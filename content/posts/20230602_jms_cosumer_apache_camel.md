@@ -13,7 +13,7 @@ tags:
 - [Quarkus - Start coding with code.quarkus.redhat.com](https://code.quarkus.redhat.com/ "Quarkus - Start coding with code.quarkus.redhat.com") で、雛形を作ります。
 - [`camel-quarkus-sjms2`](https://mvnrepository.com/artifact/org.apache.camel.quarkus/camel-quarkus-sjms2) / [`quarkus-artemis-jms`](https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms) を依存関係に含めます。
 - ルート用のクラスは、DI対象に含めます。
-- `ActiveMQ Altemis`用の設定を、`application.properties`に競ってします。
+- `ActiveMQ Altemis`用の設定を、`application.properties`に記します。
 
 ### 前回
 
