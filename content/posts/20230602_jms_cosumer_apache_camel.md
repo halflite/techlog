@@ -59,7 +59,7 @@ public class Routes extends EndpointRouteBuilder {
   }
 
   @Inject
-  public MainRoute(ConnectionFactory connectionFactory,) {
+  public Routes(ConnectionFactory connectionFactory) {
     this.connectionFactory = connectionFactory;
   }
 }
