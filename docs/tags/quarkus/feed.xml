@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <generator uri="https://gohugo.io/" version="0.111.3">Hugo</generator>
+    <title>Quarkus on ひとり開発日記。</title>
+            <link href="https://halflite.github.io/techlog/tags/quarkus/" rel="alternate" type="text/html" title="HTML" />
+            <link href="https://halflite.github.io/techlog/tags/quarkus/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
+    <updated>2023-12-22T23:17:06+00:00</updated>
+    <id>https://halflite.github.io/techlog/tags/quarkus/</id>
+        <entry>
+            <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</title>
+            <link href="https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</id>
+            <published>2023-06-02T00:00:00+09:00</published>
+            <updated>2023-06-02T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;tldr&#34;
+    &gt;
+        TL;DR
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#tldr&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor TL;DR&#34; href=&#34;#tldr&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://code.quarkus.redhat.com/&#34;title=&#34;Quarkus - Start coding with code.quarkus.redhat.com&#34;
+&gt;Quarkus - Start coding with code.quarkus.redhat.com&lt;/a&gt; で、雛形を作ります。&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/org.apache.camel.quarkus/camel-quarkus-sjms2&#34;
+&gt;&lt;code&gt;camel-quarkus-sjms2&lt;/code&gt;&lt;/a&gt; / &lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms&#34;
+&gt;&lt;code&gt;quarkus-artemis-jms&lt;/code&gt;&lt;/a&gt; を依存関係に含めます。&lt;/li&gt;
+&lt;li&gt;ルート用のクラスは、DI対象に含めます。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ActiveMQ Altemis&lt;/code&gt;用の設定を、&lt;code&gt;application.properties&lt;/code&gt;に記します。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;前回&#34;
+    &gt;
+        前回
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#前回&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 前回&#34; href=&#34;#%e5%89%8d%e5%9b%9e&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;/techlog/posts/20230529_jms_producer/&#34;
+&gt;ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;apache-camelとquarkusの第一歩&#34;
+    &gt;
+        Apache CamelとQuarkusの第一歩
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#apache-camelとquarkusの第一歩&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Apache CamelとQuarkusの第一歩&#34; href=&#34;#apache-camel%e3%81%a8quarkus%e3%81%ae%e7%ac%ac%e4%b8%80%e6%ad%a9&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://rheb.hatenablog.com/entry/2022/06/28/120434&#34;
+&gt;Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://code.quarkus.redhat.com/&#34;title=&#34;Quarkus - Start coding with code.quarkus.redhat.com&#34;
+&gt;Quarkus - Start coding with code.quarkus.redhat.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;routeの修正&#34;
+    &gt;
+        Routeの修正
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#routeの修正&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Routeの修正&#34; href=&#34;#route%e3%81%ae%e4%bf%ae%e6%ad%a3&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;上記のサンプルだと、少々使いづらい。 &lt;code&gt;Routes&lt;/code&gt;クラスを以下のように修正します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;継承する親クラスを &lt;code&gt;EndpointRouteBuilder&lt;/code&gt; にします。&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;
+&lt;ul&gt;
+&lt;li&gt;タイプセーフで、&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://bliki-ja.github.io/FluentInterface/&#34;title=&#34;流れるようなインタフェース - Martin Fowler&#39;s Bliki (ja)&#34;
+&gt;「流れるようなインターフェース」&lt;/a&gt;でルートが書けるようになります。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;クラスに &lt;code&gt;@ApplicationScoped&lt;/code&gt; アノテーションを付けます。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Routes&lt;/code&gt;クラスがDI対象に含まれます。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;activemqからのメッセージ受信&#34;
+    &gt;
+        ActiveMQからのメッセージ受信
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#activemqからのメッセージ受信&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor ActiveMQからのメッセージ受信&#34; href=&#34;#activemq%e3%81%8b%e3%82%89%e3%81%ae%e3%83%a1%e3%83%83%e3%82%bb%e3%83%bc%e3%82%b8%e5%8f%97%e4%bf%a1&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/org.apache.camel.quarkus/camel-quarkus-sjms2&#34;
+&gt;&lt;code&gt;camel-quarkus-sjms2&lt;/code&gt;&lt;/a&gt;を依存関係に加えます。
+&lt;ul&gt;
+&lt;li&gt;諸々必要なコンポーネントが自動で入ります。&lt;/li&gt;
+&lt;li&gt;ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://camel.apache.org/components/3.20.x/activemq-component.html&#34;
+&gt;&lt;code&gt;camel-activemq&lt;/code&gt;&lt;/a&gt; / &lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://camel.apache.org/components/3.20.x/jms-component.html&#34;
+&gt;&lt;code&gt;camel-jms&lt;/code&gt;&lt;/a&gt;があります。
+&lt;ul&gt;
+&lt;li&gt;このコンポーネントには、&lt;code&gt;Spring Framework&lt;/code&gt;のライブラリが依存で入ってしまうのです。&lt;/li&gt;
+&lt;li&gt;ネット上のサンプルプログラムは、&lt;code&gt;Spring-Boot&lt;/code&gt;ベースのConsumerが多いからでしょうね。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms&#34;
+&gt;&lt;code&gt;quarkus-artemis-jms&lt;/code&gt;&lt;/a&gt;を依存関係に加えます
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;camel-quarkus-sjms2&lt;/code&gt;には、ActiveMQとの通信をする、&lt;code&gt;ConnectionFactory&lt;/code&gt;の実装クラスが入ってないのです。&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ja.quarkus.io/guides/jms#artemis-jms&#34;
+&gt;Artemis JMS&lt;/a&gt;の記述のように&lt;code&gt;application.properties&lt;/code&gt;に設定を記述すると、&lt;code&gt;ConnectionFactory&lt;/code&gt;もDI対象になります。&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-bom&#34;
+&gt;Quarkus Artemis BOM&lt;/a&gt;は、Quarkusと違うので、別途依存関係に追加します。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@ApplicationScoped&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Routes&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; EndpointRouteBuilder &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; ConnectionFactory connectionFactory&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;throws&lt;/span&gt; Exception &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    from&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;sjms2&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;topic:upload.image&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// TODO 何かを処理
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;end&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Inject&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ConnectionFactory connectionFactory&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; connectionFactory&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Routes&lt;/code&gt;クラスは、このような記述になるでしょうか。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;コンソールにログが出ますので、それで動作確認でしょうか。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://camel.apache.org/manual/Endpoint-dsl.html&#34;title=&#34;Endpoint DSL :: Apache Camel&#34;
+&gt;Endpoint DSL :: Apache Camel&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/quarkus" term="quarkus" label="quarkus" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/apache-camel" term="apache-camel" label="apache-camel" />
+        </entry>
+        <entry>
+            <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</title>
+            <link href="https://halflite.github.io/techlog/posts/20230529_jms_producer/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20230529_jms_producer/</id>
+            <published>2023-05-29T00:00:00+09:00</published>
+            <updated>2023-05-29T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;承前&#34;
+    &gt;
+        承前
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#承前&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 承前&#34; href=&#34;#%e6%89%bf%e5%89%8d&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ブラウザ-&amp;gt;ウェブアプリ-&amp;gt;ActiveMQ-&amp;gt;ApacheCamel-&amp;gt;AWS S3&lt;/code&gt; と言うルートを考えてみましょう。
+&lt;ul&gt;
+&lt;li&gt;ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。
+&lt;ul&gt;
+&lt;li&gt;非同期で、イベント駆動で処理したいですよね。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ウェブアプリはDockerで建てているのだから、&lt;code&gt;ActiveMQ&lt;/code&gt;&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; も Consumerである &lt;code&gt;Apache Camel&lt;/code&gt;&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。&lt;/li&gt;
+&lt;li&gt;…と、思ったら、意外と大変だった、と言う感じです。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;jmsjava-message-service-と-producer-と-consumer&#34;
+    &gt;
+        JMS(Java Message Service) と Producer と Consumer
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#jmsjava-message-service-と-producer-と-consumer&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor JMS(Java Message Service) と Producer と Consumer&#34; href=&#34;#jmsjava-message-service-%e3%81%a8-producer-%e3%81%a8-consumer&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。&lt;/li&gt;
+&lt;li&gt;まぁ、シンプルに&lt;code&gt;Producer-&amp;gt;ActiveMQ-&amp;gt;Consumer&lt;/code&gt;で、送信元&lt;code&gt;Producer&lt;/code&gt;が、受信元&lt;code&gt;Consumer&lt;/code&gt;に向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。
+&lt;ul&gt;
+&lt;li&gt;今回は&lt;code&gt;ウェブアプリ&lt;/code&gt;が&lt;code&gt;Producer&lt;/code&gt;の役割ですね。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;ウェブアプリケーションに画像アップロード&#34;
+    &gt;
+        ウェブアプリケーションに画像アップロード
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#ウェブアプリケーションに画像アップロード&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor ウェブアプリケーションに画像アップロード&#34; href=&#34;#%e3%82%a6%e3%82%a7%e3%83%96%e3%82%a2%e3%83%97%e3%83%aa%e3%82%b1%e3%83%bc%e3%82%b7%e3%83%a7%e3%83%b3%e3%81%ab%e7%94%bb%e5%83%8f%e3%82%a2%e3%83%83%e3%83%97%e3%83%ad%e3%83%bc%e3%83%89&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;結局、ファイル名と拡張子を文字列で取れて、画像のデータを&lt;code&gt;byte[]&lt;/code&gt;か、&lt;code&gt;InputStream&lt;/code&gt;で取れれば良いと思います。
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ja.quarkus.io/guides/rest-client-multipart&#34;
+&gt;マルチパートでのRESTクライアントの使用 - Quarkus&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;依存関係に &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-multipart&#34;
+&gt;Quarkus RESTEasy Multipart Runtime&lt;/a&gt;を忘れずに。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;画像データをactivemqに送信する&#34;
+    &gt;
+        画像データをActiveMQに送信する
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#画像データをactivemqに送信する&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 画像データをActiveMQに送信する&#34; href=&#34;#%e7%94%bb%e5%83%8f%e3%83%87%e3%83%bc%e3%82%bf%e3%82%92activemq%e3%81%ab%e9%80%81%e4%bf%a1%e3%81%99%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ja.quarkus.io/guides/jms&#34;
+&gt;JMSの使用 - Quarkus&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;依存関係に &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms&#34;
+&gt;Quarkus Artemis JMS Runtime&lt;/a&gt;を忘れずに。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;application.properties&lt;/code&gt;に&lt;code&gt;quarkus.artemis.***=&lt;/code&gt;を記述することを忘れないように。&lt;/li&gt;
+&lt;li&gt;そうすると、&lt;code&gt;ConnectionFactory&lt;/code&gt;もDI対象になりますよ。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;uploadImage&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;String fileName&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; InputStream file&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;JMSContext context &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createContext&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;JMSContext&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;AUTO_ACKNOWLEDGE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ByteArrayOutputStream out &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; ByteArrayOutputStream&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// ファイル読み込み
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      file&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;transferTo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;out&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      out&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// メッセージ作成
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      BytesMessage message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; context&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createBytesMessage&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      message&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setStringProperty&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fileName&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; fileName&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      message&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;writeBytes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;out&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;toByteArray&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// トピックを送信
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      context&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createProducer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;send&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;context&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createTopic&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;upload.image&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;),&lt;/span&gt; message&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;IOException &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; JMSException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://activemq.apache.org/components/artemis/&#34;title=&#34;ActiveMQ Artemis&#34;
+&gt;ActiveMQ Artemis&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://camel.apache.org/manual/index.html&#34;title=&#34;Apache Camel user manual :: Apache Camel&#34;
+&gt;Apache Camel user manual :: Apache Camel&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/quarkus" term="quarkus" label="quarkus" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/apache-camel" term="apache-camel" label="apache-camel" />
+        </entry>
+</feed>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <generator uri="https://gohugo.io/" version="0.111.3">Hugo</generator>
+    <title>Linux on ひとり開発日記。</title>
+            <link href="https://halflite.github.io/techlog/tags/linux/" rel="alternate" type="text/html" title="HTML" />
+            <link href="https://halflite.github.io/techlog/tags/linux/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
+    <updated>2023-12-22T23:17:06+00:00</updated>
+    <id>https://halflite.github.io/techlog/tags/linux/</id>
+        <entry>
+            <title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</title>
+            <link href="https://halflite.github.io/techlog/posts/20220209_wsl_install/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20220209_wsl_install/</id>
+            <published>2022-02-09T00:00:00+09:00</published>
+            <updated>2022-02-09T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;カーネルアップデート実行&#34;
+    &gt;
+        カーネルアップデート実行
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#カーネルアップデート実行&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor カーネルアップデート実行&#34; href=&#34;#%e3%82%ab%e3%83%bc%e3%83%8d%e3%83%ab%e3%82%a2%e3%83%83%e3%83%97%e3%83%87%e3%83%bc%e3%83%88%e5%ae%9f%e8%a1%8c&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wsl_update_x64.msi&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./wsl_update_x64.msi
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;wslubuntuインストール&#34;
+    &gt;
+        WSL/Ubuntuインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#wslubuntuインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor WSL/Ubuntuインストール&#34; href=&#34;#wslubuntu%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --install -d Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --set-default Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;ubuntuに入る&#34;
+    &gt;
+        Ubuntuに入る
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#ubuntuに入る&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Ubuntuに入る&#34; href=&#34;#ubuntu%e3%81%ab%e5%85%a5%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;pip3のインストール&#34;
+    &gt;
+        pip3のインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#pip3のインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor pip3のインストール&#34; href=&#34;#pip3%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Ubuntuのコマンドプロンプトで以下を実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt -y update &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt -y install python3-pip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以下を実行して、pip3が有効か確認します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;英語のウィンドウが出ますが、&amp;rsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" />
+        </entry>
+        <entry>
+            <title>2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20201225_git_2/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20201225_git_2/</id>
+            <published>2020-12-25T00:00:00+09:00</published>
+            <updated>2020-12-25T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://halflite.github.io/techlog/posts/20200117_git_ver/&#34;title=&#34;2020年1月、CentOS7にgit2.xをyumで入れたかっただけだった。 – ひとり開発日記。&#34;
+&gt;前回&lt;/a&gt;から、また変わったので。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum -y remove git
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum -y install https://repo.ius.io/ius-release-el7.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum -y install git224
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;元ネタ&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/seal_qiita/items/981a9284ecd44e54af96&#34;title=&#34;iusの最新リンクが変更になったので注意 - Qiita&#34;
+&gt;iusの最新リンクが変更になったので注意 - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/d-dai/items/3cc0c8c81911d5b6cce5&#34;title=&#34;CentOS7にGit2系をyumでインストール - Qiita&#34;
+&gt;CentOS7にGit2系をyumでインストール - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" />
+        </entry>
+        <entry>
+            <title>2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200918_postgres_local/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200918_postgres_local/</id>
+            <published>2020-09-18T00:00:00+09:00</published>
+            <updated>2020-09-18T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;Heroku で、小さいアプリケーションを作りたいと思っていて。&lt;/p&gt;
+&lt;p&gt;MySQL も出来ない訳じゃないんですけど&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。&lt;/p&gt;
+&lt;p&gt;という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/halflite/postgresql-win-local&#34;
+&gt;https://github.com/halflite/postgresql-win-local&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;こう言う環境を一つ作っておくと、 &lt;code&gt;docker-compose.yml&lt;/code&gt; をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://elements.heroku.com/addons/cleardb&#34;title=&#34;ClearDB MySQL - Add-ons - Heroku Elements&#34;
+&gt;ClearDB MySQL - Add-ons - Heroku Elements&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/vagrant" term="vagrant" label="vagrant" />
+        </entry>
+        <entry>
+            <title>2020年1月、CentOS7にgit2.xをyumで入れたかっただけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200117_git_ver/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200117_git_ver/</id>
+            <published>2020-01-17T01:00:00+09:00</published>
+            <updated>2020-01-17T01:00:00+09:00</updated>
+            <content type="html">
+                &lt;ol&gt;
+&lt;li&gt;CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!!&lt;/li&gt;
+&lt;li&gt;Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!!&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git --version&lt;/code&gt; って、まだ1.x系なの?&lt;/li&gt;
+&lt;li&gt;しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール…&lt;/li&gt;
+&lt;li&gt;え&amp;hellip;??? 依存ライブラリが無いの…???&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y remove git
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum -y install git --enablerepo=ius --disablerepo=base
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!&lt;/p&gt;
+&lt;p&gt;結局、こうなりますわ。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y remove git
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum -y install perl-TermReadKey emacs-filesystem perl-Error
+sudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates
+&lt;/code&gt;&lt;/pre&gt;
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" />
+        </entry>
+</feed>

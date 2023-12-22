@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <generator uri="https://gohugo.io/" version="0.111.3">Hugo</generator>
+    <title>Etc on ひとり開発日記。</title>
+            <link href="https://halflite.github.io/techlog/tags/etc/" rel="alternate" type="text/html" title="HTML" />
+            <link href="https://halflite.github.io/techlog/tags/etc/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
+    <updated>2023-12-22T23:17:06+00:00</updated>
+    <id>https://halflite.github.io/techlog/tags/etc/</id>
+        <entry>
+            <title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</title>
+            <link href="https://halflite.github.io/techlog/posts/20220209_wsl_install/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20220209_wsl_install/</id>
+            <published>2022-02-09T00:00:00+09:00</published>
+            <updated>2022-02-09T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;カーネルアップデート実行&#34;
+    &gt;
+        カーネルアップデート実行
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#カーネルアップデート実行&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor カーネルアップデート実行&#34; href=&#34;#%e3%82%ab%e3%83%bc%e3%83%8d%e3%83%ab%e3%82%a2%e3%83%83%e3%83%97%e3%83%87%e3%83%bc%e3%83%88%e5%ae%9f%e8%a1%8c&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wsl_update_x64.msi&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./wsl_update_x64.msi
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;wslubuntuインストール&#34;
+    &gt;
+        WSL/Ubuntuインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#wslubuntuインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor WSL/Ubuntuインストール&#34; href=&#34;#wslubuntu%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --install -d Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --set-default Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;ubuntuに入る&#34;
+    &gt;
+        Ubuntuに入る
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#ubuntuに入る&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Ubuntuに入る&#34; href=&#34;#ubuntu%e3%81%ab%e5%85%a5%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;pip3のインストール&#34;
+    &gt;
+        pip3のインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#pip3のインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor pip3のインストール&#34; href=&#34;#pip3%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Ubuntuのコマンドプロンプトで以下を実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt -y update &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt -y install python3-pip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以下を実行して、pip3が有効か確認します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;英語のウィンドウが出ますが、&amp;rsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" />
+        </entry>
+        <entry>
+            <title>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</title>
+            <link href="https://halflite.github.io/techlog/posts/20211027_hugo_docker/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</id>
+            <published>2021-10-27T00:00:00+09:00</published>
+            <updated>2021-10-27T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://bittersmooth.halflite.net/&#34;title=&#34;bitter*smooth&#34;
+&gt;bitter*smooth&lt;/a&gt; と言う音楽レビューサイトを作っています。&lt;/p&gt;
+&lt;p&gt;この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://atmarkit.itmedia.co.jp/ait/articles/2104/01/news019.html&#34;title=&#34;ついにWindows Terminalの設定がGUIで可能に　プレビュー版v1.7が公開【Windows Terminal完全マスター】：Windows 10 The Latest（1/2 ページ） - ＠IT&#34;
+&gt;Windows Terminalインストール&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;WSL2インストール&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows Terminal を管理者権限で起動&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --install
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --set-default-version &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --install -d Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://azure.microsoft.com/ja-jp/products/visual-studio-code/&#34;title=&#34;Visual Studio Code – コード エディター | Microsoft Azure&#34;
+&gt;VSCodeインストール&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.docker.jp/docker-for-windows/install.html&#34;title=&#34;Windows に Docker Desktop をインストール — Docker-docs-ja 19.03 ドキュメント&#34;
+&gt;Windows に Docker Desktop をインストール&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？&lt;/p&gt;
+&lt;p&gt;で、プロジェクトのトップで、 &lt;code&gt;.devcontainer&lt;/code&gt; ディレクトリを作り、その配下に、 &lt;code&gt;Dockerfile&lt;/code&gt; &lt;code&gt;devcontainer.json&lt;/code&gt; の2つのファイルを作ります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.devcontainer/Dockerfile&lt;/code&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-docker&#34; data-lang=&#34;docker&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; klakegg/hugo:0.88.0-alpine&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; apk update &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apk --no-cache add git&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.devcontainer/devcontainer.json&lt;/code&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bittersmooth&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;dockerfile&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dockerfile&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	},
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;extensions&amp;#34;&lt;/span&gt;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mhutchie.git-graph&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.microsoft.com/ja-jp/learn/modules/use-docker-container-dev-env-vs-code/&#34;title=&#34;Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs&#34;
+&gt;Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;簡単に &lt;code&gt;Hugo&lt;/code&gt; の環境が手に入るのですが、コレひとつだけ落とし穴があって、 &lt;code&gt;hugo server -w&lt;/code&gt; でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ &lt;code&gt;hugo server -w&lt;/code&gt; で確認すれば良いのかな？と言う感じでやっています。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;alpineベースのイメージだと、Gitすら入っていないので &lt;code&gt;apk --no-cache add git&lt;/code&gt; が、必要なのです。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;拡張機能、 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph&#34;title=&#34;Git Graph - Visual Studio Marketplace&#34;
+&gt;Git Graph&lt;/a&gt; 位は欲しいですよね…。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+        <entry>
+            <title>imgbb.comのテスト</title>
+            <link href="https://halflite.github.io/techlog/posts/20200831_imgbb/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200831_imgbb/</id>
+            <published>2020-08-31T01:00:00+09:00</published>
+            <updated>2020-08-31T01:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link--raw&#34;
+  href=&#34;https://ibb.co/vhcb5Z8&#34;
+&gt;&lt;img
+  src=&#34;https://i.ibb.co/vhcb5Z8/20200831a.png&#34;
+  alt=&#34;20200831&#34;
+  
+/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://imgbb.com/&#34;title=&#34;ImgBB — フリーなスマイリー / アニメエモコン&#34;
+&gt;ImgBB — フリーなスマイリー / アニメエモコン&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/&#34;title=&#34;Qiita&#34;
+&gt;Qiita&lt;/a&gt; や &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://zenn.dev/&#34;title=&#34;Zenn｜プログラマーのための情報共有コミュニティ&#34;
+&gt;Zenn&lt;/a&gt; の方が良いんでしょうけど、ここは個人の日記サイトだしね…。&lt;/p&gt;
+&lt;p&gt;という事で、適当にググって、適当にアップロードして、上記サイトを試してみることにしました。 &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;まぁ、削除されても、そんなに重要な画像でもないし…。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+        <entry>
+            <title>Hugo/GitHubPagesでブログ再作成</title>
+            <link href="https://halflite.github.io/techlog/posts/buildwithhugo/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/buildwithhugo/</id>
+            <published>2020-01-16T00:00:00+09:00</published>
+            <updated>2020-01-16T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;一瞬、LivedoorBlogで作った時期もあるんですけど、やっぱり技術ブログなので…。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Markdownで書きたい&lt;/li&gt;
+&lt;li&gt;シンタックスハイライトが欲しい&lt;/li&gt;
+&lt;li&gt;ブログパーツとかいらない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;やはり、上記3条件は必須ですかねぇ。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;毎度忘れてしまうので、hugoの操作メモ&lt;/p&gt;
+&lt;p&gt;新規記事作成&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new posts/article.md
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ローカルサーバーで確認&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo server
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;記事書き出し&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo -D
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;以下、参考にした記事&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/yotsak83/items/017734d5f873f4f194d4&#34;title=&#34;Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita&#34;
+&gt;Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/ryoma-tokushige/items/eba3e6cd415e9755af87&#34;title=&#34;【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita&#34;
+&gt;【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qqhann.dev/blog/theer-stroy/&#34;title=&#34;Hugoのテーマ「Theer」を作成しました – qqhann&#34;
+&gt;Hugoのテーマ「Theer」を作成しました – qqhann&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;すっきり見やすいHugoテーマ。 ありがたく使ってます&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+        <entry>
+            <title>About Me.</title>
+            <link href="https://halflite.github.io/techlog/posts/about/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/about/</id>
+            <published>2019-12-26T00:00:00+09:00</published>
+            <updated>2019-12-26T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;http://hatena.g.hatena.ne.jp/hatenagroup/20191209/1575882230&#34;title=&#34;はてなグループの終了日を2020年1月31日\(金\)に決定しました - はてなグループ日記 - 機能変更、お知らせなど&#34;
+&gt;はてなグループの終了日を2020年1月31日(金)に決定しました - はてなグループ日記 - 機能変更、お知らせなど&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;…ということなので、技術ブログも、お引越しです。&lt;/p&gt;
+&lt;p&gt;旧ブログは、こちら。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;http://program.g.hatena.ne.jp/halflite/&#34;title=&#34;ひとり開発日記。 - プログラマの秘密のあれこれ&#34;
+&gt;ひとり開発日記。 - プログラマの秘密のあれこれ&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://web.archive.org/web/20191225152644/http://program.g.hatena.ne.jp/halflite/&#34;title=&#34;ひとり開発日記。 - プログラマの秘密のあれこれ&#34;
+&gt;web.archive.org&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;このブログの連絡先は、こちら。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://halflite.net/&#34;title=&#34;halflite.net&#34;
+&gt;halflite.net&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+</feed>

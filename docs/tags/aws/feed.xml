@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <generator uri="https://gohugo.io/" version="0.111.3">Hugo</generator>
+    <title>Aws on ひとり開発日記。</title>
+            <link href="https://halflite.github.io/techlog/tags/aws/" rel="alternate" type="text/html" title="HTML" />
+            <link href="https://halflite.github.io/techlog/tags/aws/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
+    <updated>2023-12-22T23:17:06+00:00</updated>
+    <id>https://halflite.github.io/techlog/tags/aws/</id>
+        <entry>
+            <title>AWS Lambda FunctionでJavaを採用したい</title>
+            <link href="https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</id>
+            <published>2022-09-25T00:00:00+09:00</published>
+            <updated>2022-09-25T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;承前&#34;
+    &gt;
+        承前
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#承前&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 承前&#34; href=&#34;#%e6%89%bf%e5%89%8d&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AWS Lambda Function&lt;/code&gt; を &lt;code&gt;Java&lt;/code&gt; で作るというお仕事をしています
+&lt;ul&gt;
+&lt;li&gt;基本的に &lt;code&gt;Spring-Boot&lt;/code&gt; がメインの現場です&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Spring-Framawaork&lt;/code&gt; はやめておけ、と公式でも言われてますね。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Java&lt;/code&gt; で何かしらする時は、背骨(フレームワーク)欲しいですよね
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DI(DependencyInjection)&lt;/code&gt; 無いと、もう無理ですよね&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Guice&lt;/code&gt;/&lt;code&gt;Dagger&lt;/code&gt; を使えと言われていますが、どっち使ったらいいの？
+&lt;ul&gt;
+&lt;li&gt;色々なケースがありますが&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;自分でやったこと&#34;
+    &gt;
+        自分でやったこと
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#自分でやったこと&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 自分でやったこと&#34; href=&#34;#%e8%87%aa%e5%88%86%e3%81%a7%e3%82%84%e3%81%a3%e3%81%9f%e3%81%93%e3%81%a8&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;自分でやったこと
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/guice/wiki&#34;
+&gt;google/guice&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://geronimo.apache.org/microprofile/index.html&#34;
+&gt;Apache Geronimo Config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/guava/wiki&#34;
+&gt;google/guava&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;で、どうやってビジネスロジック注入する？を考えて、やっぱり&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/guice/wiki&#34;
+&gt;google/guice&lt;/a&gt;かなぁって。&lt;/p&gt;
+&lt;p&gt;設定注入は、&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://geronimo.apache.org/microprofile/index.html&#34;
+&gt;Apache Geronimo Config&lt;/a&gt;かな &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Dagger&lt;/code&gt;はコンパイル時DI、&lt;code&gt;Guice&lt;/code&gt;実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、&lt;code&gt;Java&lt;/code&gt;は起動するとかなり速いので、あまり差が無いのですね。
+まぁ、そもそも &lt;code&gt;AWS Lambda Function&lt;/code&gt; って、プロダクション的に小さいですし &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;
+そうすると、コードや設定少ない&lt;code&gt;Guice&lt;/code&gt;の方がいいですよね。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;ケース&#34;
+    &gt;
+        ケース
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#ケース&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor ケース&#34; href=&#34;#%e3%82%b1%e3%83%bc%e3%82%b9&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;よくあるケースですが、 &lt;code&gt;API Gateway&lt;/code&gt; で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; RequestHandler&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;APIGatewayProxyRequestEvent&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; APIGatewayProxyResponseEvent&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; AnyService anyService&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; APIGatewayProxyResponseEvent &lt;span style=&#34;color:#a6e22e&#34;&gt;handleRequest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;APIGatewayProxyRequestEvent input&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; Context context&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;anyService&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;input&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    APIGatewayProxyResponseEvent res &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// do something
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; res&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Injector injector &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Guice&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createInjector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; AppModule&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;anyService&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; injector&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getInstance&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;AnyService&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Singleton&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AnyService&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;APIGatewayProxyRequestEvent input&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// do something
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AppModule&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; AbstractModule &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    bind&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;AnyService&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// bind microprofile-config.properties
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; Map&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; String&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; props &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; HashMap&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Sets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;newLinkedHashSet&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ConfigProvider&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getConfig&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getConfigSources&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;stream&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ConfigSource&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;getProperties&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;forEach&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;props&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;putAll&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Names&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;bindProperties&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;binder&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(),&lt;/span&gt; props&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;まぁー、こんな感じですかね？&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html&#34;title=&#34;AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda&#34;
+&gt;AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;JavaEE MicroProfile Config の実装参照なので、まぁ廃れることはないでしょう &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://developer.mamezou-tech.com/msa/mp/cntrn06-mp-config/&#34;
+&gt;第6回 お手軽便利MicroProfile Config | 豆蔵デベロッパーサイト&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;小さく作るべきですよね&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;たまに、こういう(所謂)「黒魔術」成分少ない、手組みのものを作ると、本当に勉強になります&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/aws" term="aws" label="aws" />
+        </entry>
+        <entry>
+            <title>2020年7月 Amazon Cognito経由でYahoo!Japanのユーザ認証をやりたかっただけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/</id>
+            <published>2020-07-08T00:00:00+09:00</published>
+            <updated>2020-07-08T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;tldr&#34;
+    &gt;
+        TL;DR
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/#tldr&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor TL;DR&#34; href=&#34;#tldr&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;できません&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Amazon Cognitoの外部フェデレーテッドIDプロバイダとして、Yahoo!Japanを登録できますが、認証が通りません。
+stateプロパティの値が長過ぎて、Yahoo!Japanからエラーで返ってきます。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/what-is-amazon-cognito.html&#34;title=&#34;Amazon Cognito とは - Amazon Cognito&#34;
+&gt;Amazon Cognito とは - Amazon Cognito&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;AWSって、以前、S3をちょっと触ったレベルだったので、全く浦島太郎状態だったんですね。 最新技術のキャッチアップを兼ねて、ちょっと小さいプロジェクトで試すかな。 それなら、初っ端に必要になるログインとか認証である、Amazon Cognitoから触ってみるか～、って触ってみたんです。&lt;/p&gt;
+&lt;p&gt;「…なるほど!! 全く分からん!!」&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://dev.classmethod.jp/articles/amazon-cognito-developer-authenticated-identities/&#34;title=&#34;[Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO&#34;
+&gt;[Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://dev.classmethod.jp/articles/cognito-userpool-openid-connect-line/&#34;title=&#34;【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO&#34;
+&gt;【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/poruruba/items/189945dc64edfe1f2464&#34;title=&#34;AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita&#34;
+&gt;AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記記事を参考に、ちまちまいじっていて、なんとなく分かった!! &lt;strong&gt;「Amazon Cognitoってアカウント管理してくれて、外部プロバイダとの連携とも整合をとってくれて、一意なIDを払い出してくれる。」&lt;/strong&gt; &lt;strong&gt;「Amazon Cognitoそれ自体は、OpenID Connect/OAuth2のプロバイダとして振る舞ってくれる」&lt;/strong&gt; なんですね!!&lt;/p&gt;
+&lt;p&gt;上記記事を参考に、試しにYahoo!JapanとのID連携やってみるかー、って思って、IDプロバイダの設定までは、サクサクできたんです。&lt;/p&gt;
+&lt;p&gt;でも、実際のログイン画面が出てきて、クリックすると、コールバックにエラーが返ってきます。 &lt;strong&gt;&amp;ldquo;state is too long value&amp;rdquo;&lt;/strong&gt; って何???&lt;/p&gt;
+&lt;p&gt;Chromeのdev-toolで、リクエストとかを見ていると、確かにAmazon Cognitoが生成する&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.buildinsider.net/enterprise/openid/oauth20&#34;title=&#34;OAuth 2.0の代表的な利用パターンを仕様から理解しよう - Build Insider&#34;
+&gt;state&lt;/a&gt;って、1,200文字程度あります。 自分では、どっちが妥当か判断できないし、しゃーないので、Yahoo!デベロッパーネットワークのお問合せフォームから、質問投げちゃいましたよ…。&lt;/p&gt;
+&lt;p&gt;結局「stateの長さは1024文字までの仕様となっており、長さを伸ばすことができません。(大意)」という回答でしたね。&lt;/p&gt;
+&lt;p&gt;よくあるOpenID Connect/OAuth2のクライアントライブラリは、そこまで長いstateを生成しないのでしょう。 ですが、全世界で広く使われているAWSだと、そうもいかないのでしょうね…。&lt;/p&gt;
+&lt;p&gt;久々、&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;http://0xcc.net/blog/archives/000196.html&#34;title=&#34;yak shaving で人生の問題の80%が説明できる問題 - bkブログ&#34;
+&gt;Yak Shaving&lt;/a&gt;で不毛な時間を過ごしちゃったよなー、でも、これやらないとダメなのが、我々の人生だよなー、と言う感想でしたね。&lt;/p&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/aws" term="aws" label="aws" />
+        </entry>
+</feed>

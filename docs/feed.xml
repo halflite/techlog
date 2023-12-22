@@ -1,0 +1,1446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <generator uri="https://gohugo.io/" version="0.111.3">Hugo</generator>
+    <title>ひとり開発日記。</title>
+            <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
+            <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
+    <updated>2023-12-22T23:17:06+00:00</updated>
+    <id>https://halflite.github.io/techlog/</id>
+        <entry>
+            <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</title>
+            <link href="https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</id>
+            <published>2023-06-02T00:00:00+09:00</published>
+            <updated>2023-06-02T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;tldr&#34;
+    &gt;
+        TL;DR
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#tldr&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor TL;DR&#34; href=&#34;#tldr&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://code.quarkus.redhat.com/&#34;title=&#34;Quarkus - Start coding with code.quarkus.redhat.com&#34;
+&gt;Quarkus - Start coding with code.quarkus.redhat.com&lt;/a&gt; で、雛形を作ります。&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/org.apache.camel.quarkus/camel-quarkus-sjms2&#34;
+&gt;&lt;code&gt;camel-quarkus-sjms2&lt;/code&gt;&lt;/a&gt; / &lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms&#34;
+&gt;&lt;code&gt;quarkus-artemis-jms&lt;/code&gt;&lt;/a&gt; を依存関係に含めます。&lt;/li&gt;
+&lt;li&gt;ルート用のクラスは、DI対象に含めます。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ActiveMQ Altemis&lt;/code&gt;用の設定を、&lt;code&gt;application.properties&lt;/code&gt;に記します。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;前回&#34;
+    &gt;
+        前回
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#前回&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 前回&#34; href=&#34;#%e5%89%8d%e5%9b%9e&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;/techlog/posts/20230529_jms_producer/&#34;
+&gt;ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;apache-camelとquarkusの第一歩&#34;
+    &gt;
+        Apache CamelとQuarkusの第一歩
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#apache-camelとquarkusの第一歩&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Apache CamelとQuarkusの第一歩&#34; href=&#34;#apache-camel%e3%81%a8quarkus%e3%81%ae%e7%ac%ac%e4%b8%80%e6%ad%a9&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://rheb.hatenablog.com/entry/2022/06/28/120434&#34;
+&gt;Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://code.quarkus.redhat.com/&#34;title=&#34;Quarkus - Start coding with code.quarkus.redhat.com&#34;
+&gt;Quarkus - Start coding with code.quarkus.redhat.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;routeの修正&#34;
+    &gt;
+        Routeの修正
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#routeの修正&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Routeの修正&#34; href=&#34;#route%e3%81%ae%e4%bf%ae%e6%ad%a3&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;上記のサンプルだと、少々使いづらい。 &lt;code&gt;Routes&lt;/code&gt;クラスを以下のように修正します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;継承する親クラスを &lt;code&gt;EndpointRouteBuilder&lt;/code&gt; にします。&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;
+&lt;ul&gt;
+&lt;li&gt;タイプセーフで、&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://bliki-ja.github.io/FluentInterface/&#34;title=&#34;流れるようなインタフェース - Martin Fowler&#39;s Bliki (ja)&#34;
+&gt;「流れるようなインターフェース」&lt;/a&gt;でルートが書けるようになります。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;クラスに &lt;code&gt;@ApplicationScoped&lt;/code&gt; アノテーションを付けます。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Routes&lt;/code&gt;クラスがDI対象に含まれます。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;activemqからのメッセージ受信&#34;
+    &gt;
+        ActiveMQからのメッセージ受信
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/#activemqからのメッセージ受信&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor ActiveMQからのメッセージ受信&#34; href=&#34;#activemq%e3%81%8b%e3%82%89%e3%81%ae%e3%83%a1%e3%83%83%e3%82%bb%e3%83%bc%e3%82%b8%e5%8f%97%e4%bf%a1&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/org.apache.camel.quarkus/camel-quarkus-sjms2&#34;
+&gt;&lt;code&gt;camel-quarkus-sjms2&lt;/code&gt;&lt;/a&gt;を依存関係に加えます。
+&lt;ul&gt;
+&lt;li&gt;諸々必要なコンポーネントが自動で入ります。&lt;/li&gt;
+&lt;li&gt;ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://camel.apache.org/components/3.20.x/activemq-component.html&#34;
+&gt;&lt;code&gt;camel-activemq&lt;/code&gt;&lt;/a&gt; / &lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://camel.apache.org/components/3.20.x/jms-component.html&#34;
+&gt;&lt;code&gt;camel-jms&lt;/code&gt;&lt;/a&gt;があります。
+&lt;ul&gt;
+&lt;li&gt;このコンポーネントには、&lt;code&gt;Spring Framework&lt;/code&gt;のライブラリが依存で入ってしまうのです。&lt;/li&gt;
+&lt;li&gt;ネット上のサンプルプログラムは、&lt;code&gt;Spring-Boot&lt;/code&gt;ベースのConsumerが多いからでしょうね。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link--code&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms&#34;
+&gt;&lt;code&gt;quarkus-artemis-jms&lt;/code&gt;&lt;/a&gt;を依存関係に加えます
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;camel-quarkus-sjms2&lt;/code&gt;には、ActiveMQとの通信をする、&lt;code&gt;ConnectionFactory&lt;/code&gt;の実装クラスが入ってないのです。&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ja.quarkus.io/guides/jms#artemis-jms&#34;
+&gt;Artemis JMS&lt;/a&gt;の記述のように&lt;code&gt;application.properties&lt;/code&gt;に設定を記述すると、&lt;code&gt;ConnectionFactory&lt;/code&gt;もDI対象になります。&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-bom&#34;
+&gt;Quarkus Artemis BOM&lt;/a&gt;は、Quarkusと違うので、別途依存関係に追加します。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@ApplicationScoped&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Routes&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; EndpointRouteBuilder &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; ConnectionFactory connectionFactory&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;throws&lt;/span&gt; Exception &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    from&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;sjms2&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;topic:upload.image&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// TODO 何かを処理
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;end&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Inject&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Routes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ConnectionFactory connectionFactory&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; connectionFactory&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Routes&lt;/code&gt;クラスは、このような記述になるでしょうか。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;コンソールにログが出ますので、それで動作確認でしょうか。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://camel.apache.org/manual/Endpoint-dsl.html&#34;title=&#34;Endpoint DSL :: Apache Camel&#34;
+&gt;Endpoint DSL :: Apache Camel&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/quarkus" term="quarkus" label="quarkus" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/apache-camel" term="apache-camel" label="apache-camel" />
+        </entry>
+        <entry>
+            <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</title>
+            <link href="https://halflite.github.io/techlog/posts/20230529_jms_producer/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20230529_jms_producer/</id>
+            <published>2023-05-29T00:00:00+09:00</published>
+            <updated>2023-05-29T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;承前&#34;
+    &gt;
+        承前
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#承前&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 承前&#34; href=&#34;#%e6%89%bf%e5%89%8d&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ブラウザ-&amp;gt;ウェブアプリ-&amp;gt;ActiveMQ-&amp;gt;ApacheCamel-&amp;gt;AWS S3&lt;/code&gt; と言うルートを考えてみましょう。
+&lt;ul&gt;
+&lt;li&gt;ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。
+&lt;ul&gt;
+&lt;li&gt;非同期で、イベント駆動で処理したいですよね。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ウェブアプリはDockerで建てているのだから、&lt;code&gt;ActiveMQ&lt;/code&gt;&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; も Consumerである &lt;code&gt;Apache Camel&lt;/code&gt;&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。&lt;/li&gt;
+&lt;li&gt;…と、思ったら、意外と大変だった、と言う感じです。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;jmsjava-message-service-と-producer-と-consumer&#34;
+    &gt;
+        JMS(Java Message Service) と Producer と Consumer
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#jmsjava-message-service-と-producer-と-consumer&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor JMS(Java Message Service) と Producer と Consumer&#34; href=&#34;#jmsjava-message-service-%e3%81%a8-producer-%e3%81%a8-consumer&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。&lt;/li&gt;
+&lt;li&gt;まぁ、シンプルに&lt;code&gt;Producer-&amp;gt;ActiveMQ-&amp;gt;Consumer&lt;/code&gt;で、送信元&lt;code&gt;Producer&lt;/code&gt;が、受信元&lt;code&gt;Consumer&lt;/code&gt;に向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。
+&lt;ul&gt;
+&lt;li&gt;今回は&lt;code&gt;ウェブアプリ&lt;/code&gt;が&lt;code&gt;Producer&lt;/code&gt;の役割ですね。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;ウェブアプリケーションに画像アップロード&#34;
+    &gt;
+        ウェブアプリケーションに画像アップロード
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#ウェブアプリケーションに画像アップロード&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor ウェブアプリケーションに画像アップロード&#34; href=&#34;#%e3%82%a6%e3%82%a7%e3%83%96%e3%82%a2%e3%83%97%e3%83%aa%e3%82%b1%e3%83%bc%e3%82%b7%e3%83%a7%e3%83%b3%e3%81%ab%e7%94%bb%e5%83%8f%e3%82%a2%e3%83%83%e3%83%97%e3%83%ad%e3%83%bc%e3%83%89&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;結局、ファイル名と拡張子を文字列で取れて、画像のデータを&lt;code&gt;byte[]&lt;/code&gt;か、&lt;code&gt;InputStream&lt;/code&gt;で取れれば良いと思います。
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ja.quarkus.io/guides/rest-client-multipart&#34;
+&gt;マルチパートでのRESTクライアントの使用 - Quarkus&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;依存関係に &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkus/quarkus-resteasy-multipart&#34;
+&gt;Quarkus RESTEasy Multipart Runtime&lt;/a&gt;を忘れずに。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;画像データをactivemqに送信する&#34;
+    &gt;
+        画像データをActiveMQに送信する
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20230529_jms_producer/#画像データをactivemqに送信する&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 画像データをActiveMQに送信する&#34; href=&#34;#%e7%94%bb%e5%83%8f%e3%83%87%e3%83%bc%e3%82%bf%e3%82%92activemq%e3%81%ab%e9%80%81%e4%bf%a1%e3%81%99%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ja.quarkus.io/guides/jms&#34;
+&gt;JMSの使用 - Quarkus&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;依存関係に &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://mvnrepository.com/artifact/io.quarkiverse.artemis/quarkus-artemis-jms&#34;
+&gt;Quarkus Artemis JMS Runtime&lt;/a&gt;を忘れずに。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;application.properties&lt;/code&gt;に&lt;code&gt;quarkus.artemis.***=&lt;/code&gt;を記述することを忘れないように。&lt;/li&gt;
+&lt;li&gt;そうすると、&lt;code&gt;ConnectionFactory&lt;/code&gt;もDI対象になりますよ。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;uploadImage&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;String fileName&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; InputStream file&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;JMSContext context &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;connectionFactory&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createContext&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;JMSContext&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;AUTO_ACKNOWLEDGE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ByteArrayOutputStream out &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; ByteArrayOutputStream&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// ファイル読み込み
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      file&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;transferTo&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;out&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      out&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// メッセージ作成
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      BytesMessage message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; context&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createBytesMessage&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      message&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;setStringProperty&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fileName&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; fileName&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      message&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;writeBytes&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;out&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;toByteArray&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// トピックを送信
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      context&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createProducer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;send&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;context&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createTopic&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;upload.image&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;),&lt;/span&gt; message&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;IOException &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; JMSException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; RuntimeException&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;e&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://activemq.apache.org/components/artemis/&#34;title=&#34;ActiveMQ Artemis&#34;
+&gt;ActiveMQ Artemis&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://camel.apache.org/manual/index.html&#34;title=&#34;Apache Camel user manual :: Apache Camel&#34;
+&gt;Apache Camel user manual :: Apache Camel&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/quarkus" term="quarkus" label="quarkus" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/apache-camel" term="apache-camel" label="apache-camel" />
+        </entry>
+        <entry>
+            <title>AWS Lambda FunctionでJavaを採用したい</title>
+            <link href="https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</id>
+            <published>2022-09-25T00:00:00+09:00</published>
+            <updated>2022-09-25T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;承前&#34;
+    &gt;
+        承前
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#承前&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 承前&#34; href=&#34;#%e6%89%bf%e5%89%8d&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AWS Lambda Function&lt;/code&gt; を &lt;code&gt;Java&lt;/code&gt; で作るというお仕事をしています
+&lt;ul&gt;
+&lt;li&gt;基本的に &lt;code&gt;Spring-Boot&lt;/code&gt; がメインの現場です&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Spring-Framawaork&lt;/code&gt; はやめておけ、と公式でも言われてますね。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Java&lt;/code&gt; で何かしらする時は、背骨(フレームワーク)欲しいですよね
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DI(DependencyInjection)&lt;/code&gt; 無いと、もう無理ですよね&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Guice&lt;/code&gt;/&lt;code&gt;Dagger&lt;/code&gt; を使えと言われていますが、どっち使ったらいいの？
+&lt;ul&gt;
+&lt;li&gt;色々なケースがありますが&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;自分でやったこと&#34;
+    &gt;
+        自分でやったこと
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#自分でやったこと&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 自分でやったこと&#34; href=&#34;#%e8%87%aa%e5%88%86%e3%81%a7%e3%82%84%e3%81%a3%e3%81%9f%e3%81%93%e3%81%a8&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;自分でやったこと
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/guice/wiki&#34;
+&gt;google/guice&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://geronimo.apache.org/microprofile/index.html&#34;
+&gt;Apache Geronimo Config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/guava/wiki&#34;
+&gt;google/guava&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;で、どうやってビジネスロジック注入する？を考えて、やっぱり&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/guice/wiki&#34;
+&gt;google/guice&lt;/a&gt;かなぁって。&lt;/p&gt;
+&lt;p&gt;設定注入は、&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://geronimo.apache.org/microprofile/index.html&#34;
+&gt;Apache Geronimo Config&lt;/a&gt;かな &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Dagger&lt;/code&gt;はコンパイル時DI、&lt;code&gt;Guice&lt;/code&gt;実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、&lt;code&gt;Java&lt;/code&gt;は起動するとかなり速いので、あまり差が無いのですね。
+まぁ、そもそも &lt;code&gt;AWS Lambda Function&lt;/code&gt; って、プロダクション的に小さいですし &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;
+そうすると、コードや設定少ない&lt;code&gt;Guice&lt;/code&gt;の方がいいですよね。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;ケース&#34;
+    &gt;
+        ケース
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#ケース&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor ケース&#34; href=&#34;#%e3%82%b1%e3%83%bc%e3%82%b9&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;よくあるケースですが、 &lt;code&gt;API Gateway&lt;/code&gt; で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;implements&lt;/span&gt; RequestHandler&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;APIGatewayProxyRequestEvent&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; APIGatewayProxyResponseEvent&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; AnyService anyService&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; APIGatewayProxyResponseEvent &lt;span style=&#34;color:#a6e22e&#34;&gt;handleRequest&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;APIGatewayProxyRequestEvent input&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; Context context&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;anyService&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;input&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    APIGatewayProxyResponseEvent res &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// do something
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; res&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;App&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Injector injector &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Guice&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createInjector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; AppModule&lt;span style=&#34;color:#f92672&#34;&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;anyService&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; injector&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getInstance&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;AnyService&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Singleton&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AnyService&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;APIGatewayProxyRequestEvent input&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// do something
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AppModule&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; AbstractModule &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;protected&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    bind&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;AnyService&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// bind microprofile-config.properties
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; Map&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; String&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; props &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; HashMap&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Sets&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;newLinkedHashSet&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ConfigProvider&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getConfig&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;getConfigSources&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;stream&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;map&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ConfigSource&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;getProperties&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;forEach&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;props&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;putAll&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Names&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;bindProperties&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;binder&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(),&lt;/span&gt; props&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;まぁー、こんな感じですかね？&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html&#34;title=&#34;AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda&#34;
+&gt;AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;JavaEE MicroProfile Config の実装参照なので、まぁ廃れることはないでしょう &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://developer.mamezou-tech.com/msa/mp/cntrn06-mp-config/&#34;
+&gt;第6回 お手軽便利MicroProfile Config | 豆蔵デベロッパーサイト&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;小さく作るべきですよね&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;たまに、こういう(所謂)「黒魔術」成分少ない、手組みのものを作ると、本当に勉強になります&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/aws" term="aws" label="aws" />
+        </entry>
+        <entry>
+            <title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</title>
+            <link href="https://halflite.github.io/techlog/posts/20220209_wsl_install/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20220209_wsl_install/</id>
+            <published>2022-02-09T00:00:00+09:00</published>
+            <updated>2022-02-09T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;カーネルアップデート実行&#34;
+    &gt;
+        カーネルアップデート実行
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#カーネルアップデート実行&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor カーネルアップデート実行&#34; href=&#34;#%e3%82%ab%e3%83%bc%e3%83%8d%e3%83%ab%e3%82%a2%e3%83%83%e3%83%97%e3%83%87%e3%83%bc%e3%83%88%e5%ae%9f%e8%a1%8c&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Invoke-WebRequest -Uri &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34;&lt;/span&gt; -OutFile &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wsl_update_x64.msi&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./wsl_update_x64.msi
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;wslubuntuインストール&#34;
+    &gt;
+        WSL/Ubuntuインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#wslubuntuインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor WSL/Ubuntuインストール&#34; href=&#34;#wslubuntu%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --install -d Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --set-default Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;ubuntuに入る&#34;
+    &gt;
+        Ubuntuに入る
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#ubuntuに入る&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Ubuntuに入る&#34; href=&#34;#ubuntu%e3%81%ab%e5%85%a5%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;PowerShellのコマンドプロンプトで、以下を実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;pip3のインストール&#34;
+    &gt;
+        pip3のインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20220209_wsl_install/#pip3のインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor pip3のインストール&#34; href=&#34;#pip3%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Ubuntuのコマンドプロンプトで以下を実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt -y update &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt -y install python3-pip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以下を実行して、pip3が有効か確認します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;英語のウィンドウが出ますが、&amp;rsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" />
+        </entry>
+        <entry>
+            <title>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</title>
+            <link href="https://halflite.github.io/techlog/posts/20211027_hugo_docker/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</id>
+            <published>2021-10-27T00:00:00+09:00</published>
+            <updated>2021-10-27T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://bittersmooth.halflite.net/&#34;title=&#34;bitter*smooth&#34;
+&gt;bitter*smooth&lt;/a&gt; と言う音楽レビューサイトを作っています。&lt;/p&gt;
+&lt;p&gt;この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://atmarkit.itmedia.co.jp/ait/articles/2104/01/news019.html&#34;title=&#34;ついにWindows Terminalの設定がGUIで可能に　プレビュー版v1.7が公開【Windows Terminal完全マスター】：Windows 10 The Latest（1/2 ページ） - ＠IT&#34;
+&gt;Windows Terminalインストール&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;WSL2インストール&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows Terminal を管理者権限で起動&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --install
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --set-default-version &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wsl --install -d Ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://azure.microsoft.com/ja-jp/products/visual-studio-code/&#34;title=&#34;Visual Studio Code – コード エディター | Microsoft Azure&#34;
+&gt;VSCodeインストール&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.docker.jp/docker-for-windows/install.html&#34;title=&#34;Windows に Docker Desktop をインストール — Docker-docs-ja 19.03 ドキュメント&#34;
+&gt;Windows に Docker Desktop をインストール&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？&lt;/p&gt;
+&lt;p&gt;で、プロジェクトのトップで、 &lt;code&gt;.devcontainer&lt;/code&gt; ディレクトリを作り、その配下に、 &lt;code&gt;Dockerfile&lt;/code&gt; &lt;code&gt;devcontainer.json&lt;/code&gt; の2つのファイルを作ります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.devcontainer/Dockerfile&lt;/code&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-docker&#34; data-lang=&#34;docker&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; klakegg/hugo:0.88.0-alpine&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; apk update &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apk --no-cache add git&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.devcontainer/devcontainer.json&lt;/code&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;bittersmooth&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;dockerfile&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dockerfile&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	},
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;extensions&amp;#34;&lt;/span&gt;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mhutchie.git-graph&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.microsoft.com/ja-jp/learn/modules/use-docker-container-dev-env-vs-code/&#34;title=&#34;Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs&#34;
+&gt;Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;簡単に &lt;code&gt;Hugo&lt;/code&gt; の環境が手に入るのですが、コレひとつだけ落とし穴があって、 &lt;code&gt;hugo server -w&lt;/code&gt; でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ &lt;code&gt;hugo server -w&lt;/code&gt; で確認すれば良いのかな？と言う感じでやっています。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;alpineベースのイメージだと、Gitすら入っていないので &lt;code&gt;apk --no-cache add git&lt;/code&gt; が、必要なのです。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;拡張機能、 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph&#34;title=&#34;Git Graph - Visual Studio Marketplace&#34;
+&gt;Git Graph&lt;/a&gt; 位は欲しいですよね…。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+        <entry>
+            <title>2021年6月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</title>
+            <link href="https://halflite.github.io/techlog/posts/20210627_java_dev/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20210627_java_dev/</id>
+            <published>2021-06-27T00:00:00+09:00</published>
+            <updated>2021-06-27T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;Javaのプログラミングで、 &amp;ldquo;Hello World&amp;rdquo; を出したいと思うでしょう?&lt;/p&gt;
+&lt;p&gt;まぁ、惰性で以下のことをするでしょう。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;JDK(OracleとかOpenJDK)をインストール、パスを通す&lt;/li&gt;
+&lt;li&gt;Mavenをインストール、パスを通す&lt;/li&gt;
+&lt;li&gt;Eclipseをインストール、各種フォーマッターをインストール&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;今は、2021年6月です。 こう言うのは避けたいですよね。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;JDK/JREのバージョンを切り替えるのが難しい
+&lt;ul&gt;
+&lt;li&gt;JDK/JREは後方互換を重視していたので、ちょっとしたことで対応が難しい&lt;/li&gt;
+&lt;li&gt;現在の Eclipse って、必要なJDK/JREって、15ですよね&lt;/li&gt;
+&lt;li&gt;Java 11/15で後方互換が切り捨てられたのもあるので、対応はそれなりに必要でしょう  &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Windows10でJava開発環境整える
+&lt;ul&gt;
+&lt;li&gt;それだけで、一体、いくらのソフトをダウンロードするんです?&lt;/li&gt;
+&lt;li&gt;JDK/Maven/Eclipse のインストールは、大体において鬼門だったりしますね&lt;/li&gt;
+&lt;li&gt;隣の席の人と、Eclipseのバージョン合ってます？&lt;/li&gt;
+&lt;li&gt;Mavenでも、変な対応が入ることがありますよ &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;まぁ、結局、以下の如しですわ。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;まず世間のIT関連のPCはWindows10ベースなので、それを考える&lt;/li&gt;
+&lt;li&gt;ローカル開発環境に、極力インストールさせない&lt;/li&gt;
+&lt;li&gt;Gitからチェックアウトしたら、すぐ全員の環境と同じになる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ここら辺、あなたならどう考えるでしょうね?&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;JAXB対応 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/acroquest/javabook-support/issues/49&#34;
+&gt;https://github.com/acroquest/javabook-support/issues/49&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;Maven 3.8.1 で mvn install 出来ない(maven-default-http-blocker)されたメモ &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/bazoo/items/3b5cab094b25cbbd8019&#34;
+&gt;https://qiita.com/bazoo/items/3b5cab094b25cbbd8019&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>Quarkusに入門してみた</title>
+            <link href="https://halflite.github.io/techlog/posts/20210530_quarkus/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20210530_quarkus/</id>
+            <published>2021-05-30T00:00:00+09:00</published>
+            <updated>2021-05-30T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;quarkusに入門してみた&#34;
+    &gt;
+        Quarkusに入門してみた
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20210530_quarkus/#quarkusに入門してみた&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Quarkusに入門してみた&#34; href=&#34;#quarkus%e3%81%ab%e5%85%a5%e9%96%80%e3%81%97%e3%81%a6%e3%81%bf%e3%81%9f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://quarkus.io/guides/getting-started&#34;title=&#34;Quarkus - Creating Your First Application&#34;
+&gt;Quarkus - Creating Your First Application&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;Quarkus&lt;/code&gt; を、ちょろっと触っています。&lt;/p&gt;
+&lt;p&gt;入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;最初に触った感想&#34;
+    &gt;
+        最初に触った感想
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20210530_quarkus/#最初に触った感想&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 最初に触った感想&#34; href=&#34;#%e6%9c%80%e5%88%9d%e3%81%ab%e8%a7%a6%e3%81%a3%e3%81%9f%e6%84%9f%e6%83%b3&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;とりあえず、簡単に出来るよな&lt;/li&gt;
+&lt;li&gt;色々揃っているよな、でも外れると何も出来ないよな&lt;/li&gt;
+&lt;li&gt;Vert.x が鬼門かもしれないな&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;とりあえず簡単に出来るよな&#34;
+    &gt;
+        とりあえず、簡単に出来るよな
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20210530_quarkus/#とりあえず簡単に出来るよな&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor とりあえず、簡単に出来るよな&#34; href=&#34;#%e3%81%a8%e3%82%8a%e3%81%82%e3%81%88%e3%81%9a%e7%b0%a1%e5%8d%98%e3%81%ab%e5%87%ba%e6%9d%a5%e3%82%8b%e3%82%88%e3%81%aa&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;とりあえず、mavenでプロジェクト作って、 &lt;code&gt;Hello, World!&lt;/code&gt; とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn clean compile quarkus:dev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;色々揃っているよなでも外れると何も出来ないよな&#34;
+    &gt;
+        色々揃っているよな、でも外れると何も出来ないよな
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20210530_quarkus/#色々揃っているよなでも外れると何も出来ないよな&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 色々揃っているよな、でも外れると何も出来ないよな&#34; href=&#34;#%e8%89%b2%e3%80%85%e6%8f%83%e3%81%a3%e3%81%a6%e3%81%84%e3%82%8b%e3%82%88%e3%81%aa%e3%81%a7%e3%82%82%e5%a4%96%e3%82%8c%e3%82%8b%e3%81%a8%e4%bd%95%e3%82%82%e5%87%ba%e6%9d%a5%e3%81%aa%e3%81%84%e3%82%88%e3%81%aa&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;プレゼンテーション層、(所謂)「HTMLテンプレート」は &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://quarkus.io/guides/qute&#34;title=&#34;Quarkus - Qute Templating Engine&#34;
+&gt;Qute Templating Engine&lt;/a&gt; があるんですが、マジでこれしかないの…？ &lt;code&gt;Thymeleaf&lt;/code&gt; はおろか、 &lt;code&gt;FreeMarker&lt;/code&gt; にも届かないんでは…。&lt;/p&gt;
+&lt;p&gt;DBアクセスには、 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://quarkus.io/guides/hibernate-orm&#34;title=&#34;Quarkus - Using Hibernate ORM and JPA&#34;
+&gt;Hibernate/JPA&lt;/a&gt; とか、そのラッパー &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://quarkus.io/guides/hibernate-orm-panache&#34;title=&#34;Quarkus - Simplified Hibernate ORM with Panache&#34;
+&gt;Panache&lt;/a&gt; とかあるんですが、それ以外は…。&lt;/p&gt;
+&lt;p&gt;まぁ、そもそも &lt;code&gt;Quarkus&lt;/code&gt; の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;vertx-が鬼門かもしれないな&#34;
+    &gt;
+        Vert.x が鬼門かもしれないな
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20210530_quarkus/#vertx-が鬼門かもしれないな&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Vert.x が鬼門かもしれないな&#34; href=&#34;#vertx-%e3%81%8c%e9%ac%bc%e9%96%80%e3%81%8b%e3%82%82%e3%81%97%e3%82%8c%e3%81%aa%e3%81%84%e3%81%aa&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://spring.pleiades.io/spring-boot/docs/current/reference/html/getting-started.html&#34;title=&#34;Spring Boot 入門 - リファレンスドキュメント&#34;
+&gt;Spring Boot&lt;/a&gt; って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 &lt;code&gt;Vert.x &lt;/code&gt; は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;でもね&#34;
+    &gt;
+        でもね
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20210530_quarkus/#でもね&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor でもね&#34; href=&#34;#%e3%81%a7%e3%82%82%e3%81%ad&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;とは言え、新しい技術に触れると、ホントにワクワクしますわ。&lt;/p&gt;
+&lt;p&gt;このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;Maven testをeclipseでデバッグ | infoScoop開発者ブログ &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://bit.ly/2TJzH6W&#34;
+&gt;https://bit.ly/2TJzH6W&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;Quarkus - Guides - Latest &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://quarkus.io/guides/&#34;
+&gt;https://quarkus.io/guides/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;MicroProfile 4.0への道 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/&#34;
+&gt;https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20201225_git_2/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20201225_git_2/</id>
+            <published>2020-12-25T00:00:00+09:00</published>
+            <updated>2020-12-25T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://halflite.github.io/techlog/posts/20200117_git_ver/&#34;title=&#34;2020年1月、CentOS7にgit2.xをyumで入れたかっただけだった。 – ひとり開発日記。&#34;
+&gt;前回&lt;/a&gt;から、また変わったので。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum -y remove git
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum -y install https://repo.ius.io/ius-release-el7.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum -y install git224
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;元ネタ&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/seal_qiita/items/981a9284ecd44e54af96&#34;title=&#34;iusの最新リンクが変更になったので注意 - Qiita&#34;
+&gt;iusの最新リンクが変更になったので注意 - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/d-dai/items/3cc0c8c81911d5b6cce5&#34;title=&#34;CentOS7にGit2系をyumでインストール - Qiita&#34;
+&gt;CentOS7にGit2系をyumでインストール - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" />
+        </entry>
+        <entry>
+            <title>2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200918_postgres_local/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200918_postgres_local/</id>
+            <published>2020-09-18T00:00:00+09:00</published>
+            <updated>2020-09-18T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;Heroku で、小さいアプリケーションを作りたいと思っていて。&lt;/p&gt;
+&lt;p&gt;MySQL も出来ない訳じゃないんですけど&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。&lt;/p&gt;
+&lt;p&gt;という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/halflite/postgresql-win-local&#34;
+&gt;https://github.com/halflite/postgresql-win-local&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;こう言う環境を一つ作っておくと、 &lt;code&gt;docker-compose.yml&lt;/code&gt; をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://elements.heroku.com/addons/cleardb&#34;title=&#34;ClearDB MySQL - Add-ons - Heroku Elements&#34;
+&gt;ClearDB MySQL - Add-ons - Heroku Elements&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" /> 
+                                <category scheme="https://halflite.github.io/techlog/tags/vagrant" term="vagrant" label="vagrant" />
+        </entry>
+        <entry>
+            <title>imgbb.comのテスト</title>
+            <link href="https://halflite.github.io/techlog/posts/20200831_imgbb/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200831_imgbb/</id>
+            <published>2020-08-31T01:00:00+09:00</published>
+            <updated>2020-08-31T01:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link--raw&#34;
+  href=&#34;https://ibb.co/vhcb5Z8&#34;
+&gt;&lt;img
+  src=&#34;https://i.ibb.co/vhcb5Z8/20200831a.png&#34;
+  alt=&#34;20200831&#34;
+  
+/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://imgbb.com/&#34;title=&#34;ImgBB — フリーなスマイリー / アニメエモコン&#34;
+&gt;ImgBB — フリーなスマイリー / アニメエモコン&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/&#34;title=&#34;Qiita&#34;
+&gt;Qiita&lt;/a&gt; や &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://zenn.dev/&#34;title=&#34;Zenn｜プログラマーのための情報共有コミュニティ&#34;
+&gt;Zenn&lt;/a&gt; の方が良いんでしょうけど、ここは個人の日記サイトだしね…。&lt;/p&gt;
+&lt;p&gt;という事で、適当にググって、適当にアップロードして、上記サイトを試してみることにしました。 &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;まぁ、削除されても、そんなに重要な画像でもないし…。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+        <entry>
+            <title>2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200728_eclipse_pe/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200728_eclipse_pe/</id>
+            <published>2020-07-28T00:00:00+09:00</published>
+            <updated>2020-07-28T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;tldr&#34;
+    &gt;
+        TL;DR
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20200728_eclipse_pe/#tldr&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor TL;DR&#34; href=&#34;#tldr&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;インストール用リポジトリーURLは、以下です&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://propedit.osdn.jp/eclipse/updates/&#34;
+&gt;https://propedit.osdn.jp/eclipse/updates/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;諸々など&#34;
+    &gt;
+        諸々など
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20200728_eclipse_pe/#諸々など&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 諸々など&#34; href=&#34;#%e8%ab%b8%e3%80%85%e3%81%aa%e3%81%a9&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;現在、 Google Guice ベースで Bean Validation を入れようとしていて。 独自メッセージファイル ValidationMessages_ja.properties を作ろうかと思ったら、あれ、 Unicode でないとダメなのか…。 Spring-Boot だと、フツーに UTF-8 を読んでくれるんですけどね。&lt;/p&gt;
+&lt;p&gt;Validator を DI する時に、設定を注入出来ないかな？って思ったのですが、どこにも情報が無い!! まぁ、仕方ないですわ。 Unicodeのまま実装しますかね。&lt;/p&gt;
+&lt;p&gt;なので、Eclipse に PropertiesEditor をインストールしようと思って、 ぐぐって &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://proengineer.internous.co.jp/content/columnfeature/9158#2&#34;title=&#34;Eclipseで文字化けするプロパティファイルを編集する方法 | サービス | プロエンジニア&#34;
+&gt;Eclipseで文字化けするプロパティファイルを編集する方法&lt;/a&gt; を参考にインストール…、しようと思っても入らない!!&lt;/p&gt;
+&lt;p&gt;まぁ、そういう事情もありましたよね &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; で、ドメイン/ホストを色々打ち替えて、上記のリポジトリーURLが分かった次第。&lt;/p&gt;
+&lt;p&gt;本質的には、 JakartaEE / Hibernate が、メッセージファイルのフォーマットをUTF-8に公式対応してくれれば、それが良いのでしょうが…。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ja.osdn.net/projects/sourceforge/news/24957&#34;title=&#34;ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&#34;
+&gt;ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.itmedia.co.jp/enterprise/articles/1504/08/news105.html&#34;title=&#34;OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&#34;
+&gt;OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>2020年7月 Amazon Cognito経由でYahoo!Japanのユーザ認証をやりたかっただけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/</id>
+            <published>2020-07-08T00:00:00+09:00</published>
+            <updated>2020-07-08T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;tldr&#34;
+    &gt;
+        TL;DR
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20200708_cognito_yahoo_integration/#tldr&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor TL;DR&#34; href=&#34;#tldr&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;できません&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Amazon Cognitoの外部フェデレーテッドIDプロバイダとして、Yahoo!Japanを登録できますが、認証が通りません。
+stateプロパティの値が長過ぎて、Yahoo!Japanからエラーで返ってきます。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/what-is-amazon-cognito.html&#34;title=&#34;Amazon Cognito とは - Amazon Cognito&#34;
+&gt;Amazon Cognito とは - Amazon Cognito&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;AWSって、以前、S3をちょっと触ったレベルだったので、全く浦島太郎状態だったんですね。 最新技術のキャッチアップを兼ねて、ちょっと小さいプロジェクトで試すかな。 それなら、初っ端に必要になるログインとか認証である、Amazon Cognitoから触ってみるか～、って触ってみたんです。&lt;/p&gt;
+&lt;p&gt;「…なるほど!! 全く分からん!!」&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://dev.classmethod.jp/articles/amazon-cognito-developer-authenticated-identities/&#34;title=&#34;[Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO&#34;
+&gt;[Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://dev.classmethod.jp/articles/cognito-userpool-openid-connect-line/&#34;title=&#34;【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO&#34;
+&gt;【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/poruruba/items/189945dc64edfe1f2464&#34;title=&#34;AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita&#34;
+&gt;AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記記事を参考に、ちまちまいじっていて、なんとなく分かった!! &lt;strong&gt;「Amazon Cognitoってアカウント管理してくれて、外部プロバイダとの連携とも整合をとってくれて、一意なIDを払い出してくれる。」&lt;/strong&gt; &lt;strong&gt;「Amazon Cognitoそれ自体は、OpenID Connect/OAuth2のプロバイダとして振る舞ってくれる」&lt;/strong&gt; なんですね!!&lt;/p&gt;
+&lt;p&gt;上記記事を参考に、試しにYahoo!JapanとのID連携やってみるかー、って思って、IDプロバイダの設定までは、サクサクできたんです。&lt;/p&gt;
+&lt;p&gt;でも、実際のログイン画面が出てきて、クリックすると、コールバックにエラーが返ってきます。 &lt;strong&gt;&amp;ldquo;state is too long value&amp;rdquo;&lt;/strong&gt; って何???&lt;/p&gt;
+&lt;p&gt;Chromeのdev-toolで、リクエストとかを見ていると、確かにAmazon Cognitoが生成する&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.buildinsider.net/enterprise/openid/oauth20&#34;title=&#34;OAuth 2.0の代表的な利用パターンを仕様から理解しよう - Build Insider&#34;
+&gt;state&lt;/a&gt;って、1,200文字程度あります。 自分では、どっちが妥当か判断できないし、しゃーないので、Yahoo!デベロッパーネットワークのお問合せフォームから、質問投げちゃいましたよ…。&lt;/p&gt;
+&lt;p&gt;結局「stateの長さは1024文字までの仕様となっており、長さを伸ばすことができません。(大意)」という回答でしたね。&lt;/p&gt;
+&lt;p&gt;よくあるOpenID Connect/OAuth2のクライアントライブラリは、そこまで長いstateを生成しないのでしょう。 ですが、全世界で広く使われているAWSだと、そうもいかないのでしょうね…。&lt;/p&gt;
+&lt;p&gt;久々、&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;http://0xcc.net/blog/archives/000196.html&#34;title=&#34;yak shaving で人生の問題の80%が説明できる問題 - bkブログ&#34;
+&gt;Yak Shaving&lt;/a&gt;で不毛な時間を過ごしちゃったよなー、でも、これやらないとダメなのが、我々の人生だよなー、と言う感想でしたね。&lt;/p&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/aws" term="aws" label="aws" />
+        </entry>
+        <entry>
+            <title>2020年 Javaベースのバッチを作るなら</title>
+            <link href="https://halflite.github.io/techlog/posts/20200625_java_based_batch/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200625_java_based_batch/</id>
+            <published>2020-06-25T12:00:00+09:00</published>
+            <updated>2020-06-25T12:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 &lt;strong&gt;「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」&lt;/strong&gt; &lt;strong&gt;「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」&lt;/strong&gt; 位の要件でしたね。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ある程度ポータブルなものにしたいよね
+&lt;ul&gt;
+&lt;li&gt;オンプレとは言え、不定期にサーバーの統廃合があったりする&lt;/li&gt;
+&lt;li&gt;サーバーの統廃合時に、cronタブの設定忘れたり&lt;/li&gt;
+&lt;li&gt;サーバーごとに &lt;strong&gt;秘伝のタレ&lt;/strong&gt; の設定/シェルがあったり&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ある程度複雑なロジックを伴うから、TDDとかやりたいよね
+&lt;ul&gt;
+&lt;li&gt;ちょっとした変更だって、やっぱり確認しながらやりたい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;デプロイ時に漏れとか防ぎたいよね&lt;/li&gt;
+&lt;li&gt;ソース管理もGitとかのVCSでやりたいよね
+&lt;ul&gt;
+&lt;li&gt;たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが…&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;…あれ? 結構条件ありますね。&lt;/p&gt;
+&lt;p&gt;今、自分で作るとするなら、こんな感じかな&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ある程度枯れた、よく使われる軽量ライブラリの組合せで作る
+&lt;ul&gt;
+&lt;li&gt;GraalVMとか、まだ人類には早すぎるのでは…&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://jdbi.org/&#34;title=&#34;Jdbi 3 Developer Guide&#34;
+&gt;Jdbi&lt;/a&gt; のような軽量OR/M&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;変数を、環境変数や実行時変数から注入できる仕組みを組み込む
+&lt;ul&gt;
+&lt;li&gt;VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/lightbend/config&#34;title=&#34;lightbend/config: configuration library for JVM languages using HOCON files&#34;
+&gt;Typesafe Config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/eclipse/microprofile-config&#34;title=&#34;eclipse/microprofile-config: MicroProfile Configuration Feature&#34;
+&gt;MicroProfile Configuration&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ビジネスロジックをTDDで作るために、モックとか差し替えしたい
+&lt;ul&gt;
+&lt;li&gt;軽量DIコンテナを採用する&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/dagger&#34;title=&#34;google/dagger: A fast dependency injector for Android and Java.&#34;
+&gt;Dagger&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Maven/Gradleで、依存関係やバージョン情報を明示&lt;/li&gt;
+&lt;li&gt;実行可能なFatJarを作成して &lt;code&gt;java --jar batch.jar&lt;/code&gt; だけで実行可能&lt;/li&gt;
+&lt;li&gt;実行は、cronではなく、バッチ実行の仕組みを別に用意する
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.rundeck.com/docs/&#34;title=&#34;Rundeck Documentation | Rundeck Docs&#34;
+&gt;Rundeck&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;意外とやらないといけないこと多いですわ。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.slideshare.net/AmazonWebServicesJapan/serverlessjava-199195000&#34;title=&#34;Serverless時代のJavaについて&#34;
+&gt;Serverless時代のJavaについて&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;あるある案件&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;惰性とも言う&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</title>
+            <link href="https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/</id>
+            <published>2020-05-04T00:00:00+09:00</published>
+            <updated>2020-05-04T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？&lt;/p&gt;
+&lt;p&gt;Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。&lt;/p&gt;
+&lt;p&gt;解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;project.build.sourceEncoding&amp;gt;&lt;/span&gt;UTF-8&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/project.build.sourceEncoding&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!-- Eclipse --&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.maven.plugins&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;maven-eclipse-plugin&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.10&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;downloadSources&amp;gt;&lt;/span&gt;true&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/downloadSources&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;downloadJavadocs&amp;gt;&lt;/span&gt;true&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/downloadJavadocs&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;additionalConfig&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;file&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;name&amp;gt;&lt;/span&gt;.settings/org.eclipse.core.resources.prefs&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;content&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&amp;lt;project&amp;gt;=${project.build.sourceEncoding}${line.separator}]]&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/content&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/file&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/additionalConfig&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn eclipse:clean eclipse:eclipse
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;元ネタ &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://stackoverflow.com/a/7605915&#34;title=&#34;Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow&#34;
+&gt;Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;旧blog 2018/10/12 の記事に加筆訂正して再掲しました。&lt;/p&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>Java NIO2 で一時ファイルを作成、処理後に削除</title>
+            <link href="https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/</id>
+            <published>2020-02-22T00:00:00+09:00</published>
+            <updated>2020-02-22T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Path tempFilePath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Files&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createTempFile&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.tmp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Writer writer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Files&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;newBufferedWriter&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;tempFilePath&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// do something.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// 終わった後に一時ファイルを削除したい
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;IOException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// ログとか出したり、または、別の例外再スロー
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; Closeable &lt;span style=&#34;color:#a6e22e&#34;&gt;deleteOnClose&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; Path tempFilePath&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Closeable&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;@Override&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;throws&lt;/span&gt; IOException &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Files&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;deleteIfExists&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;tempFilePath&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Path tempFilePath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Files&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createTempFile&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.tmp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Closeable closeable &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; deleteOnClose&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;tempFilePath&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          Writer writer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Files&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;newBufferedWriter&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;tempFilePath&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// do something.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;IOException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// ...
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以前やったのは、 &lt;code&gt;Closeable&lt;/code&gt; の匿名クラス作って返すようなメソッドを一つ用意しておいて、 &amp;ldquo;try-with-resources&amp;rdquo; 構文の中で開放させる、というもの。 &amp;ldquo;try-with-resources&amp;rdquo; では、 &lt;code&gt;try&lt;/code&gt; のカッコ内の最後の方からクローズしていくので、 &lt;code&gt;Closeable&lt;/code&gt; を返すメソッドは一番最初に書くのが、注意するポイントでしょうか。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Closeable&lt;/code&gt; の実装は自分でやることになるので、 Java SE 7 以前の &lt;code&gt;java.io.File.createTempFile&lt;/code&gt; メソッドで作った一時ファイル等にも、対応できるのが良いところですね。&lt;/p&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      Path tempFilePath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Files&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;createTempFile&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.temp&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;Writer writer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Files&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;newBufferedWriter&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;tempFilePath&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; StandardOpenOption&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DELETE_ON_CLOSE&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// do something.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;IOException e&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// ...
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Java NIO2 以降だと、ファイルを &lt;code&gt;newBufferedWriter&lt;/code&gt; メソッドで開く時に、オプションで &lt;code&gt;DELETE_ON_CLOSE&lt;/code&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; を付けると、処理終了後に、そのファイルは削除されるのですね。&lt;/p&gt;
+&lt;p&gt;もとねた&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.jpcert.or.jp/java-rules/fio03-j.html&#34;title=&#34;FIO03-J. 一時ファイルはプログラムの終了前に削除する&#34;
+&gt;FIO03-J. 一時ファイルはプログラムの終了前に削除する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;Java NIO2 なので、 Java SE 7 以降の話です。 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.oracle.com/cd/E26537_01/tutorial/essential/io/fileio.html&#34;
+&gt;ファイルI/O（NIO.2を含む）（Java チュートリアル &amp;gt; 重要なクラス &amp;gt; 基本的なI/O）&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.oracle.com/javase/jp/8/docs/api/java/nio/file/StandardOpenOption.html#DELETE_ON_CLOSE&#34;
+&gt;https://docs.oracle.com/javase/jp/8/docs/api/java/nio/file/StandardOpenOption.html#DELETE_ON_CLOSE&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>Mavenで依存関係あるライブラリをダウンロードしたいだけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200214_maven_copy_dependencies/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200214_maven_copy_dependencies/</id>
+            <published>2020-02-13T00:00:00+09:00</published>
+            <updated>2020-02-13T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;また、以前blogに書いていたのに、すっかり忘れてググってしまったので。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn dependency:copy-dependencies -DincludeScope&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;test
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上記を実行すると、プロジェクト配下の &lt;code&gt;target/dependency&lt;/code&gt; に、テストスコープのものも含めて、 &lt;code&gt;*.jar&lt;/code&gt; ファイルがダウンロードされます。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;書いている時点のmavenバージョン 3.6.3&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>Windowsのcmd.exeで、Mavenを使って新規プロジェクトを作る時、複数行に分けて書きたかっただけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200120_maven_cmd/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200120_maven_cmd/</id>
+            <published>2020-01-20T00:00:00+09:00</published>
+            <updated>2020-01-20T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;新しいライブラリやフレームワークを試す時、素振りも兼ねて、小さいJavaプロジェクトを作ってみるんですが、毎回Maven Archetypeの書き方を忘れて、自分のblogを読み返してしまったり。&lt;/p&gt;
+&lt;p&gt;この度、blog移設なので、ここでも書き記しておく次第です。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mvn archetype:generate ^
+  -DarchetypeArtifactId=maven-archetype-quickstart ^
+  -DinteractiveMode=false ^
+  -DgroupId=net.halflite ^
+  -DartifactId=testapp ^
+  -Dpackage=net.halflite.testapp
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;もとねた&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;http://maven.apache.org/archetypes/maven-archetype-quickstart/&#34;title=&#34;Maven Quickstart Archetype – Maven Quickstart Archetype&#34;
+&gt;Maven Quickstart Archetype – Maven Quickstart Archetype&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/ndxbn/items/089b97e33ae9b69bf48b&#34;title=&#34;cmdのバッチファイルで、1コマンドを複数行にわたって記述したい場合 - Qiita&#34;
+&gt;cmdのバッチファイルで、1コマンドを複数行にわたって記述したい場合 - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>2020年1月、CentOS7にgit2.xをyumで入れたかっただけだった。</title>
+            <link href="https://halflite.github.io/techlog/posts/20200117_git_ver/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20200117_git_ver/</id>
+            <published>2020-01-17T01:00:00+09:00</published>
+            <updated>2020-01-17T01:00:00+09:00</updated>
+            <content type="html">
+                &lt;ol&gt;
+&lt;li&gt;CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!!&lt;/li&gt;
+&lt;li&gt;Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!!&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git --version&lt;/code&gt; って、まだ1.x系なの?&lt;/li&gt;
+&lt;li&gt;しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール…&lt;/li&gt;
+&lt;li&gt;え&amp;hellip;??? 依存ライブラリが無いの…???&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y remove git
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum -y install git --enablerepo=ius --disablerepo=base
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!&lt;/p&gt;
+&lt;p&gt;結局、こうなりますわ。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y remove git
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+sudo yum -y install perl-TermReadKey emacs-filesystem perl-Error
+sudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates
+&lt;/code&gt;&lt;/pre&gt;
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/linux" term="linux" label="linux" />
+        </entry>
+        <entry>
+            <title>Hugo/GitHubPagesでブログ再作成</title>
+            <link href="https://halflite.github.io/techlog/posts/buildwithhugo/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/buildwithhugo/</id>
+            <published>2020-01-16T00:00:00+09:00</published>
+            <updated>2020-01-16T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;一瞬、LivedoorBlogで作った時期もあるんですけど、やっぱり技術ブログなので…。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Markdownで書きたい&lt;/li&gt;
+&lt;li&gt;シンタックスハイライトが欲しい&lt;/li&gt;
+&lt;li&gt;ブログパーツとかいらない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;やはり、上記3条件は必須ですかねぇ。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;毎度忘れてしまうので、hugoの操作メモ&lt;/p&gt;
+&lt;p&gt;新規記事作成&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new posts/article.md
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ローカルサーバーで確認&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo server
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;記事書き出し&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo -D
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;以下、参考にした記事&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/yotsak83/items/017734d5f873f4f194d4&#34;title=&#34;Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita&#34;
+&gt;Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qiita.com/ryoma-tokushige/items/eba3e6cd415e9755af87&#34;title=&#34;【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita&#34;
+&gt;【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://qqhann.dev/blog/theer-stroy/&#34;title=&#34;Hugoのテーマ「Theer」を作成しました – qqhann&#34;
+&gt;Hugoのテーマ「Theer」を作成しました – qqhann&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;すっきり見やすいHugoテーマ。 ありがたく使ってます&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+        <entry>
+            <title>About Me.</title>
+            <link href="https://halflite.github.io/techlog/posts/about/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/about/</id>
+            <published>2019-12-26T00:00:00+09:00</published>
+            <updated>2019-12-26T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;http://hatena.g.hatena.ne.jp/hatenagroup/20191209/1575882230&#34;title=&#34;はてなグループの終了日を2020年1月31日\(金\)に決定しました - はてなグループ日記 - 機能変更、お知らせなど&#34;
+&gt;はてなグループの終了日を2020年1月31日(金)に決定しました - はてなグループ日記 - 機能変更、お知らせなど&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;…ということなので、技術ブログも、お引越しです。&lt;/p&gt;
+&lt;p&gt;旧ブログは、こちら。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;http://program.g.hatena.ne.jp/halflite/&#34;title=&#34;ひとり開発日記。 - プログラマの秘密のあれこれ&#34;
+&gt;ひとり開発日記。 - プログラマの秘密のあれこれ&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://web.archive.org/web/20191225152644/http://program.g.hatena.ne.jp/halflite/&#34;title=&#34;ひとり開発日記。 - プログラマの秘密のあれこれ&#34;
+&gt;web.archive.org&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;このブログの連絡先は、こちら。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://halflite.net/&#34;title=&#34;halflite.net&#34;
+&gt;halflite.net&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+</feed>
