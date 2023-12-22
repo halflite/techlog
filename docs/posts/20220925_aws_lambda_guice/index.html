@@ -1,240 +1,59 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-      
-  AWS Lambda FunctionでJavaを採用したい &ndash; ひとり開発日記。
-
-    </title>
-    
-    
-    <meta name="description" property="og:description" content="承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=color-toggle-hidden><head><meta charset=utf-8><meta name=referrer content="no-referrer"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.111.3"><meta name=robots content="index, follow"><meta name=description content="承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
 設定注入は、Apache Geronimo Configかな 2
 Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。
 ケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
-public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&amp;gt; { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.|">
-    
-
-    <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
-    
-    
-    
-    
-
-
-    <link rel="stylesheet" href="/techlog/assets/syntax.css">
-    <link rel="stylesheet" href="/techlog/assets/primer-build.css">
-    <link rel="stylesheet" href="/techlog/assets/style.css">
-    <link rel="stylesheet" href="/techlog/assets/custom_style.css">
-  </head>
-
-
-  <body class="bg-gray">
-    <div id="holy" class="container-lg bg-white h-100">
-
-      <div id="header" class="px-1 bg-white">
-        <nav class="UnderlineNav UnderlineNav--right px-2">
-  <a class="UnderlineNav-actions muted-link h2" href="https://halflite.github.io/techlog/">
-    ひとり開発日記。
-  </a>
-
-  
-  
-</nav>
-
-      </div>
-
-      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
-        
-
-<div class="Subhead">
-  <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">AWS Lambda FunctionでJavaを採用したい</div>
-  </div>
-  <div class="Subhead-description">
-    
-
-
-
-
-<a href='/tags/java' class="muted-link">
-  <span class="Label Label--gray">java</span>
-</a>
-
-<a href='/tags/aws' class="muted-link">
-  <span class="Label Label--gray">aws</span>
-</a>
-
-
-
-    
-    <div class="float-md-right">
-      <span title="Lastmod: 2022-09-25. Published at: 2022-09-25.">
-        
-          Published: 2022-09-25
-        
-      </span>
-    </div>
-    
-  </div>
-</div>
-<article>
-  
-  <section class="pb-6 mb-3 border-bottom">
-    <h3 id="承前">承前</h3>
-<ul>
-<li><code>AWS Lambda Function</code> を <code>Java</code> で作るというお仕事をしています
-<ul>
-<li>基本的に <code>Spring-Boot</code> がメインの現場です</li>
-<li><code>Spring-Framawaork</code> はやめておけ、と公式でも言われてますね。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
-</ul>
-</li>
-<li><code>Java</code> で何かしらする時は、背骨(フレームワーク)欲しいですよね
-<ul>
-<li><code>DI(DependencyInjection)</code> 無いと、もう無理ですよね</li>
-</ul>
-</li>
-<li><code>Guice</code>/<code>Dagger</code> を使えと言われていますが、どっち使ったらいいの？
-<ul>
-<li>色々なケースがありますが</li>
-</ul>
-</li>
-</ul>
-<h3 id="自分でやったこと">自分でやったこと</h3>
-<ul>
-<li>自分でやったこと
-<ul>
-<li><a href="https://github.com/google/guice/wiki">google/guice</a></li>
-<li><a href="https://geronimo.apache.org/microprofile/index.html">Apache Geronimo Config</a></li>
-<li><a href="https://github.com/google/guava/wiki">google/guava</a></li>
-</ul>
-</li>
-</ul>
-<p>で、どうやってビジネスロジック注入する？を考えて、やっぱり<a href="https://github.com/google/guice/wiki">google/guice</a>かなぁって。</p>
-<p>設定注入は、<a href="https://geronimo.apache.org/microprofile/index.html">Apache Geronimo Config</a>かな <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<p><code>Dagger</code>はコンパイル時DI、<code>Guice</code>実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、<code>Java</code>は起動するとかなり速いので、あまり差が無いのですね。
-まぁ、そもそも <code>AWS Lambda Function</code> って、プロダクション的に小さいですし <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>
-そうすると、コードや設定少ない<code>Guice</code>の方がいいですよね。</p>
-<h3 id="ケース">ケース</h3>
-<p>よくあるケースですが、 <code>API Gateway</code> で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">App</span> <span style="color:#66d9ef">implements</span> RequestHandler<span style="color:#f92672">&lt;</span>APIGatewayProxyRequestEvent<span style="color:#f92672">,</span> APIGatewayProxyResponseEvent<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> AnyService anyService<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> APIGatewayProxyResponseEvent <span style="color:#a6e22e">handleRequest</span><span style="color:#f92672">(</span>APIGatewayProxyRequestEvent input<span style="color:#f92672">,</span> Context context<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">anyService</span><span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">(</span>input<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>    APIGatewayProxyResponseEvent res <span style="color:#f92672">=</span> <span style="color:#f92672">...</span> <span style="color:#75715e">// do something
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> res<span style="color:#f92672">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">App</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    Injector injector <span style="color:#f92672">=</span> Guice<span style="color:#f92672">.</span><span style="color:#a6e22e">createInjector</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> AppModule<span style="color:#f92672">());</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">anyService</span> <span style="color:#f92672">=</span> injector<span style="color:#f92672">.</span><span style="color:#a6e22e">getInstance</span><span style="color:#f92672">(</span>AnyService<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Singleton</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnyService</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">execute</span><span style="color:#f92672">(</span>APIGatewayProxyRequestEvent input<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppModule</span> <span style="color:#66d9ef">extends</span> AbstractModule <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    bind<span style="color:#f92672">(</span>AnyService<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// bind microprofile-config.properties
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> props <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
-</span></span><span style="display:flex;"><span>    Sets<span style="color:#f92672">.</span><span style="color:#a6e22e">newLinkedHashSet</span><span style="color:#f92672">(</span>ConfigProvider<span style="color:#f92672">.</span><span style="color:#a6e22e">getConfig</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getConfigSources</span><span style="color:#f92672">())</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">stream</span><span style="color:#f92672">()</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>ConfigSource<span style="color:#f92672">::</span>getProperties<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">forEach</span><span style="color:#f92672">(</span>props<span style="color:#f92672">::</span>putAll<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>    Names<span style="color:#f92672">.</span><span style="color:#a6e22e">bindProperties</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">binder</span><span style="color:#f92672">(),</span> props<span style="color:#f92672">);</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>まぁー、こんな感じですかね？<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html" title="AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda">AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>JavaEE MicroProfile Config の実装参照なので、まぁ廃れることはないでしょう <a href="https://developer.mamezou-tech.com/msa/mp/cntrn06-mp-config/">第6回 お手軽便利MicroProfile Config | 豆蔵デベロッパーサイト</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>小さく作るべきですよね&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p>たまに、こういう(所謂)「黒魔術」成分少ない、手組みのものを作ると、本当に勉強になります&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-
-  </section>
-
-  <section>
-    
-      
-    
-  </section>
-</article>
-
-      </div>
-
-      <div id="side" class="pr-1 bg-white">
-        <aside class="pr-3">
-          
-  
-    <div id="toc" class="Box Box--blue mb-3">
-      <b>AWS Lambda FunctionでJavaを採用したい</b><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#承前">承前</a></li>
-        <li><a href="#自分でやったこと">自分でやったこと</a></li>
-        <li><a href="#ケース">ケース</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-  
-
-  
-    <div>
-      
-    </div>
-  
-
-        </aside>
-      </div>
-
-      <div id="footer" class="pt-2 pb-3 bg-white text-center">
-        
-
-  <span class="text-small text-gray">
-    
-
-    Powered by the
-    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
-    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
-  </span>
-
-
-      </div>
-    </div>
-
-    
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
-    
-  </body>
-</html>
+public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice."><title>AWS Lambda FunctionでJavaを採用したい | ひとり開発日記。</title><link rel=icon type=image/svg+xml href=/techlog/favicon/favicon.svg><link rel=icon type=image/png sizes=32x32 href=/techlog/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/techlog/favicon/favicon-16x16.png><meta property="og:title" content="AWS Lambda FunctionでJavaを採用したい"><meta property="og:site_name" content="ひとり開発日記。"><meta property="og:description" content="承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
+設定注入は、Apache Geronimo Configかな 2
+Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。
+ケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
+public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice."><meta property="og:type" content="article"><meta property="og:url" content="https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2022-09-25T00:00:00+09:00"><meta property="article:modified_time" content="2022-09-25T00:00:00+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="AWS Lambda FunctionでJavaを採用したい"><meta name=twitter:description content="承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
+設定注入は、Apache Geronimo Configかな 2
+Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。
+ケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
+public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice."><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"Posts","name":"AWS Lambda FunctionでJavaを採用したい","url":"https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/","headline":"AWS Lambda FunctionでJavaを採用したい","description":"承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice\/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google\/guice Apache Geronimo Config google\/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle\/guiceかなぁって。\n設定注入は、Apache Geronimo Configかな 2\nDaggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。\nケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。\npublic class App implements RequestHandler\u003cAPIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent\u003e { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... \/\/ do something return res; } public App() { Injector injector = Guice.","wordCount":"150","inLanguage":"en","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/"},"keywords":["java","aws"],"author":[],"copyrightHolder":"ひとり開発日記。","copyrightYear":"2022","dateCreated":"2022-09-25T00:00:00.00Z","datePublished":"2022-09-25T00:00:00.00Z","dateModified":"2022-09-25T00:00:00.00Z","publisher":{"@type":"Organization","name":"ひとり開発日記。","url":"https://halflite.github.io/techlog/","logo":{"@type":"ImageObject","url":"https://halflite.github.io/techlog/brand.svg","width":"32","height":"32"}}}</script><script src=/techlog/></script>
+<script src=/techlog/></script>
+<link rel=preload as=font href=/techlog/fonts/Metropolis.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/LiberationSans.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/GeekblogIcons.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media="screen and (max-width: 45rem)"><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=print><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link href=https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/ rel=canonical type=text/html><link href=https://halflite.github.io/techlog/index.xml rel=alternate type=application/rss+xml title="ひとり開発日記。 RSS Feed"></head><body><div class=wrapper><header class=gblog-header><div class="container flex flex-wrap"><div class="gblog-header__col-1 flex justify-start hidden-mobile"></div><div class="gblog-header__col-2 flex align-center justify-center"><a class=gblog-header__link rel=me href=https://halflite.github.io/techlog/><span class="gblog-brand flex align-center justify-center"><img class=gblog-brand__img src=/techlog/brand.svg alt>
+<span class=gblog-brand__title>ひとり開発日記。</span></span></a></div><div class="gblog-header__col-3 flex justify-end"><span id=gblog-color-theme><svg class="gblog-icon gblog_brightness_dark"><title/><use xlink:href="#gblog_brightness_dark"/></svg><svg class="gblog-icon gblog_brightness_light"><title/><use xlink:href="#gblog_brightness_light"/></svg><svg class="gblog-icon gblog_brightness_auto"><title/><use xlink:href="#gblog_brightness_auto"/></svg></span></div></div></header><nav class=gblog-nav><input type=checkbox id=menu-control class=hidden><div class=gblog-nav__control><label for=menu-control class="flex align-center justify-center"><svg class="gblog-icon gblog_menu"><use xlink:href="#gblog_menu"/></svg><svg class="gblog-icon gblog_clear"><use xlink:href="#gblog_clear"/></svg><span>Navigation</span></label></div><ul class="gblog-nav__list container flex flex-wrap justify-center menu-content"><li><a class=gblog-nav__entry href=/techlog/tags/apache-camel/>Apache Camel</a></li><li><a class=gblog-nav__entry href=/techlog/tags/aws/>Aws</a></li><li><a class=gblog-nav__entry href=/techlog/tags/etc/>Etc</a></li><li><a class=gblog-nav__entry href=/techlog/tags/java/>Java</a></li><li><a class=gblog-nav__entry href=/techlog/tags/linux/>Linux</a></li><li><a class=gblog-nav__entry href=/techlog/tags/quarkus/>Quarkus</a></li><li><a class=gblog-nav__entry href=/techlog/tags/vagrant/>Vagrant</a></li></ul></nav><main class="gblog-page container"><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title>AWS Lambda FunctionでJavaを採用したい</h1><div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2022-09-25T00:00:00+09:00>Sep 25, 2022</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/aws/ title="All posts tagged with 'aws'">aws</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span></div></header><section class=gblog-markdown><div class="flex align-center gblog-post__anchorwrap"><h3 id=承前>承前</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#承前 class="gblog-post__anchor clip flex align-center" aria-label="Anchor 承前" href=#%e6%89%bf%e5%89%8d><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><ul><li><code>AWS Lambda Function</code> を <code>Java</code> で作るというお仕事をしています<ul><li>基本的に <code>Spring-Boot</code> がメインの現場です</li><li><code>Spring-Framawaork</code> はやめておけ、と公式でも言われてますね。<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></li></ul></li><li><code>Java</code> で何かしらする時は、背骨(フレームワーク)欲しいですよね<ul><li><code>DI(DependencyInjection)</code> 無いと、もう無理ですよね</li></ul></li><li><code>Guice</code>/<code>Dagger</code> を使えと言われていますが、どっち使ったらいいの？<ul><li>色々なケースがありますが</li></ul></li></ul><div class="flex align-center gblog-post__anchorwrap"><h3 id=自分でやったこと>自分でやったこと</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#自分でやったこと class="gblog-post__anchor clip flex align-center" aria-label="Anchor 自分でやったこと" href=#%e8%87%aa%e5%88%86%e3%81%a7%e3%82%84%e3%81%a3%e3%81%9f%e3%81%93%e3%81%a8><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><ul><li>自分でやったこと<ul><li><a class=gblog-markdown__link href=https://github.com/google/guice/wiki>google/guice</a></li><li><a class=gblog-markdown__link href=https://geronimo.apache.org/microprofile/index.html>Apache Geronimo Config</a></li><li><a class=gblog-markdown__link href=https://github.com/google/guava/wiki>google/guava</a></li></ul></li></ul><p>で、どうやってビジネスロジック注入する？を考えて、やっぱり<a class=gblog-markdown__link href=https://github.com/google/guice/wiki>google/guice</a>かなぁって。</p><p>設定注入は、<a class=gblog-markdown__link href=https://geronimo.apache.org/microprofile/index.html>Apache Geronimo Config</a>かな <sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup></p><p><code>Dagger</code>はコンパイル時DI、<code>Guice</code>実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、<code>Java</code>は起動するとかなり速いので、あまり差が無いのですね。
+まぁ、そもそも <code>AWS Lambda Function</code> って、プロダクション的に小さいですし <sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>
+そうすると、コードや設定少ない<code>Guice</code>の方がいいですよね。</p><div class="flex align-center gblog-post__anchorwrap"><h3 id=ケース>ケース</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/#ケース class="gblog-post__anchor clip flex align-center" aria-label="Anchor ケース" href=#%e3%82%b1%e3%83%bc%e3%82%b9><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>よくあるケースですが、 <code>API Gateway</code> で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>App</span> <span style=color:#66d9ef>implements</span> RequestHandler<span style=color:#f92672>&lt;</span>APIGatewayProxyRequestEvent<span style=color:#f92672>,</span> APIGatewayProxyResponseEvent<span style=color:#f92672>&gt;</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AnyService anyService<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> APIGatewayProxyResponseEvent <span style=color:#a6e22e>handleRequest</span><span style=color:#f92672>(</span>APIGatewayProxyRequestEvent input<span style=color:#f92672>,</span> Context context<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span><span style=color:#f92672>.</span><span style=color:#a6e22e>anyService</span><span style=color:#f92672>.</span><span style=color:#a6e22e>execute</span><span style=color:#f92672>(</span>input<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>    APIGatewayProxyResponseEvent res <span style=color:#f92672>=</span> <span style=color:#f92672>...</span> <span style=color:#75715e>// do something
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> res<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>App</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    Injector injector <span style=color:#f92672>=</span> Guice<span style=color:#f92672>.</span><span style=color:#a6e22e>createInjector</span><span style=color:#f92672>(</span><span style=color:#66d9ef>new</span> AppModule<span style=color:#f92672>());</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span><span style=color:#f92672>.</span><span style=color:#a6e22e>anyService</span> <span style=color:#f92672>=</span> injector<span style=color:#f92672>.</span><span style=color:#a6e22e>getInstance</span><span style=color:#f92672>(</span>AnyService<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Singleton</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AnyService</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>execute</span><span style=color:#f92672>(</span>APIGatewayProxyRequestEvent input<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// do something
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AppModule</span> <span style=color:#66d9ef>extends</span> AbstractModule <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>configure</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    bind<span style=color:#f92672>(</span>AnyService<span style=color:#f92672>.</span><span style=color:#a6e22e>class</span><span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// bind microprofile-config.properties
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>final</span> Map<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>,</span> String<span style=color:#f92672>&gt;</span> props <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;();</span>
+</span></span><span style=display:flex><span>    Sets<span style=color:#f92672>.</span><span style=color:#a6e22e>newLinkedHashSet</span><span style=color:#f92672>(</span>ConfigProvider<span style=color:#f92672>.</span><span style=color:#a6e22e>getConfig</span><span style=color:#f92672>().</span><span style=color:#a6e22e>getConfigSources</span><span style=color:#f92672>())</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>.</span><span style=color:#a6e22e>stream</span><span style=color:#f92672>()</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>.</span><span style=color:#a6e22e>map</span><span style=color:#f92672>(</span>ConfigSource<span style=color:#f92672>::</span>getProperties<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>.</span><span style=color:#a6e22e>forEach</span><span style=color:#f92672>(</span>props<span style=color:#f92672>::</span>putAll<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>    Names<span style=color:#f92672>.</span><span style=color:#a6e22e>bindProperties</span><span style=color:#f92672>(</span><span style=color:#66d9ef>this</span><span style=color:#f92672>.</span><span style=color:#a6e22e>binder</span><span style=color:#f92672>(),</span> props<span style=color:#f92672>);</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><p>まぁー、こんな感じですかね？<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup></p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p><a class=gblog-markdown__link href=https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html title="AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda">AWS Lambda 関数を使用するためのベストプラクティス - AWS Lambda</a>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>JavaEE MicroProfile Config の実装参照なので、まぁ廃れることはないでしょう <a class=gblog-markdown__link href=https://developer.mamezou-tech.com/msa/mp/cntrn06-mp-config/>第6回 お手軽便利MicroProfile Config | 豆蔵デベロッパーサイト</a>&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3><p>小さく作るべきですよね&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:4><p>たまに、こういう(所謂)「黒魔術」成分少ない、手組みのものを作ると、本当に勉強になります&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></section></article></main><footer class=gblog-footer><nav class="container flex"><div><section class="flex flex-wrap align-center"></section><section class="flex flex-wrap align-center"><span class=gblog-footer__item>Built with <a href=https://gohugo.io/ class=gblog-footer__link>Hugo</a> and<svg class="gblog-icon gblog_heart"><use xlink:href="#gblog_heart"/></svg></span></section></div><div class="flex flex-25 justify-end"><span class="gblog-footer__item text-right"><a class="gblog-footer__link fake-link" href=# aria-label="Back to top"><svg class="gblog-icon gblog_keyboard_arrow_up"><use xlink:href="#gblog_keyboard_arrow_up"/></svg><span class=hidden-mobile>Back to top</span></a></span></div></nav></footer></div></body></html>

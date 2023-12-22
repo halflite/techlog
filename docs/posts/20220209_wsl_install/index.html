@@ -1,183 +1,39 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-      
-  Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい &ndash; ひとり開発日記。
-
-    </title>
-    
-    
-    <meta name="description" property="og:description" content="全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=color-toggle-hidden><head><meta charset=utf-8><meta name=referrer content="no-referrer"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.111.3"><meta name=robots content="index, follow"><meta name=description content="全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
 カーネルアップデート実行 PowerShellのコマンドプロンプトで、以下を実行します。1
-Invoke-WebRequest -Uri &amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34; -OutFile &amp;#34;wsl_update_x64.msi&amp;#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
+Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34; -OutFile &#34;wsl_update_x64.msi&#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
 wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
 wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
-apt -y update &amp;amp;&amp;amp; apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
-pip --version 英語のウィンドウが出ますが、&amp;rsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-&amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&amp;#x21a9;&amp;#xfe0e;|">
-    
-
-    <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
-    
-    
-    
-    
-
-
-    <link rel="stylesheet" href="/techlog/assets/syntax.css">
-    <link rel="stylesheet" href="/techlog/assets/primer-build.css">
-    <link rel="stylesheet" href="/techlog/assets/style.css">
-    <link rel="stylesheet" href="/techlog/assets/custom_style.css">
-  </head>
-
-
-  <body class="bg-gray">
-    <div id="holy" class="container-lg bg-white h-100">
-
-      <div id="header" class="px-1 bg-white">
-        <nav class="UnderlineNav UnderlineNav--right px-2">
-  <a class="UnderlineNav-actions muted-link h2" href="https://halflite.github.io/techlog/">
-    ひとり開発日記。
-  </a>
-
-  
-  
-</nav>
-
-      </div>
-
-      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
-        
-
-<div class="Subhead">
-  <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</div>
-  </div>
-  <div class="Subhead-description">
-    
-
-
-
-
-<a href='/tags/etc' class="muted-link">
-  <span class="Label Label--gray">etc</span>
-</a>
-
-<a href='/tags/linux' class="muted-link">
-  <span class="Label Label--gray">linux</span>
-</a>
-
-
-
-    
-    <div class="float-md-right">
-      <span title="Lastmod: 2022-02-09. Published at: 2022-02-09.">
-        
-          Published: 2022-02-09
-        
-      </span>
-    </div>
-    
-  </div>
-</div>
-<article>
-  
-  <section class="pb-6 mb-3 border-bottom">
-    <p>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。</p>
-<h3 id="カーネルアップデート実行">カーネルアップデート実行</h3>
-<p>PowerShellのコマンドプロンプトで、以下を実行します。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>Invoke-WebRequest -Uri <span style="color:#e6db74">&#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34;</span> -OutFile <span style="color:#e6db74">&#34;wsl_update_x64.msi&#34;</span>
-</span></span><span style="display:flex;"><span>./wsl_update_x64.msi
-</span></span></code></pre></div><h3 id="wslubuntuインストール">WSL/Ubuntuインストール</h3>
-<p>PowerShellのコマンドプロンプトで、以下を実行します。<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>wsl --install -d Ubuntu
-</span></span><span style="display:flex;"><span>wsl --set-default Ubuntu
-</span></span></code></pre></div><h3 id="ubuntuに入る">Ubuntuに入る</h3>
-<p>PowerShellのコマンドプロンプトで、以下を実行します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>wsl
-</span></span></code></pre></div><p>Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python3 --version
-</span></span></code></pre></div><h3 id="pip3のインストール">pip3のインストール</h3>
-<p>Ubuntuのコマンドプロンプトで以下を実行します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt -y update <span style="color:#f92672">&amp;&amp;</span> apt -y install python3-pip
-</span></span></code></pre></div><p>以下を実行して、pip3が有効か確認します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>pip --version
-</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>英語のウィンドウが出ますが、&rsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>&ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-
-  </section>
-
-  <section>
-    
-      
-    
-  </section>
-</article>
-
-      </div>
-
-      <div id="side" class="pr-1 bg-white">
-        <aside class="pr-3">
-          
-  
-    <div id="toc" class="Box Box--blue mb-3">
-      <b>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</b><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#カーネルアップデート実行">カーネルアップデート実行</a></li>
-        <li><a href="#wslubuntuインストール">WSL/Ubuntuインストール</a></li>
-        <li><a href="#ubuntuに入る">Ubuntuに入る</a></li>
-        <li><a href="#pip3のインストール">pip3のインストール</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-  
-
-  
-    <div>
-      
-    </div>
-  
-
-        </aside>
-      </div>
-
-      <div id="footer" class="pt-2 pb-3 bg-white text-center">
-        
-
-  <span class="text-small text-gray">
-    
-
-    Powered by the
-    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
-    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
-  </span>
-
-
-      </div>
-    </div>
-
-    
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
-    
-  </body>
-</html>
+apt -y update && apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
+pip --version 英語のウィンドウが出ますが、’next’をクリックして、‘finish’まで行けば大丈夫です。 ↩︎
+“Retype new password:“と言うウィンドウが出ますが、それは、そのまま閉じて下さい。 ↩︎"><title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい | ひとり開発日記。</title><link rel=icon type=image/svg+xml href=/techlog/favicon/favicon.svg><link rel=icon type=image/png sizes=32x32 href=/techlog/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/techlog/favicon/favicon-16x16.png><meta property="og:title" content="Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい"><meta property="og:site_name" content="ひとり開発日記。"><meta property="og:description" content="全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+カーネルアップデート実行 PowerShellのコマンドプロンプトで、以下を実行します。1
+Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34; -OutFile &#34;wsl_update_x64.msi&#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
+wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
+wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
+python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
+apt -y update && apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
+pip --version 英語のウィンドウが出ますが、’next’をクリックして、‘finish’まで行けば大丈夫です。 ↩︎
+“Retype new password:“と言うウィンドウが出ますが、それは、そのまま閉じて下さい。 ↩︎"><meta property="og:type" content="article"><meta property="og:url" content="https://halflite.github.io/techlog/posts/20220209_wsl_install/"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2022-02-09T00:00:00+09:00"><meta property="article:modified_time" content="2022-02-09T00:00:00+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい"><meta name=twitter:description content="全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+カーネルアップデート実行 PowerShellのコマンドプロンプトで、以下を実行します。1
+Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34; -OutFile &#34;wsl_update_x64.msi&#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
+wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
+wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
+python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
+apt -y update && apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
+pip --version 英語のウィンドウが出ますが、’next’をクリックして、‘finish’まで行けば大丈夫です。 ↩︎
+“Retype new password:“と言うウィンドウが出ますが、それは、そのまま閉じて下さい。 ↩︎"><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"Posts","name":"Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい","url":"https://halflite.github.io/techlog/posts/20220209_wsl_install/","headline":"Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい","description":"全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。\nカーネルアップデート実行 PowerShellのコマンドプロンプトで、以下を実行します。1\nInvoke-WebRequest -Uri \u0022https:\/\/wslstorestorage.blob.core.windows.net\/wslblob\/wsl_update_x64.msi\u0022 -OutFile \u0022wsl_update_x64.msi\u0022 .\/wsl_update_x64.msi WSL\/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2\nwsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。\nwsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。\npython3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。\napt -y update \u0026\u0026 apt -y install python3-pip 以下を実行して、pip3が有効か確認します。\npip --version 英語のウィンドウが出ますが、’next’をクリックして、‘finish’まで行けば大丈夫です。 ↩︎\n“Retype new password:“と言うウィンドウが出ますが、それは、そのまま閉じて下さい。 ↩︎","wordCount":"41","inLanguage":"en","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https://halflite.github.io/techlog/posts/20220209_wsl_install/"},"keywords":["etc","linux"],"author":[],"copyrightHolder":"ひとり開発日記。","copyrightYear":"2022","dateCreated":"2022-02-09T00:00:00.00Z","datePublished":"2022-02-09T00:00:00.00Z","dateModified":"2022-02-09T00:00:00.00Z","publisher":{"@type":"Organization","name":"ひとり開発日記。","url":"https://halflite.github.io/techlog/","logo":{"@type":"ImageObject","url":"https://halflite.github.io/techlog/brand.svg","width":"32","height":"32"}}}</script><script src=/techlog/></script>
+<script src=/techlog/></script>
+<link rel=preload as=font href=/techlog/fonts/Metropolis.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/LiberationSans.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/GeekblogIcons.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media="screen and (max-width: 45rem)"><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=print><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link href=https://halflite.github.io/techlog/posts/20220209_wsl_install/ rel=canonical type=text/html><link href=https://halflite.github.io/techlog/index.xml rel=alternate type=application/rss+xml title="ひとり開発日記。 RSS Feed"></head><body><div class=wrapper><header class=gblog-header><div class="container flex flex-wrap"><div class="gblog-header__col-1 flex justify-start hidden-mobile"></div><div class="gblog-header__col-2 flex align-center justify-center"><a class=gblog-header__link rel=me href=https://halflite.github.io/techlog/><span class="gblog-brand flex align-center justify-center"><img class=gblog-brand__img src=/techlog/brand.svg alt>
+<span class=gblog-brand__title>ひとり開発日記。</span></span></a></div><div class="gblog-header__col-3 flex justify-end"><span id=gblog-color-theme><svg class="gblog-icon gblog_brightness_dark"><title/><use xlink:href="#gblog_brightness_dark"/></svg><svg class="gblog-icon gblog_brightness_light"><title/><use xlink:href="#gblog_brightness_light"/></svg><svg class="gblog-icon gblog_brightness_auto"><title/><use xlink:href="#gblog_brightness_auto"/></svg></span></div></div></header><nav class=gblog-nav><input type=checkbox id=menu-control class=hidden><div class=gblog-nav__control><label for=menu-control class="flex align-center justify-center"><svg class="gblog-icon gblog_menu"><use xlink:href="#gblog_menu"/></svg><svg class="gblog-icon gblog_clear"><use xlink:href="#gblog_clear"/></svg><span>Navigation</span></label></div><ul class="gblog-nav__list container flex flex-wrap justify-center menu-content"><li><a class=gblog-nav__entry href=/techlog/tags/apache-camel/>Apache Camel</a></li><li><a class=gblog-nav__entry href=/techlog/tags/aws/>Aws</a></li><li><a class=gblog-nav__entry href=/techlog/tags/etc/>Etc</a></li><li><a class=gblog-nav__entry href=/techlog/tags/java/>Java</a></li><li><a class=gblog-nav__entry href=/techlog/tags/linux/>Linux</a></li><li><a class=gblog-nav__entry href=/techlog/tags/quarkus/>Quarkus</a></li><li><a class=gblog-nav__entry href=/techlog/tags/vagrant/>Vagrant</a></li></ul></nav><main class="gblog-page container"><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</h1><div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2022-02-09T00:00:00+09:00>Feb 9, 2022</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/etc/ title="All posts tagged with 'etc'">etc</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/linux/ title="All posts tagged with 'linux'">linux</a></span></span></div></header><section class=gblog-markdown><p>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。</p><div class="flex align-center gblog-post__anchorwrap"><h3 id=カーネルアップデート実行>カーネルアップデート実行</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20220209_wsl_install/#カーネルアップデート実行 class="gblog-post__anchor clip flex align-center" aria-label="Anchor カーネルアップデート実行" href=#%e3%82%ab%e3%83%bc%e3%83%8d%e3%83%ab%e3%82%a2%e3%83%83%e3%83%97%e3%83%87%e3%83%bc%e3%83%88%e5%ae%9f%e8%a1%8c><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>PowerShellのコマンドプロンプトで、以下を実行します。<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span>Invoke-WebRequest -Uri <span style=color:#e6db74>&#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34;</span> -OutFile <span style=color:#e6db74>&#34;wsl_update_x64.msi&#34;</span>
+</span></span><span style=display:flex><span>./wsl_update_x64.msi
+</span></span></code></pre></div><div class="flex align-center gblog-post__anchorwrap"><h3 id=wslubuntuインストール>WSL/Ubuntuインストール</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20220209_wsl_install/#wslubuntuインストール class="gblog-post__anchor clip flex align-center" aria-label="Anchor WSL/Ubuntuインストール" href=#wslubuntu%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>PowerShellのコマンドプロンプトで、以下を実行します。<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span>wsl --install -d Ubuntu
+</span></span><span style=display:flex><span>wsl --set-default Ubuntu
+</span></span></code></pre></div><div class="flex align-center gblog-post__anchorwrap"><h3 id=ubuntuに入る>Ubuntuに入る</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20220209_wsl_install/#ubuntuに入る class="gblog-post__anchor clip flex align-center" aria-label="Anchor Ubuntuに入る" href=#ubuntu%e3%81%ab%e5%85%a5%e3%82%8b><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>PowerShellのコマンドプロンプトで、以下を実行します。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span>wsl
+</span></span></code></pre></div><p>Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>python3 --version
+</span></span></code></pre></div><div class="flex align-center gblog-post__anchorwrap"><h3 id=pip3のインストール>pip3のインストール</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20220209_wsl_install/#pip3のインストール class="gblog-post__anchor clip flex align-center" aria-label="Anchor pip3のインストール" href=#pip3%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>Ubuntuのコマンドプロンプトで以下を実行します。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>apt -y update <span style=color:#f92672>&amp;&amp;</span> apt -y install python3-pip
+</span></span></code></pre></div><p>以下を実行して、pip3が有効か確認します。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>pip --version
+</span></span></code></pre></div><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>英語のウィンドウが出ますが、&rsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>&ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></section></article></main><footer class=gblog-footer><nav class="container flex"><div><section class="flex flex-wrap align-center"></section><section class="flex flex-wrap align-center"><span class=gblog-footer__item>Built with <a href=https://gohugo.io/ class=gblog-footer__link>Hugo</a> and<svg class="gblog-icon gblog_heart"><use xlink:href="#gblog_heart"/></svg></span></section></div><div class="flex flex-25 justify-end"><span class="gblog-footer__item text-right"><a class="gblog-footer__link fake-link" href=# aria-label="Back to top"><svg class="gblog-icon gblog_keyboard_arrow_up"><use xlink:href="#gblog_keyboard_arrow_up"/></svg><span class=hidden-mobile>Back to top</span></a></span></div></nav></footer></div></body></html>

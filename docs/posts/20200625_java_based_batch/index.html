@@ -1,204 +1,24 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-      
-  2020年 Javaベースのバッチを作るなら &ndash; ひとり開発日記。
-
-    </title>
-    
-    
-    <meta name="description" property="og:description" content="前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=color-toggle-hidden><head><meta charset=utf-8><meta name=referrer content="no-referrer"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.111.3"><meta name=robots content="index, follow"><meta name=description content="前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
 そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。
 ある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。
 今、自分で作るとするなら、こんな感じかな
 ある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。
-参考 Serverless時代のJavaについて あるある案件&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-惰性とも言う&amp;#160;&amp;#x21a9;&amp;#xfe0e;|">
-    
-
-    <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
-    
-    
-    
-    
-
-
-    <link rel="stylesheet" href="/techlog/assets/syntax.css">
-    <link rel="stylesheet" href="/techlog/assets/primer-build.css">
-    <link rel="stylesheet" href="/techlog/assets/style.css">
-    <link rel="stylesheet" href="/techlog/assets/custom_style.css">
-  </head>
-
-
-  <body class="bg-gray">
-    <div id="holy" class="container-lg bg-white h-100">
-
-      <div id="header" class="px-1 bg-white">
-        <nav class="UnderlineNav UnderlineNav--right px-2">
-  <a class="UnderlineNav-actions muted-link h2" href="https://halflite.github.io/techlog/">
-    ひとり開発日記。
-  </a>
-
-  
-  
-</nav>
-
-      </div>
-
-      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
-        
-
-<div class="Subhead">
-  <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">2020年 Javaベースのバッチを作るなら</div>
-  </div>
-  <div class="Subhead-description">
-    
-
-
-
-
-<a href='/tags/java' class="muted-link">
-  <span class="Label Label--gray">java</span>
-</a>
-
-
-
-    
-    <div class="float-md-right">
-      <span title="Lastmod: 2020-06-25. Published at: 2020-06-25.">
-        
-          Published: 2020-06-25
-        
-      </span>
-    </div>
-    
-  </div>
-</div>
-<article>
-  
-  <section class="pb-6 mb-3 border-bottom">
-    <p>前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 <strong>「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」</strong> <strong>「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」</strong> 位の要件でしたね。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<p>そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。</p>
-<ul>
-<li>ある程度ポータブルなものにしたいよね
-<ul>
-<li>オンプレとは言え、不定期にサーバーの統廃合があったりする</li>
-<li>サーバーの統廃合時に、cronタブの設定忘れたり</li>
-<li>サーバーごとに <strong>秘伝のタレ</strong> の設定/シェルがあったり</li>
-</ul>
-</li>
-<li>ある程度複雑なロジックを伴うから、TDDとかやりたいよね
-<ul>
-<li>ちょっとした変更だって、やっぱり確認しながらやりたい</li>
-</ul>
-</li>
-<li>デプロイ時に漏れとか防ぎたいよね</li>
-<li>ソース管理もGitとかのVCSでやりたいよね
-<ul>
-<li>たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが…</li>
-</ul>
-</li>
-</ul>
-<p>…あれ? 結構条件ありますね。</p>
-<p>今、自分で作るとするなら、こんな感じかな</p>
-<ul>
-<li>ある程度枯れた、よく使われる軽量ライブラリの組合せで作る
-<ul>
-<li>GraalVMとか、まだ人類には早すぎるのでは…</li>
-<li><a href="https://jdbi.org/" title="Jdbi 3 Developer Guide">Jdbi</a> のような軽量OR/M</li>
-</ul>
-</li>
-<li>変数を、環境変数や実行時変数から注入できる仕組みを組み込む
-<ul>
-<li>VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう</li>
-<li><a href="https://github.com/lightbend/config" title="lightbend/config: configuration library for JVM languages using HOCON files">Typesafe Config</a></li>
-<li><a href="https://github.com/eclipse/microprofile-config" title="eclipse/microprofile-config: MicroProfile Configuration Feature">MicroProfile Configuration</a></li>
-</ul>
-</li>
-<li>ビジネスロジックをTDDで作るために、モックとか差し替えしたい
-<ul>
-<li>軽量DIコンテナを採用する</li>
-<li><a href="https://github.com/google/dagger" title="google/dagger: A fast dependency injector for Android and Java.">Dagger</a></li>
-</ul>
-</li>
-<li>Maven/Gradleで、依存関係やバージョン情報を明示</li>
-<li>実行可能なFatJarを作成して <code>java --jar batch.jar</code> だけで実行可能</li>
-<li>実行は、cronではなく、バッチ実行の仕組みを別に用意する
-<ul>
-<li><a href="https://docs.rundeck.com/docs/" title="Rundeck Documentation | Rundeck Docs">Rundeck</a></li>
-</ul>
-</li>
-<li>そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる</li>
-</ul>
-<p>意外とやらないといけないこと多いですわ。</p>
-<ul>
-<li>参考 <a href="https://www.slideshare.net/AmazonWebServicesJapan/serverlessjava-199195000" title="Serverless時代のJavaについて">Serverless時代のJavaについて</a></li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>あるある案件&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>惰性とも言う&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-
-  </section>
-
-  <section>
-    
-      
-    
-  </section>
-</article>
-
-      </div>
-
-      <div id="side" class="pr-1 bg-white">
-        <aside class="pr-3">
-          
-  
-    <div id="toc" class="Box Box--blue mb-3">
-      <b>2020年 Javaベースのバッチを作るなら</b><nav id="TableOfContents"></nav></div>
-  
-
-  
-    <div>
-      
-    </div>
-  
-
-        </aside>
-      </div>
-
-      <div id="footer" class="pt-2 pb-3 bg-white text-center">
-        
-
-  <span class="text-small text-gray">
-    
-
-    Powered by the
-    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
-    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
-  </span>
-
-
-      </div>
-    </div>
-
-    
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
-    
-  </body>
-</html>
+参考 Serverless時代のJavaについて あるある案件 ↩︎
+惰性とも言う ↩︎"><title>2020年 Javaベースのバッチを作るなら | ひとり開発日記。</title><link rel=icon type=image/svg+xml href=/techlog/favicon/favicon.svg><link rel=icon type=image/png sizes=32x32 href=/techlog/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/techlog/favicon/favicon-16x16.png><meta property="og:title" content="2020年 Javaベースのバッチを作るなら"><meta property="og:site_name" content="ひとり開発日記。"><meta property="og:description" content="前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
+そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。
+ある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。
+今、自分で作るとするなら、こんな感じかな
+ある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。
+参考 Serverless時代のJavaについて あるある案件 ↩︎
+惰性とも言う ↩︎"><meta property="og:type" content="article"><meta property="og:url" content="https://halflite.github.io/techlog/posts/20200625_java_based_batch/"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2020-06-25T12:00:00+09:00"><meta property="article:modified_time" content="2020-06-25T12:00:00+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="2020年 Javaベースのバッチを作るなら"><meta name=twitter:description content="前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
+そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。
+ある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。
+今、自分で作るとするなら、こんな感じかな
+ある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。
+参考 Serverless時代のJavaについて あるある案件 ↩︎
+惰性とも言う ↩︎"><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"Posts","name":"2020年 Javaベースのバッチを作るなら","url":"https://halflite.github.io/techlog/posts/20200625_java_based_batch/","headline":"2020年 Javaベースのバッチを作るなら","description":"前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1\nそこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。\nある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定\/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。\n今、自分で作るとするなら、こんな感じかな\nある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR\/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven\/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI\/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。\n参考 Serverless時代のJavaについて あるある案件 ↩︎\n惰性とも言う ↩︎","wordCount":"47","inLanguage":"en","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https://halflite.github.io/techlog/posts/20200625_java_based_batch/"},"keywords":["java"],"author":[],"copyrightHolder":"ひとり開発日記。","copyrightYear":"2020","dateCreated":"2020-06-25T12:00:00.00Z","datePublished":"2020-06-25T12:00:00.00Z","dateModified":"2020-06-25T12:00:00.00Z","publisher":{"@type":"Organization","name":"ひとり開発日記。","url":"https://halflite.github.io/techlog/","logo":{"@type":"ImageObject","url":"https://halflite.github.io/techlog/brand.svg","width":"32","height":"32"}}}</script><script src=/techlog/></script>
+<script src=/techlog/></script>
+<link rel=preload as=font href=/techlog/fonts/Metropolis.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/LiberationSans.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/GeekblogIcons.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media="screen and (max-width: 45rem)"><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=print><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link href=https://halflite.github.io/techlog/posts/20200625_java_based_batch/ rel=canonical type=text/html><link href=https://halflite.github.io/techlog/index.xml rel=alternate type=application/rss+xml title="ひとり開発日記。 RSS Feed"></head><body><div class=wrapper><header class=gblog-header><div class="container flex flex-wrap"><div class="gblog-header__col-1 flex justify-start hidden-mobile"></div><div class="gblog-header__col-2 flex align-center justify-center"><a class=gblog-header__link rel=me href=https://halflite.github.io/techlog/><span class="gblog-brand flex align-center justify-center"><img class=gblog-brand__img src=/techlog/brand.svg alt>
+<span class=gblog-brand__title>ひとり開発日記。</span></span></a></div><div class="gblog-header__col-3 flex justify-end"><span id=gblog-color-theme><svg class="gblog-icon gblog_brightness_dark"><title/><use xlink:href="#gblog_brightness_dark"/></svg><svg class="gblog-icon gblog_brightness_light"><title/><use xlink:href="#gblog_brightness_light"/></svg><svg class="gblog-icon gblog_brightness_auto"><title/><use xlink:href="#gblog_brightness_auto"/></svg></span></div></div></header><nav class=gblog-nav><input type=checkbox id=menu-control class=hidden><div class=gblog-nav__control><label for=menu-control class="flex align-center justify-center"><svg class="gblog-icon gblog_menu"><use xlink:href="#gblog_menu"/></svg><svg class="gblog-icon gblog_clear"><use xlink:href="#gblog_clear"/></svg><span>Navigation</span></label></div><ul class="gblog-nav__list container flex flex-wrap justify-center menu-content"><li><a class=gblog-nav__entry href=/techlog/tags/apache-camel/>Apache Camel</a></li><li><a class=gblog-nav__entry href=/techlog/tags/aws/>Aws</a></li><li><a class=gblog-nav__entry href=/techlog/tags/etc/>Etc</a></li><li><a class=gblog-nav__entry href=/techlog/tags/java/>Java</a></li><li><a class=gblog-nav__entry href=/techlog/tags/linux/>Linux</a></li><li><a class=gblog-nav__entry href=/techlog/tags/quarkus/>Quarkus</a></li><li><a class=gblog-nav__entry href=/techlog/tags/vagrant/>Vagrant</a></li></ul></nav><main class="gblog-page container"><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title>2020年 Javaベースのバッチを作るなら</h1><div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2020-06-25T12:00:00+09:00>Jun 25, 2020</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span></div></header><section class=gblog-markdown><p>前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 <strong>「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」</strong> <strong>「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」</strong> 位の要件でしたね。<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></p><p>そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。</p><ul><li>ある程度ポータブルなものにしたいよね<ul><li>オンプレとは言え、不定期にサーバーの統廃合があったりする</li><li>サーバーの統廃合時に、cronタブの設定忘れたり</li><li>サーバーごとに <strong>秘伝のタレ</strong> の設定/シェルがあったり</li></ul></li><li>ある程度複雑なロジックを伴うから、TDDとかやりたいよね<ul><li>ちょっとした変更だって、やっぱり確認しながらやりたい</li></ul></li><li>デプロイ時に漏れとか防ぎたいよね</li><li>ソース管理もGitとかのVCSでやりたいよね<ul><li>たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが…</li></ul></li></ul><p>…あれ? 結構条件ありますね。</p><p>今、自分で作るとするなら、こんな感じかな</p><ul><li>ある程度枯れた、よく使われる軽量ライブラリの組合せで作る<ul><li>GraalVMとか、まだ人類には早すぎるのでは…</li><li><a class=gblog-markdown__link href=https://jdbi.org/ title="Jdbi 3 Developer Guide">Jdbi</a> のような軽量OR/M</li></ul></li><li>変数を、環境変数や実行時変数から注入できる仕組みを組み込む<ul><li>VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう</li><li><a class=gblog-markdown__link href=https://github.com/lightbend/config title="lightbend/config: configuration library for JVM languages using HOCON files">Typesafe Config</a></li><li><a class=gblog-markdown__link href=https://github.com/eclipse/microprofile-config title="eclipse/microprofile-config: MicroProfile Configuration Feature">MicroProfile Configuration</a></li></ul></li><li>ビジネスロジックをTDDで作るために、モックとか差し替えしたい<ul><li>軽量DIコンテナを採用する</li><li><a class=gblog-markdown__link href=https://github.com/google/dagger title="google/dagger: A fast dependency injector for Android and Java.">Dagger</a></li></ul></li><li>Maven/Gradleで、依存関係やバージョン情報を明示</li><li>実行可能なFatJarを作成して <code>java --jar batch.jar</code> だけで実行可能</li><li>実行は、cronではなく、バッチ実行の仕組みを別に用意する<ul><li><a class=gblog-markdown__link href=https://docs.rundeck.com/docs/ title="Rundeck Documentation | Rundeck Docs">Rundeck</a></li></ul></li><li>そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる</li></ul><p>意外とやらないといけないこと多いですわ。</p><ul><li>参考 <a class=gblog-markdown__link href=https://www.slideshare.net/AmazonWebServicesJapan/serverlessjava-199195000 title=Serverless時代のJavaについて>Serverless時代のJavaについて</a></li></ul><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>あるある案件&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>惰性とも言う&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></section></article></main><footer class=gblog-footer><nav class="container flex"><div><section class="flex flex-wrap align-center"></section><section class="flex flex-wrap align-center"><span class=gblog-footer__item>Built with <a href=https://gohugo.io/ class=gblog-footer__link>Hugo</a> and<svg class="gblog-icon gblog_heart"><use xlink:href="#gblog_heart"/></svg></span></section></div><div class="flex flex-25 justify-end"><span class="gblog-footer__item text-right"><a class="gblog-footer__link fake-link" href=# aria-label="Back to top"><svg class="gblog-icon gblog_keyboard_arrow_up"><use xlink:href="#gblog_keyboard_arrow_up"/></svg><span class=hidden-mobile>Back to top</span></a></span></div></nav></footer></div></body></html>

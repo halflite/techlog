@@ -1,0 +1,23 @@
+# local environments
+.swp
+.env*
+/dist/
+/build/
+/node_modules/
+/lhci_reports/
+/exampleSite/themes/
+/exampleSite/public/
+CHANGELOG.md
+.hugo_build.lock
+
+# auto-generated files
+/data/
+/static/
+/assets/sprites/
+/resources/
+/exampleSite/resources/
+/exampleSite/data/sprites/
+VERSION
+
+# testing
+.lighthouseci/

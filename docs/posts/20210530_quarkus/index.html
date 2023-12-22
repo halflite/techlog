@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-      
-  Quarkusに入門してみた &ndash; ひとり開発日記。
-
-    </title>
-    
-    
-    <meta name="description" property="og:description" content="Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=color-toggle-hidden><head><meta charset=utf-8><meta name=referrer content="no-referrer"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.111.3"><meta name=robots content="index, follow"><meta name=description content="Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
 入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
 最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
 mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
@@ -22,174 +9,35 @@ DBアクセスには、 Hibernate/JPA とか、そのラッパー Panache とか
 Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
 でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
 このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
-Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-Quarkus - Guides - Latest https://quarkus.|">
-    
-
-    <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
-    
-    
-    
-    
-
-
-    <link rel="stylesheet" href="/techlog/assets/syntax.css">
-    <link rel="stylesheet" href="/techlog/assets/primer-build.css">
-    <link rel="stylesheet" href="/techlog/assets/style.css">
-    <link rel="stylesheet" href="/techlog/assets/custom_style.css">
-  </head>
-
-
-  <body class="bg-gray">
-    <div id="holy" class="container-lg bg-white h-100">
-
-      <div id="header" class="px-1 bg-white">
-        <nav class="UnderlineNav UnderlineNav--right px-2">
-  <a class="UnderlineNav-actions muted-link h2" href="https://halflite.github.io/techlog/">
-    ひとり開発日記。
-  </a>
-
-  
-  
-</nav>
-
-      </div>
-
-      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
-        
-
-<div class="Subhead">
-  <div class="Subhead-heading">
-    <div class="h1 mt-3 mb-1">Quarkusに入門してみた</div>
-  </div>
-  <div class="Subhead-description">
-    
-
-
-
-
-<a href='/tags/java' class="muted-link">
-  <span class="Label Label--gray">java</span>
-</a>
-
-
-
-    
-    <div class="float-md-right">
-      <span title="Lastmod: 2021-05-30. Published at: 2021-05-30.">
-        
-          Published: 2021-05-30
-        
-      </span>
-    </div>
-    
-  </div>
-</div>
-<article>
-  
-  <section class="pb-6 mb-3 border-bottom">
-    <h3 id="quarkusに入門してみた">Quarkusに入門してみた</h3>
-<ul>
-<li><a href="https://quarkus.io/guides/getting-started" title="Quarkus - Creating Your First Application">Quarkus - Creating Your First Application</a></li>
-</ul>
-<p><code>Quarkus</code> を、ちょろっと触っています。</p>
-<p>入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。</p>
-<h3 id="最初に触った感想">最初に触った感想</h3>
-<ul>
-<li>とりあえず、簡単に出来るよな</li>
-<li>色々揃っているよな、でも外れると何も出来ないよな</li>
-<li>Vert.x が鬼門かもしれないな</li>
-</ul>
-<h3 id="とりあえず簡単に出来るよな">とりあえず、簡単に出来るよな</h3>
-<p>とりあえず、mavenでプロジェクト作って、 <code>Hello, World!</code> とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mvn clean compile quarkus:dev
-</span></span></code></pre></div><p>で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<h3 id="色々揃っているよなでも外れると何も出来ないよな">色々揃っているよな、でも外れると何も出来ないよな</h3>
-<p>色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<p>プレゼンテーション層、(所謂)「HTMLテンプレート」は <a href="https://quarkus.io/guides/qute" title="Quarkus - Qute Templating Engine">Qute Templating Engine</a> があるんですが、マジでこれしかないの…？ <code>Thymeleaf</code> はおろか、 <code>FreeMarker</code> にも届かないんでは…。</p>
-<p>DBアクセスには、 <a href="https://quarkus.io/guides/hibernate-orm" title="Quarkus - Using Hibernate ORM and JPA">Hibernate/JPA</a> とか、そのラッパー <a href="https://quarkus.io/guides/hibernate-orm-panache" title="Quarkus - Simplified Hibernate ORM with Panache">Panache</a> とかあるんですが、それ以外は…。</p>
-<p>まぁ、そもそも <code>Quarkus</code> の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。</p>
-<h3 id="vertx-が鬼門かもしれないな">Vert.x が鬼門かもしれないな</h3>
-<p><a href="https://spring.pleiades.io/spring-boot/docs/current/reference/html/getting-started.html" title="Spring Boot 入門 - リファレンスドキュメント">Spring Boot</a> って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 <code>Vert.x </code> は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。</p>
-<h3 id="でもね">でもね</h3>
-<p>とは言え、新しい技術に触れると、ホントにワクワクしますわ。</p>
-<p>このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Maven testをeclipseでデバッグ | infoScoop開発者ブログ <a href="https://bit.ly/2TJzH6W">https://bit.ly/2TJzH6W</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Quarkus - Guides - Latest <a href="https://quarkus.io/guides/">https://quarkus.io/guides/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>MicroProfile 4.0への道 <a href="https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/">https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-
-  </section>
-
-  <section>
-    
-      
-    
-  </section>
-</article>
-
-      </div>
-
-      <div id="side" class="pr-1 bg-white">
-        <aside class="pr-3">
-          
-  
-    <div id="toc" class="Box Box--blue mb-3">
-      <b>Quarkusに入門してみた</b><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#quarkusに入門してみた">Quarkusに入門してみた</a></li>
-        <li><a href="#最初に触った感想">最初に触った感想</a></li>
-        <li><a href="#とりあえず簡単に出来るよな">とりあえず、簡単に出来るよな</a></li>
-        <li><a href="#色々揃っているよなでも外れると何も出来ないよな">色々揃っているよな、でも外れると何も出来ないよな</a></li>
-        <li><a href="#vertx-が鬼門かもしれないな">Vert.x が鬼門かもしれないな</a></li>
-        <li><a href="#でもね">でもね</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-  
-
-  
-    <div>
-      
-    </div>
-  
-
-        </aside>
-      </div>
-
-      <div id="footer" class="pt-2 pb-3 bg-white text-center">
-        
-
-  <span class="text-small text-gray">
-    
-
-    Powered by the
-    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
-    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
-  </span>
-
-
-      </div>
-    </div>
-
-    
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
-    
-  </body>
-</html>
+Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W ↩︎
+Quarkus - Guides - Latest https://quarkus."><title>Quarkusに入門してみた | ひとり開発日記。</title><link rel=icon type=image/svg+xml href=/techlog/favicon/favicon.svg><link rel=icon type=image/png sizes=32x32 href=/techlog/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/techlog/favicon/favicon-16x16.png><meta property="og:title" content="Quarkusに入門してみた"><meta property="og:site_name" content="ひとり開発日記。"><meta property="og:description" content="Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
+入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
+最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
+mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
+色々揃っているよな、でも外れると何も出来ないよな 色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 2
+プレゼンテーション層、(所謂)「HTMLテンプレート」は Qute Templating Engine があるんですが、マジでこれしかないの…？ Thymeleaf はおろか、 FreeMarker にも届かないんでは…。
+DBアクセスには、 Hibernate/JPA とか、そのラッパー Panache とかあるんですが、それ以外は…。
+まぁ、そもそも Quarkus の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。
+Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
+でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
+このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
+Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W ↩︎
+Quarkus - Guides - Latest https://quarkus."><meta property="og:type" content="article"><meta property="og:url" content="https://halflite.github.io/techlog/posts/20210530_quarkus/"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2021-05-30T00:00:00+09:00"><meta property="article:modified_time" content="2021-05-30T00:00:00+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Quarkusに入門してみた"><meta name=twitter:description content="Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
+入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
+最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
+mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
+色々揃っているよな、でも外れると何も出来ないよな 色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 2
+プレゼンテーション層、(所謂)「HTMLテンプレート」は Qute Templating Engine があるんですが、マジでこれしかないの…？ Thymeleaf はおろか、 FreeMarker にも届かないんでは…。
+DBアクセスには、 Hibernate/JPA とか、そのラッパー Panache とかあるんですが、それ以外は…。
+まぁ、そもそも Quarkus の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。
+Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
+でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
+このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
+Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W ↩︎
+Quarkus - Guides - Latest https://quarkus."><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","articleSection":"Posts","name":"Quarkusに入門してみた","url":"https://halflite.github.io/techlog/posts/20210530_quarkus/","headline":"Quarkusに入門してみた","description":"Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。\n入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。\n最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。\nmvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1\n色々揃っているよな、でも外れると何も出来ないよな 色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 2\nプレゼンテーション層、(所謂)「HTMLテンプレート」は Qute Templating Engine があるんですが、マジでこれしかないの…？ Thymeleaf はおろか、 FreeMarker にも届かないんでは…。\nDBアクセスには、 Hibernate\/JPA とか、そのラッパー Panache とかあるんですが、それ以外は…。\nまぁ、そもそも Quarkus の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。\nVert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。\nでもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。\nこのフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3\nMaven testをeclipseでデバッグ | infoScoop開発者ブログ https:\/\/bit.ly\/2TJzH6W ↩︎\nQuarkus - Guides - Latest https:\/\/quarkus.","wordCount":"74","inLanguage":"en","isFamilyFriendly":"true","mainEntityOfPage":{"@type":"WebPage","@id":"https://halflite.github.io/techlog/posts/20210530_quarkus/"},"keywords":["java"],"author":[],"copyrightHolder":"ひとり開発日記。","copyrightYear":"2021","dateCreated":"2021-05-30T00:00:00.00Z","datePublished":"2021-05-30T00:00:00.00Z","dateModified":"2021-05-30T00:00:00.00Z","publisher":{"@type":"Organization","name":"ひとり開発日記。","url":"https://halflite.github.io/techlog/","logo":{"@type":"ImageObject","url":"https://halflite.github.io/techlog/brand.svg","width":"32","height":"32"}}}</script><script src=/techlog/></script>
+<script src=/techlog/></script>
+<link rel=preload as=font href=/techlog/fonts/Metropolis.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/LiberationSans.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/GeekblogIcons.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media="screen and (max-width: 45rem)"><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=print><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link href=https://halflite.github.io/techlog/posts/20210530_quarkus/ rel=canonical type=text/html><link href=https://halflite.github.io/techlog/index.xml rel=alternate type=application/rss+xml title="ひとり開発日記。 RSS Feed"></head><body><div class=wrapper><header class=gblog-header><div class="container flex flex-wrap"><div class="gblog-header__col-1 flex justify-start hidden-mobile"></div><div class="gblog-header__col-2 flex align-center justify-center"><a class=gblog-header__link rel=me href=https://halflite.github.io/techlog/><span class="gblog-brand flex align-center justify-center"><img class=gblog-brand__img src=/techlog/brand.svg alt>
+<span class=gblog-brand__title>ひとり開発日記。</span></span></a></div><div class="gblog-header__col-3 flex justify-end"><span id=gblog-color-theme><svg class="gblog-icon gblog_brightness_dark"><title/><use xlink:href="#gblog_brightness_dark"/></svg><svg class="gblog-icon gblog_brightness_light"><title/><use xlink:href="#gblog_brightness_light"/></svg><svg class="gblog-icon gblog_brightness_auto"><title/><use xlink:href="#gblog_brightness_auto"/></svg></span></div></div></header><nav class=gblog-nav><input type=checkbox id=menu-control class=hidden><div class=gblog-nav__control><label for=menu-control class="flex align-center justify-center"><svg class="gblog-icon gblog_menu"><use xlink:href="#gblog_menu"/></svg><svg class="gblog-icon gblog_clear"><use xlink:href="#gblog_clear"/></svg><span>Navigation</span></label></div><ul class="gblog-nav__list container flex flex-wrap justify-center menu-content"><li><a class=gblog-nav__entry href=/techlog/tags/apache-camel/>Apache Camel</a></li><li><a class=gblog-nav__entry href=/techlog/tags/aws/>Aws</a></li><li><a class=gblog-nav__entry href=/techlog/tags/etc/>Etc</a></li><li><a class=gblog-nav__entry href=/techlog/tags/java/>Java</a></li><li><a class=gblog-nav__entry href=/techlog/tags/linux/>Linux</a></li><li><a class=gblog-nav__entry href=/techlog/tags/quarkus/>Quarkus</a></li><li><a class=gblog-nav__entry href=/techlog/tags/vagrant/>Vagrant</a></li></ul></nav><main class="gblog-page container"><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title>Quarkusに入門してみた</h1><div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2021-05-30T00:00:00+09:00>May 30, 2021</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span></div></header><section class=gblog-markdown><div class="flex align-center gblog-post__anchorwrap"><h3 id=quarkusに入門してみた>Quarkusに入門してみた</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20210530_quarkus/#quarkusに入門してみた class="gblog-post__anchor clip flex align-center" aria-label="Anchor Quarkusに入門してみた" href=#quarkus%e3%81%ab%e5%85%a5%e9%96%80%e3%81%97%e3%81%a6%e3%81%bf%e3%81%9f><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><ul><li><a class=gblog-markdown__link href=https://quarkus.io/guides/getting-started title="Quarkus - Creating Your First Application">Quarkus - Creating Your First Application</a></li></ul><p><code>Quarkus</code> を、ちょろっと触っています。</p><p>入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。</p><div class="flex align-center gblog-post__anchorwrap"><h3 id=最初に触った感想>最初に触った感想</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20210530_quarkus/#最初に触った感想 class="gblog-post__anchor clip flex align-center" aria-label="Anchor 最初に触った感想" href=#%e6%9c%80%e5%88%9d%e3%81%ab%e8%a7%a6%e3%81%a3%e3%81%9f%e6%84%9f%e6%83%b3><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><ul><li>とりあえず、簡単に出来るよな</li><li>色々揃っているよな、でも外れると何も出来ないよな</li><li>Vert.x が鬼門かもしれないな</li></ul><div class="flex align-center gblog-post__anchorwrap"><h3 id=とりあえず簡単に出来るよな>とりあえず、簡単に出来るよな</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20210530_quarkus/#とりあえず簡単に出来るよな class="gblog-post__anchor clip flex align-center" aria-label="Anchor とりあえず、簡単に出来るよな" href=#%e3%81%a8%e3%82%8a%e3%81%82%e3%81%88%e3%81%9a%e7%b0%a1%e5%8d%98%e3%81%ab%e5%87%ba%e6%9d%a5%e3%82%8b%e3%82%88%e3%81%aa><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>とりあえず、mavenでプロジェクト作って、 <code>Hello, World!</code> とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>mvn clean compile quarkus:dev
+</span></span></code></pre></div><p>で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></p><div class="flex align-center gblog-post__anchorwrap"><h3 id=色々揃っているよなでも外れると何も出来ないよな>色々揃っているよな、でも外れると何も出来ないよな</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20210530_quarkus/#色々揃っているよなでも外れると何も出来ないよな class="gblog-post__anchor clip flex align-center" aria-label="Anchor 色々揃っているよな、でも外れると何も出来ないよな" href=#%e8%89%b2%e3%80%85%e6%8f%83%e3%81%a3%e3%81%a6%e3%81%84%e3%82%8b%e3%82%88%e3%81%aa%e3%81%a7%e3%82%82%e5%a4%96%e3%82%8c%e3%82%8b%e3%81%a8%e4%bd%95%e3%82%82%e5%87%ba%e6%9d%a5%e3%81%aa%e3%81%84%e3%82%88%e3%81%aa><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 <sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup></p><p>プレゼンテーション層、(所謂)「HTMLテンプレート」は <a class=gblog-markdown__link href=https://quarkus.io/guides/qute title="Quarkus - Qute Templating Engine">Qute Templating Engine</a> があるんですが、マジでこれしかないの…？ <code>Thymeleaf</code> はおろか、 <code>FreeMarker</code> にも届かないんでは…。</p><p>DBアクセスには、 <a class=gblog-markdown__link href=https://quarkus.io/guides/hibernate-orm title="Quarkus - Using Hibernate ORM and JPA">Hibernate/JPA</a> とか、そのラッパー <a class=gblog-markdown__link href=https://quarkus.io/guides/hibernate-orm-panache title="Quarkus - Simplified Hibernate ORM with Panache">Panache</a> とかあるんですが、それ以外は…。</p><p>まぁ、そもそも <code>Quarkus</code> の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。</p><div class="flex align-center gblog-post__anchorwrap"><h3 id=vertx-が鬼門かもしれないな>Vert.x が鬼門かもしれないな</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20210530_quarkus/#vertx-が鬼門かもしれないな class="gblog-post__anchor clip flex align-center" aria-label="Anchor Vert.x が鬼門かもしれないな" href=#vertx-%e3%81%8c%e9%ac%bc%e9%96%80%e3%81%8b%e3%82%82%e3%81%97%e3%82%8c%e3%81%aa%e3%81%84%e3%81%aa><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p><a class=gblog-markdown__link href=https://spring.pleiades.io/spring-boot/docs/current/reference/html/getting-started.html title="Spring Boot 入門 - リファレンスドキュメント">Spring Boot</a> って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 <code>Vert.x</code> は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。</p><div class="flex align-center gblog-post__anchorwrap"><h3 id=でもね>でもね</h3><a data-clipboard-text=https://halflite.github.io/techlog/posts/20210530_quarkus/#でもね class="gblog-post__anchor clip flex align-center" aria-label="Anchor でもね" href=#%e3%81%a7%e3%82%82%e3%81%ad><svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"/></svg></a></div><p>とは言え、新しい技術に触れると、ホントにワクワクしますわ。</p><p>このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 <sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup></p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>Maven testをeclipseでデバッグ | infoScoop開発者ブログ <a class=gblog-markdown__link href=https://bit.ly/2TJzH6W>https://bit.ly/2TJzH6W</a>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>Quarkus - Guides - Latest <a class=gblog-markdown__link href=https://quarkus.io/guides/>https://quarkus.io/guides/</a>&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3><p>MicroProfile 4.0への道 <a class=gblog-markdown__link href=https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/>https://www.infoq.com/jp/news/2021/04/the-road-to-microprofile-4/</a>&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></section></article></main><footer class=gblog-footer><nav class="container flex"><div><section class="flex flex-wrap align-center"></section><section class="flex flex-wrap align-center"><span class=gblog-footer__item>Built with <a href=https://gohugo.io/ class=gblog-footer__link>Hugo</a> and<svg class="gblog-icon gblog_heart"><use xlink:href="#gblog_heart"/></svg></span></section></div><div class="flex flex-25 justify-end"><span class="gblog-footer__item text-right"><a class="gblog-footer__link fake-link" href=# aria-label="Back to top"><svg class="gblog-icon gblog_keyboard_arrow_up"><use xlink:href="#gblog_keyboard_arrow_up"/></svg><span class=hidden-mobile>Back to top</span></a></span></div></nav></footer></div></body></html>

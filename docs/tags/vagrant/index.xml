@@ -1,24 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>vagrant on ひとり開発日記。</title>
-    <link>https://halflite.github.io/techlog/tags/vagrant/</link>
-    <description>Recent content in vagrant on ひとり開発日記。</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja</language>
-    <lastBuildDate>Fri, 18 Sep 2020 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</title>
-      <link>https://halflite.github.io/techlog/posts/20200918_postgres_local/</link>
-      <pubDate>Fri, 18 Sep 2020 00:00:00 +0900</pubDate>
-      
-      <guid>https://halflite.github.io/techlog/posts/20200918_postgres_local/</guid>
-      <description>Heroku で、小さいアプリケーションを作りたいと思っていて。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>vagrant on ひとり開発日記。</title><link>https://halflite.github.io/techlog/tags/vagrant/</link><description>Recent content in vagrant on ひとり開発日記。</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Fri, 18 Sep 2020 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/vagrant/index.xml" rel="self" type="application/rss+xml"/><item><title>2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</title><link>https://halflite.github.io/techlog/posts/20200918_postgres_local/</link><pubDate>Fri, 18 Sep 2020 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200918_postgres_local/</guid><description>Heroku で、小さいアプリケーションを作りたいと思っていて。
 MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。
 という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。
 https://github.com/halflite/postgresql-win-local こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
-ClearDB MySQL - Add-ons - Heroku Elements&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
-    </item>
-    
-  </channel>
-</rss>
+ClearDB MySQL - Add-ons - Heroku Elements&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description></item></channel></rss>

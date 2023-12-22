@@ -1,124 +1,37 @@
-<!DOCTYPE html>
-<html>
-  <head>
-	<meta name="generator" content="Hugo 0.107.0">
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-      
-  ひとり開発日記。 &ndash; ひとり開発日記。
-
-    </title>
-    
-    
-    <meta name="description" property="og:description" content="">
-    
-
-    <meta name="apple-mobile-web-app-title" content="ひとり開発日記。">
-    
-    
-    
-    
-
-
-    <link rel="stylesheet" href="/techlog/assets/syntax.css">
-    <link rel="stylesheet" href="/techlog/assets/primer-build.css">
-    <link rel="stylesheet" href="/techlog/assets/style.css">
-    <link rel="stylesheet" href="/techlog/assets/custom_style.css">
-  </head>
-
-
-  <body class="bg-gray">
-    <div id="holy" class="container-lg bg-white h-100">
-
-      <div id="header" class="px-1 bg-white">
-        <nav class="UnderlineNav UnderlineNav--right px-2">
-  <a class="UnderlineNav-actions muted-link h2" href="https://halflite.github.io/techlog/">
-    ひとり開発日記。
-  </a>
-
-  
-  
-</nav>
-
-      </div>
-
-      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
-        
-
-<div>
-
-  <h1>ひとり開発日記。</h1>
-  
-
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20230602_jms_cosumer_apache_camel/">
-        <h3>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</small>
-      2023-06-02
-    </div>
-    TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
-継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&#34;topic:upload.
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20230529_jms_producer/">
-        <h3>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20230529_jms_producer/</small>
-      2023-05-29
-    </div>
-    承前 ブラウザ-&gt;ウェブアプリ-&gt;ActiveMQ-&gt;ApacheCamel-&gt;AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 非同期で、イベント駆動で処理したいですよね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである Apache Camel2 もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer-&gt;ActiveMQ-&gt;Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように。 そうすると、ConnectionFactoryもDI対象になりますよ。 public void uploadImage(String fileName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20220925_aws_lambda_guice/">
-        <h3>AWS Lambda FunctionでJavaを採用したい</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</small>
-      2022-09-25
-    </div>
-    承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=color-toggle-hidden><head><meta charset=utf-8><meta name=referrer content="no-referrer"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.111.3"><meta name=robots content="index, follow"><title>ひとり開発日記。</title><link rel=icon type=image/svg+xml href=/techlog/favicon/favicon.svg><link rel=icon type=image/png sizes=32x32 href=/techlog/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/techlog/favicon/favicon-16x16.png><meta property="og:site_name" content="ひとり開発日記。"><meta property="og:type" content="website"><meta property="og:url" content="https://halflite.github.io/techlog/"><meta name=twitter:card content="summary"><meta name=twitter:title content="ひとり開発日記。"><script type=application/ld+json>{"@context":"http://schema.org","@type":"WebSite","name":"ひとり開発日記。","url":"https://halflite.github.io/techlog/","inLanguage":"en"}</script><script src=/techlog/></script>
+<script src=/techlog/></script>
+<link rel=preload as=font href=/techlog/fonts/Metropolis.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/LiberationSans.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload as=font href=/techlog/fonts/GeekblogIcons.woff2 type=font/woff2 crossorigin=anonymous><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media="screen and (max-width: 45rem)"><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=print><link rel=preload href=/techlog/ as=style><link rel=stylesheet href=/techlog/ media=all><link href=https://halflite.github.io/techlog/ rel=canonical type=text/html><link href=https://halflite.github.io/techlog/index.xml rel=alternate type=application/rss+xml title="ひとり開発日記。 RSS Feed"></head><body><div class=wrapper><header class=gblog-header><div class="container flex flex-wrap"><div class="gblog-header__col-1 flex justify-start hidden-mobile"></div><div class="gblog-header__col-2 flex align-center justify-center"><a class=gblog-header__link rel=me href=https://halflite.github.io/techlog/><span class="gblog-brand flex align-center justify-center"><img class=gblog-brand__img src=/techlog/brand.svg alt>
+<span class=gblog-brand__title>ひとり開発日記。</span></span></a></div><div class="gblog-header__col-3 flex justify-end"><span id=gblog-color-theme><svg class="gblog-icon gblog_brightness_dark"><title/><use xlink:href="#gblog_brightness_dark"/></svg><svg class="gblog-icon gblog_brightness_light"><title/><use xlink:href="#gblog_brightness_light"/></svg><svg class="gblog-icon gblog_brightness_auto"><title/><use xlink:href="#gblog_brightness_auto"/></svg></span></div></div></header><nav class=gblog-nav><input type=checkbox id=menu-control class=hidden><div class=gblog-nav__control><label for=menu-control class="flex align-center justify-center"><svg class="gblog-icon gblog_menu"><use xlink:href="#gblog_menu"/></svg><svg class="gblog-icon gblog_clear"><use xlink:href="#gblog_clear"/></svg><span>Navigation</span></label></div><ul class="gblog-nav__list container flex flex-wrap justify-center menu-content"><li><a class=gblog-nav__entry href=/techlog/tags/apache-camel/>Apache Camel</a></li><li><a class=gblog-nav__entry href=/techlog/tags/aws/>Aws</a></li><li><a class=gblog-nav__entry href=/techlog/tags/etc/>Etc</a></li><li><a class=gblog-nav__entry href=/techlog/tags/java/>Java</a></li><li><a class=gblog-nav__entry href=/techlog/tags/linux/>Linux</a></li><li><a class=gblog-nav__entry href=/techlog/tags/quarkus/>Quarkus</a></li><li><a class=gblog-nav__entry href=/techlog/tags/vagrant/>Vagrant</a></li></ul></nav><main class="gblog-page container"><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20230602_jms_cosumer_apache_camel/>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</a></h1></header><section class=gblog-markdown>TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
+継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2("topic:upload.</section><div class=gblog-post__readmore><a class="flex-inline align-center fake-link" title="Read full post" href=/techlog/posts/20230602_jms_cosumer_apache_camel/>Read full post
+<i class=gblog-icon>gblog_arrow_right</i></a></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2023-06-02T00:00:00+09:00>Jun 2, 2023</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/apache-camel/ title="All posts tagged with 'apache-camel'">apache-camel</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/quarkus/ title="All posts tagged with 'quarkus'">quarkus</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20230529_jms_producer/>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</a></h1></header><section class=gblog-markdown>承前 ブラウザ->ウェブアプリ->ActiveMQ->ApacheCamel->AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 非同期で、イベント駆動で処理したいですよね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである Apache Camel2 もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer->ActiveMQ->Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように。 そうすると、ConnectionFactoryもDI対象になりますよ。 public void uploadImage(String fileName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.</section><div class=gblog-post__readmore><a class="flex-inline align-center fake-link" title="Read full post" href=/techlog/posts/20230529_jms_producer/>Read full post
+<i class=gblog-icon>gblog_arrow_right</i></a></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2023-05-29T00:00:00+09:00>May 29, 2023</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/apache-camel/ title="All posts tagged with 'apache-camel'">apache-camel</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/quarkus/ title="All posts tagged with 'quarkus'">quarkus</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20220925_aws_lambda_guice/>AWS Lambda FunctionでJavaを採用したい</a></h1></header><section class=gblog-markdown>承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
 設定注入は、Apache Geronimo Configかな 2
 Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。
 ケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
-public class App implements RequestHandler&lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&gt; { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20220209_wsl_install/">
-        <h3>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20220209_wsl_install/</small>
-      2022-02-09
-    </div>
-    全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+public class App implements RequestHandler&lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.</section><div class=gblog-post__readmore><a class="flex-inline align-center fake-link" title="Read full post" href=/techlog/posts/20220925_aws_lambda_guice/>Read full post
+<i class=gblog-icon>gblog_arrow_right</i></a></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2022-09-25T00:00:00+09:00>Sep 25, 2022</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/aws/ title="All posts tagged with 'aws'">aws</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20220209_wsl_install/>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</a></h1></header><section class=gblog-markdown>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
 カーネルアップデート実行 PowerShellのコマンドプロンプトで、以下を実行します。1
-Invoke-WebRequest -Uri &#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&#34; -OutFile &#34;wsl_update_x64.msi&#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
+Invoke-WebRequest -Uri "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi" -OutFile "wsl_update_x64.msi" ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
 wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
 wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を実行して、Python3が有効か確認します。
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
-apt -y update &amp;&amp; apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
-pip --version 英語のウィンドウが出ますが、&rsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;&#x21a9;&#xfe0e;
-&ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;&#x21a9;&#xfe0e;
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20211027_hugo_docker/">
-        <h3>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</small>
-      2021-10-27
-    </div>
-    bitter*smooth と言う音楽レビューサイトを作っています。
+apt -y update && apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
+pip --version 英語のウィンドウが出ますが、&rsquo;next&rsquo;をクリックして、&lsquo;finish&rsquo;まで行けば大丈夫です。&#160;&#8617;&#xfe0e;
+&ldquo;Retype new password:&ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&#160;&#8617;&#xfe0e;</section><div class=gblog-post__readmore></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2022-02-09T00:00:00+09:00>Feb 9, 2022</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/etc/ title="All posts tagged with 'etc'">etc</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/linux/ title="All posts tagged with 'linux'">linux</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20211027_hugo_docker/>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</a></h1></header><section class=gblog-markdown>bitter*smooth と言う音楽レビューサイトを作っています。
 この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！
 Windows Terminalインストール
 WSL2インストール
@@ -126,35 +39,18 @@ Windows Terminal を管理者権限で起動 wsl --install wsl --set-default-ver
 Windows に Docker Desktop をインストール
 まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？
 で、プロジェクトのトップで、 .devcontainer ディレクトリを作り、その配下に、 Dockerfile devcontainer.json の2つのファイルを作ります。
-.devcontainer/Dockerfile 1 FROM klakegg/hugo:0.88.0-alpine RUN apk update &amp;&amp; apk --no-cache add git .devcontainer/devcontainer.json 2 { &#34;name&#34;: &#34;bittersmooth&#34;, &#34;build&#34;: { &#34;dockerfile&#34;: &#34;Dockerfile&#34;, }, &#34;extensions&#34;: [ &#34;mhutchie.git-graph&#34; ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20210627_java_dev/">
-        <h3>2021年6月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20210627_java_dev/</small>
-      2021-06-27
-    </div>
-    Javaのプログラミングで、 &ldquo;Hello World&rdquo; を出したいと思うでしょう?
+.devcontainer/Dockerfile 1 FROM klakegg/hugo:0.88.0-alpine RUN apk update && apk --no-cache add git .devcontainer/devcontainer.json 2 { "name": "bittersmooth", "build": { "dockerfile": "Dockerfile", }, "extensions": [ "mhutchie.git-graph" ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。</section><div class=gblog-post__readmore><a class="flex-inline align-center fake-link" title="Read full post" href=/techlog/posts/20211027_hugo_docker/>Read full post
+<i class=gblog-icon>gblog_arrow_right</i></a></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2021-10-27T00:00:00+09:00>Oct 27, 2021</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/etc/ title="All posts tagged with 'etc'">etc</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20210627_java_dev/>2021年6月 Javaプログラミングで "Hello World" を出したいだけだった</a></h1></header><section class=gblog-markdown>Javaのプログラミングで、 &ldquo;Hello World&rdquo; を出したいと思うでしょう?
 まぁ、惰性で以下のことをするでしょう。
 JDK(OracleとかOpenJDK)をインストール、パスを通す Mavenをインストール、パスを通す Eclipseをインストール、各種フォーマッターをインストール 今は、2021年6月です。 こう言うのは避けたいですよね。
 JDK/JREのバージョンを切り替えるのが難しい JDK/JREは後方互換を重視していたので、ちょっとしたことで対応が難しい 現在の Eclipse って、必要なJDK/JREって、15ですよね Java 11/15で後方互換が切り捨てられたのもあるので、対応はそれなりに必要でしょう 1 Windows10でJava開発環境整える それだけで、一体、いくらのソフトをダウンロードするんです? JDK/Maven/Eclipse のインストールは、大体において鬼門だったりしますね 隣の席の人と、Eclipseのバージョン合ってます？ Mavenでも、変な対応が入ることがありますよ 2 まぁ、結局、以下の如しですわ。
 まず世間のIT関連のPCはWindows10ベースなので、それを考える ローカル開発環境に、極力インストールさせない Gitからチェックアウトしたら、すぐ全員の環境と同じになる ここら辺、あなたならどう考えるでしょうね?
-JAXB対応 https://github.com/acroquest/javabook-support/issues/49&#160;&#x21a9;&#xfe0e;
-Maven 3.8.1 で mvn install 出来ない(maven-default-http-blocker)されたメモ https://qiita.com/bazoo/items/3b5cab094b25cbbd8019&#160;&#x21a9;&#xfe0e;
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20210530_quarkus/">
-        <h3>Quarkusに入門してみた</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20210530_quarkus/</small>
-      2021-05-30
-    </div>
-    Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
+JAXB対応 https://github.com/acroquest/javabook-support/issues/49&#160;&#8617;&#xfe0e;
+Maven 3.8.1 で mvn install 出来ない(maven-default-http-blocker)されたメモ https://qiita.com/bazoo/items/3b5cab094b25cbbd8019&#160;&#8617;&#xfe0e;</section><div class=gblog-post__readmore></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2021-06-27T00:00:00+09:00>Jun 27, 2021</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20210530_quarkus/>Quarkusに入門してみた</a></h1></header><section class=gblog-markdown>Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
 入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
 最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
 mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
@@ -165,113 +61,24 @@ DBアクセスには、 Hibernate/JPA とか、そのラッパー Panache とか
 Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
 でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
 このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
-Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W&#160;&#x21a9;&#xfe0e;
-Quarkus - Guides - Latest https://quarkus.
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20201225_git_2/">
-        <h3>2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20201225_git_2/</small>
-      2020-12-25
-    </div>
-    前回から、また変わったので。
+Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W&#160;&#8617;&#xfe0e;
+Quarkus - Guides - Latest https://quarkus.</section><div class=gblog-post__readmore><a class="flex-inline align-center fake-link" title="Read full post" href=/techlog/posts/20210530_quarkus/>Read full post
+<i class=gblog-icon>gblog_arrow_right</i></a></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2021-05-30T00:00:00+09:00>May 30, 2021</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/java/ title="All posts tagged with 'java'">java</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20201225_git_2/>2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</a></h1></header><section class=gblog-markdown>前回から、また変わったので。
 sudo yum -y remove git sudo yum -y install https://repo.ius.io/ius-release-el7.rpm sudo yum -y install git224 git --version 元ネタ
-iusの最新リンクが変更になったので注意 - Qiita CentOS7にGit2系をyumでインストール - Qiita 
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20200918_postgres_local/">
-        <h3>2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20200918_postgres_local/</small>
-      2020-09-18
-    </div>
-    Heroku で、小さいアプリケーションを作りたいと思っていて。
+iusの最新リンクが変更になったので注意 - Qiita CentOS7にGit2系をyumでインストール - Qiita</section><div class=gblog-post__readmore></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2020-12-25T00:00:00+09:00>Dec 25, 2020</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/linux/ title="All posts tagged with 'linux'">linux</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20200918_postgres_local/>2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</a></h1></header><section class=gblog-markdown>Heroku で、小さいアプリケーションを作りたいと思っていて。
 MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。
 という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。
 https://github.com/halflite/postgresql-win-local こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
-ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
-  </div>
-  
-  <div>
-    <div>
-      <a href="/techlog/posts/20200831_imgbb/">
-        <h3>imgbb.comのテスト</h3>
-      </a>
-      <small>https://halflite.github.io/techlog/posts/20200831_imgbb/</small>
-      2020-08-31
-    </div>
-    ImgBB — フリーなスマイリー / アニメエモコン たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
+ClearDB MySQL - Add-ons - Heroku Elements&#160;&#8617;&#xfe0e;</section><div class=gblog-post__readmore></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2020-09-18T00:00:00+09:00>Sep 18, 2020</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/linux/ title="All posts tagged with 'linux'">linux</a></span></span>
+<span class="flex align-center gblog-post__meta--tag"><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/vagrant/ title="All posts tagged with 'vagrant'">vagrant</a></span></span></div></footer></article><article class=gblog-post><header class=gblog-post__header><h1 class=gblog-post__title><a href=/techlog/posts/20200831_imgbb/>imgbb.comのテスト</a></h1></header><section class=gblog-markdown>ImgBB — フリーなスマイリー / アニメエモコン たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
 という事で、適当にググって、適当にアップロードして、上記サイトを試してみることにしました。 1
-まぁ、削除されても、そんなに重要な画像でもないし…。&#160;&#x21a9;&#xfe0e;
-  </div>
-  
-
-  
-  <nav class="paginate-container">
-    <div class="pagination">
-      <ul>
-        
-        <span class="previous_page disabled">Prev</span>
-        
-
-        
-          <a href="/techlog/">
-            1
-          </a>
-        
-          <a href="/techlog/page/2/">
-            2
-          </a>
-        
-
-        
-        <a href="/techlog/page/2/" class="next_page">Next</a>
-        
-      </ul>
-    </div>
-  </nav>
-  
-
-
-</div>
-
-
-      </div>
-
-      <div id="side" class="pr-1 bg-white">
-        <aside class="pr-3">
-          
-          <div id="toc" class="mb-3">
-          </div>
-          
-        </aside>
-      </div>
-
-      <div id="footer" class="pt-2 pb-3 bg-white text-center">
-        
-
-  <span class="text-small text-gray">
-    
-
-    Powered by the
-    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
-    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
-  </span>
-
-
-      </div>
-    </div>
-
-    
-    
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script>
-    
-  </body>
-</html>
+まぁ、削除されても、そんなに重要な画像でもないし…。&#160;&#8617;&#xfe0e;</section><div class=gblog-post__readmore></div><footer class=gblog-post__footer><div class="flex flex-wrap align-center gblog-post__meta"><span class="flex align-center no-wrap gblog-post__meta--update"><svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"/></svg><span class=gblog-post__tag><time datetime=2020-08-31T01:00:00+09:00>Aug 31, 2020</time></span></span>
+<span class="flex align-center no-wrap gblog-post__meta--readtime"><svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"/></svg><span class=gblog-post__tag>1 min read</span></span>
+<span class="flex align-center no-wrap gblog-post__meta--tag"><svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"/></svg><span class="gblog-post__tag gblog-button gblog-button--regular"><a class=gblog-button__link href=/techlog/tags/etc/ title="All posts tagged with 'etc'">etc</a></span></span></div></footer></article><nav class="gblog-paging flex flex-even align-center" role=navigation><div class="gblog-paging__item gblog-paging__item--prev"></div><div class=gblog-paging__state>Page 1 of 2</div><div class="gblog-paging__item gblog-paging__item--next"><a class="flex-inline align-center fake-link no-wrap" href=/techlog/page/2/>NEXT
+<i class=gblog-icon>gblog_keyboard_arrow_right</i></a></div></nav></main><footer class=gblog-footer><nav class="container flex"><div><section class="flex flex-wrap align-center"></section><section class="flex flex-wrap align-center"><span class=gblog-footer__item>Built with <a href=https://gohugo.io/ class=gblog-footer__link>Hugo</a> and<svg class="gblog-icon gblog_heart"><use xlink:href="#gblog_heart"/></svg></span></section></div><div class="flex flex-25 justify-end"><span class="gblog-footer__item text-right"><a class="gblog-footer__link fake-link" href=# aria-label="Back to top"><svg class="gblog-icon gblog_keyboard_arrow_up"><use xlink:href="#gblog_keyboard_arrow_up"/></svg><span class=hidden-mobile>Back to top</span></a></span></div></nav></footer></div></body></html>

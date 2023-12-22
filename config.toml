@@ -2,6 +2,6 @@ baseURL = "https://halflite.github.io/techlog/"
 languageCode = "ja"
 title = "ひとり開発日記。"
 
-theme = "hugo-ficurinia"
+theme = "hugo-geekblog"
 
 publishDir = "docs"
