@@ -1,5 +1,4 @@
-FROM klakegg/hugo:edge-ext-alpine
-RUN apk update && apk --no-cache add git tzdata && \
-  cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-  apk del tzdata && \
-  git clone https://github.com/qqhann/hugo-primer.git themes/hugo-primer
+FROM klakegg/hugo:0.111.3-debian
+RUN apt update && apt -y install git && \
+    git config --global user.name "halflite" && \
+    git config --global user.email shingo@halflite.net
