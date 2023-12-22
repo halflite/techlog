@@ -5,6 +5,6 @@
     <link>https://halflite.github.io/techlog/categories/</link>
     <description>Recent content in Categories on ひとり開発日記。</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>ja</language><atom:link href="https://halflite.github.io/techlog/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>ja</language><:link href="https://halflite.github.io/techlog/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

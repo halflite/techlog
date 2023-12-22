@@ -1,5 +1,5 @@
 ---
-title: "Hello World."
+title: "About Me."
 date: 2019-12-26T00:00:00+09:00
 draft: false
 tags:
@@ -16,4 +16,4 @@ tags:
 
 このブログの連絡先は、こちら。
 
-* [about me](https://halflite.net/aboutme/ "about me")
+* [halflite.net](https://halflite.net/ "halflite.net")

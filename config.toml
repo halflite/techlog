@@ -5,3 +5,25 @@ title = "ひとり開発日記。"
 theme = "hugo-geekblog"
 
 publishDir = "docs"
+
+[mediaTypes]
+  [mediaTypes."application/atom+xml"]
+    suffixes = ["xml"]
+
+[outputFormats]
+  [outputFormats.Atom]
+    name = "Atom"
+    mediaType = "application/atom+xml"
+    baseName = "feed"
+    isPlainText = false
+    rel = "alternate"
+    isHTML = false
+    noUgly = true
+    permalinkable = false
+
+[outputs]
+  home = ["HTML", "ATOM"]
+  page = ["HTML"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML", "ATOM"]
