@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>etc on ひとり開発日記。</title><link>https://halflite.github.io/techlog/tags/etc/</link><description>Recent content in etc on ひとり開発日記。</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/etc/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</title><link>https://halflite.github.io/techlog/posts/20220209_wsl_install/</link><pubDate>Wed, 09 Feb 2022 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20220209_wsl_install/</guid><description>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>etc on ひとり開発日記。</title>
+    <link>https://halflite.github.io/techlog/tags/etc/</link>
+    <description>Recent content in etc on ひとり開発日記。</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/etc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</title>
+      <link>https://halflite.github.io/techlog/posts/20220209_wsl_install/</link>
+      <pubDate>Wed, 09 Feb 2022 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20220209_wsl_install/</guid>
+      <description>全くWindows、PowerShell、仮想環境、Pythonも知らない人に、実行環境構築するために教えた時のメモです。
 カーネルアップデート実行 PowerShellのコマンドプロンプトで、以下を実行します。1
 Invoke-WebRequest -Uri &amp;#34;https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi&amp;#34; -OutFile &amp;#34;wsl_update_x64.msi&amp;#34; ./wsl_update_x64.msi WSL/Ubuntuインストール PowerShellのコマンドプロンプトで、以下を実行します。2
 wsl --install -d Ubuntu wsl --set-default Ubuntu Ubuntuに入る PowerShellのコマンドプロンプトで、以下を実行します。
@@ -6,7 +21,16 @@ wsl Ubuntuのコマンドプロンプトに入れたと思うので、以下を�
 python3 --version pip3のインストール Ubuntuのコマンドプロンプトで以下を実行します。
 apt -y update &amp;amp;&amp;amp; apt -y install python3-pip 以下を実行して、pip3が有効か確認します。
 pip --version 英語のウィンドウが出ますが、&amp;rsquo;next&amp;rsquo;をクリックして、&amp;lsquo;finish&amp;rsquo;まで行けば大丈夫です。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-&amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description></item><item><title>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</title><link>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</link><pubDate>Wed, 27 Oct 2021 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</guid><description>bitter*smooth と言う音楽レビューサイトを作っています。
+&amp;ldquo;Retype new password:&amp;ldquo;と言うウィンドウが出ますが、それは、そのまま閉じて下さい。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</title>
+      <link>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</link>
+      <pubDate>Wed, 27 Oct 2021 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20211027_hugo_docker/</guid>
+      <description>bitter*smooth と言う音楽レビューサイトを作っています。
 この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！
 Windows Terminalインストール
 WSL2インストール
@@ -14,16 +38,47 @@ Windows Terminal を管理者権限で起動 wsl --install wsl --set-default-ver
 Windows に Docker Desktop をインストール
 まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？
 で、プロジェクトのトップで、 .devcontainer ディレクトリを作り、その配下に、 Dockerfile devcontainer.json の2つのファイルを作ります。
-.devcontainer/Dockerfile 1 FROM klakegg/hugo:0.88.0-alpine RUN apk update &amp;amp;&amp;amp; apk --no-cache add git .devcontainer/devcontainer.json 2 { &amp;#34;name&amp;#34;: &amp;#34;bittersmooth&amp;#34;, &amp;#34;build&amp;#34;: { &amp;#34;dockerfile&amp;#34;: &amp;#34;Dockerfile&amp;#34;, }, &amp;#34;extensions&amp;#34;: [ &amp;#34;mhutchie.git-graph&amp;#34; ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。</description></item><item><title>imgbb.comのテスト</title><link>https://halflite.github.io/techlog/posts/20200831_imgbb/</link><pubDate>Mon, 31 Aug 2020 01:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200831_imgbb/</guid><description>ImgBB — フリーなスマイリー / アニメエモコン たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
+.devcontainer/Dockerfile 1 FROM klakegg/hugo:0.88.0-alpine RUN apk update &amp;amp;&amp;amp; apk --no-cache add git .devcontainer/devcontainer.json 2 { &amp;#34;name&amp;#34;: &amp;#34;bittersmooth&amp;#34;, &amp;#34;build&amp;#34;: { &amp;#34;dockerfile&amp;#34;: &amp;#34;Dockerfile&amp;#34;, }, &amp;#34;extensions&amp;#34;: [ &amp;#34;mhutchie.git-graph&amp;#34; ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。</description>
+    </item>
+    
+    <item>
+      <title>imgbb.comのテスト</title>
+      <link>https://halflite.github.io/techlog/posts/20200831_imgbb/</link>
+      <pubDate>Mon, 31 Aug 2020 01:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20200831_imgbb/</guid>
+      <description>ImgBB — フリーなスマイリー / アニメエモコン たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
 という事で、適当にググって、適当にアップロードして、上記サイトを試してみることにしました。 1
-まぁ、削除されても、そんなに重要な画像でもないし…。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description></item><item><title>Hugo/GitHubPagesでブログ再作成</title><link>https://halflite.github.io/techlog/posts/buildwithhugo/</link><pubDate>Thu, 16 Jan 2020 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/buildwithhugo/</guid><description>一瞬、LivedoorBlogで作った時期もあるんですけど、やっぱり技術ブログなので…。
+まぁ、削除されても、そんなに重要な画像でもないし…。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>Hugo/GitHubPagesでブログ再作成</title>
+      <link>https://halflite.github.io/techlog/posts/buildwithhugo/</link>
+      <pubDate>Thu, 16 Jan 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/buildwithhugo/</guid>
+      <description>一瞬、LivedoorBlogで作った時期もあるんですけど、やっぱり技術ブログなので…。
 Markdownで書きたい シンタックスハイライトが欲しい ブログパーツとかいらない やはり、上記3条件は必須ですかねぇ。
 毎度忘れてしまうので、hugoの操作メモ
 新規記事作成
 hugo new posts/article.md ローカルサーバーで確認
 hugo server 記事書き出し
 hugo -D 以下、参考にした記事
-Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita 【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita Hugoのテーマ「Theer」を作成しました – qqhann すっきり見やすいHugoテーマ。 ありがたく使ってます</description></item><item><title>Hello World.</title><link>https://halflite.github.io/techlog/posts/helloworld/</link><pubDate>Thu, 26 Dec 2019 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/helloworld/</guid><description> はてなグループの終了日を2020年1月31日(金)に決定しました - はてなグループ日記 - 機能変更、お知らせなど …ということなので、技術ブログも、お引越しです。
+Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita 【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita Hugoのテーマ「Theer」を作成しました – qqhann すっきり見やすいHugoテーマ。 ありがたく使ってます </description>
+    </item>
+    
+    <item>
+      <title>Hello World.</title>
+      <link>https://halflite.github.io/techlog/posts/helloworld/</link>
+      <pubDate>Thu, 26 Dec 2019 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/helloworld/</guid>
+      <description> はてなグループの終了日を2020年1月31日(金)に決定しました - はてなグループ日記 - 機能変更、お知らせなど …ということなので、技術ブログも、お引越しです。
 旧ブログは、こちら。
 ひとり開発日記。 - プログラマの秘密のあれこれ web.archive.org このブログの連絡先は、こちら。
-about me</description></item></channel></rss>
+about me </description>
+    </item>
+    
+  </channel>
+</rss>

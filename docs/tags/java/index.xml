@@ -1,15 +1,66 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>java on ひとり開発日記。</title><link>https://halflite.github.io/techlog/tags/java/</link><description>Recent content in java on ひとり開発日記。</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Fri, 02 Jun 2023 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</title><link>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</link><pubDate>Fri, 02 Jun 2023 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</guid><description>TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
-継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&amp;#34;topic:upload.</description></item><item><title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</title><link>https://halflite.github.io/techlog/posts/20230529_jms_producer/</link><pubDate>Mon, 29 May 2023 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20230529_jms_producer/</guid><description>承前 ブラウザ-&amp;gt;ウェブアプリ-&amp;gt;ActiveMQ-&amp;gt;ApacheCamel-&amp;gt;AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 非同期で、イベント駆動で処理したいですよね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである Apache Camel2 もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer-&amp;gt;ActiveMQ-&amp;gt;Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように。 そうすると、ConnectionFactoryもDI対象になりますよ。 public void uploadImage(String fileName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.</description></item><item><title>AWS Lambda FunctionでJavaを採用したい</title><link>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</link><pubDate>Sun, 25 Sep 2022 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</guid><description>承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java on ひとり開発日記。</title>
+    <link>https://halflite.github.io/techlog/tags/java/</link>
+    <description>Recent content in java on ひとり開発日記。</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Fri, 02 Jun 2023 00:00:00 +0900</lastBuildDate><atom:link href="https://halflite.github.io/techlog/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</title>
+      <link>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</link>
+      <pubDate>Fri, 02 Jun 2023 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</guid>
+      <description>TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
+継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&amp;#34;topic:upload.</description>
+    </item>
+    
+    <item>
+      <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</title>
+      <link>https://halflite.github.io/techlog/posts/20230529_jms_producer/</link>
+      <pubDate>Mon, 29 May 2023 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20230529_jms_producer/</guid>
+      <description>承前 ブラウザ-&amp;gt;ウェブアプリ-&amp;gt;ActiveMQ-&amp;gt;ApacheCamel-&amp;gt;AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 非同期で、イベント駆動で処理したいですよね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである Apache Camel2 もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer-&amp;gt;ActiveMQ-&amp;gt;Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように。 そうすると、ConnectionFactoryもDI対象になりますよ。 public void uploadImage(String fileName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.</description>
+    </item>
+    
+    <item>
+      <title>AWS Lambda FunctionでJavaを採用したい</title>
+      <link>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</link>
+      <pubDate>Sun, 25 Sep 2022 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/</guid>
+      <description>承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google/guice Apache Geronimo Config google/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle/guiceかなぁって。
 設定注入は、Apache Geronimo Configかな 2
 Daggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。
 ケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。
-public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&amp;gt; { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.</description></item><item><title>2021年6月 Javaプログラミングで "Hello World" を出したいだけだった</title><link>https://halflite.github.io/techlog/posts/20210627_java_dev/</link><pubDate>Sun, 27 Jun 2021 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20210627_java_dev/</guid><description>Javaのプログラミングで、 &amp;ldquo;Hello World&amp;rdquo; を出したいと思うでしょう?
+public class App implements RequestHandler&amp;lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&amp;gt; { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... // do something return res; } public App() { Injector injector = Guice.</description>
+    </item>
+    
+    <item>
+      <title>2021年6月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</title>
+      <link>https://halflite.github.io/techlog/posts/20210627_java_dev/</link>
+      <pubDate>Sun, 27 Jun 2021 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20210627_java_dev/</guid>
+      <description>Javaのプログラミングで、 &amp;ldquo;Hello World&amp;rdquo; を出したいと思うでしょう?
 まぁ、惰性で以下のことをするでしょう。
 JDK(OracleとかOpenJDK)をインストール、パスを通す Mavenをインストール、パスを通す Eclipseをインストール、各種フォーマッターをインストール 今は、2021年6月です。 こう言うのは避けたいですよね。
 JDK/JREのバージョンを切り替えるのが難しい JDK/JREは後方互換を重視していたので、ちょっとしたことで対応が難しい 現在の Eclipse って、必要なJDK/JREって、15ですよね Java 11/15で後方互換が切り捨てられたのもあるので、対応はそれなりに必要でしょう 1 Windows10でJava開発環境整える それだけで、一体、いくらのソフトをダウンロードするんです? JDK/Maven/Eclipse のインストールは、大体において鬼門だったりしますね 隣の席の人と、Eclipseのバージョン合ってます？ Mavenでも、変な対応が入ることがありますよ 2 まぁ、結局、以下の如しですわ。
 まず世間のIT関連のPCはWindows10ベースなので、それを考える ローカル開発環境に、極力インストールさせない Gitからチェックアウトしたら、すぐ全員の環境と同じになる ここら辺、あなたならどう考えるでしょうね?
 JAXB対応 https://github.com/acroquest/javabook-support/issues/49&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-Maven 3.8.1 で mvn install 出来ない(maven-default-http-blocker)されたメモ https://qiita.com/bazoo/items/3b5cab094b25cbbd8019&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description></item><item><title>Quarkusに入門してみた</title><link>https://halflite.github.io/techlog/posts/20210530_quarkus/</link><pubDate>Sun, 30 May 2021 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20210530_quarkus/</guid><description>Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
+Maven 3.8.1 で mvn install 出来ない(maven-default-http-blocker)されたメモ https://qiita.com/bazoo/items/3b5cab094b25cbbd8019&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>Quarkusに入門してみた</title>
+      <link>https://halflite.github.io/techlog/posts/20210530_quarkus/</link>
+      <pubDate>Sun, 30 May 2021 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20210530_quarkus/</guid>
+      <description>Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
 入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
 最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
 mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
@@ -21,32 +72,85 @@ Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServlet�
 でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
 このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
 Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-Quarkus - Guides - Latest https://quarkus.</description></item><item><title>2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</title><link>https://halflite.github.io/techlog/posts/20200728_eclipse_pe/</link><pubDate>Tue, 28 Jul 2020 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200728_eclipse_pe/</guid><description>TL;DR インストール用リポジトリーURLは、以下です
+Quarkus - Guides - Latest https://quarkus.</description>
+    </item>
+    
+    <item>
+      <title>2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</title>
+      <link>https://halflite.github.io/techlog/posts/20200728_eclipse_pe/</link>
+      <pubDate>Tue, 28 Jul 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20200728_eclipse_pe/</guid>
+      <description>TL;DR インストール用リポジトリーURLは、以下です
 https://propedit.osdn.jp/eclipse/updates/ 諸々など 現在、 Google Guice ベースで Bean Validation を入れようとしていて。 独自メッセージファイル ValidationMessages_ja.properties を作ろうかと思ったら、あれ、 Unicode でないとダメなのか…。 Spring-Boot だと、フツーに UTF-8 を読んでくれるんですけどね。
 Validator を DI する時に、設定を注入出来ないかな？って思ったのですが、どこにも情報が無い!! まぁ、仕方ないですわ。 Unicodeのまま実装しますかね。
 なので、Eclipse に PropertiesEditor をインストールしようと思って、 ぐぐって Eclipseで文字化けするプロパティファイルを編集する方法 を参考にインストール…、しようと思っても入らない!!
 まぁ、そういう事情もありましたよね 1 2 で、ドメイン/ホストを色々打ち替えて、上記のリポジトリーURLが分かった次第。
 本質的には、 JakartaEE / Hibernate が、メッセージファイルのフォーマットをUTF-8に公式対応してくれれば、それが良いのでしょうが…。
 ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description></item><item><title>2020年 Javaベースのバッチを作るなら</title><link>https://halflite.github.io/techlog/posts/20200625_java_based_batch/</link><pubDate>Thu, 25 Jun 2020 12:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200625_java_based_batch/</guid><description>前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
+OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>2020年 Javaベースのバッチを作るなら</title>
+      <link>https://halflite.github.io/techlog/posts/20200625_java_based_batch/</link>
+      <pubDate>Thu, 25 Jun 2020 12:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20200625_java_based_batch/</guid>
+      <description>前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
 そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。
 ある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。
 今、自分で作るとするなら、こんな感じかな
 ある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。
 参考 Serverless時代のJavaについて あるある案件&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-惰性とも言う&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description></item><item><title>MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</title><link>https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/</link><pubDate>Mon, 04 May 2020 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/</guid><description>WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
+惰性とも言う&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</title>
+      <link>https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20200504_eclipse_setting_utf8/</guid>
+      <description>WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
 Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
 解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
 &amp;lt;properties&amp;gt; &amp;lt;project.build.sourceEncoding&amp;gt;UTF-8&amp;lt;/project.build.sourceEncoding&amp;gt; &amp;lt;/properties&amp;gt; &amp;lt;build&amp;gt; &amp;lt;plugins&amp;gt; &amp;lt;!-- Eclipse --&amp;gt; &amp;lt;plugin&amp;gt; &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;maven-eclipse-plugin&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.10&amp;lt;/version&amp;gt; &amp;lt;configuration&amp;gt; &amp;lt;downloadSources&amp;gt;true&amp;lt;/downloadSources&amp;gt; &amp;lt;downloadJavadocs&amp;gt;true&amp;lt;/downloadJavadocs&amp;gt; &amp;lt;additionalConfig&amp;gt; &amp;lt;file&amp;gt; &amp;lt;name&amp;gt;.settings/org.eclipse.core.resources.prefs&amp;lt;/name&amp;gt; &amp;lt;content&amp;gt; &amp;lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&amp;lt;project&amp;gt;=${project.build.sourceEncoding}${line.separator}]]&amp;gt; &amp;lt;/content&amp;gt; &amp;lt;/file&amp;gt; &amp;lt;/additionalConfig&amp;gt; &amp;lt;/configuration&amp;gt; &amp;lt;/plugin&amp;gt; &amp;lt;/plugins&amp;gt; &amp;lt;/build&amp;gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
-mvn eclipse:clean eclipse:eclipse 元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow 旧blog 2018/10/12 の記事に加筆訂正して再掲しました。</description></item><item><title>Java NIO2 で一時ファイルを作成、処理後に削除</title><link>https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/</link><pubDate>Sat, 22 Feb 2020 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/</guid><description>public void doSomething() { try { Path tempFilePath = Files.createTempFile(&amp;#34;id&amp;#34;, &amp;#34;.tmp&amp;#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。1
-public static Closeable deleteOnClose(final Path tempFilePath) { return new Closeable() { @Override public void close() throws IOException { Files.deleteIfExists(tempFilePath); } }; } public void doSomething() { try { Path tempFilePath = Files.createTempFile(&amp;#34;id&amp;#34;, &amp;#34;.tmp&amp;#34;); try (Closeable closeable = deleteOnClose(tempFilePath); Writer writer = Files.</description></item><item><title>Mavenで依存関係あるライブラリをダウンロードしたいだけだった。</title><link>https://halflite.github.io/techlog/posts/20200214_maven_copy_dependencies/</link><pubDate>Thu, 13 Feb 2020 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200214_maven_copy_dependencies/</guid><description>また、以前blogに書いていたのに、すっかり忘れてググってしまったので。
+mvn eclipse:clean eclipse:eclipse 元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow 旧blog 2018/10/12 の記事に加筆訂正して再掲しました。</description>
+    </item>
+    
+    <item>
+      <title>Java NIO2 で一時ファイルを作成、処理後に削除</title>
+      <link>https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/</link>
+      <pubDate>Sat, 22 Feb 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/</guid>
+      <description>public void doSomething() { try { Path tempFilePath = Files.createTempFile(&amp;#34;id&amp;#34;, &amp;#34;.tmp&amp;#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。1
+public static Closeable deleteOnClose(final Path tempFilePath) { return new Closeable() { @Override public void close() throws IOException { Files.deleteIfExists(tempFilePath); } }; } public void doSomething() { try { Path tempFilePath = Files.createTempFile(&amp;#34;id&amp;#34;, &amp;#34;.tmp&amp;#34;); try (Closeable closeable = deleteOnClose(tempFilePath); Writer writer = Files.</description>
+    </item>
+    
+    <item>
+      <title>Mavenで依存関係あるライブラリをダウンロードしたいだけだった。</title>
+      <link>https://halflite.github.io/techlog/posts/20200214_maven_copy_dependencies/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20200214_maven_copy_dependencies/</guid>
+      <description>また、以前blogに書いていたのに、すっかり忘れてググってしまったので。
 mvn dependency:copy-dependencies -DincludeScope=test 上記を実行すると、プロジェクト配下の target/dependency に、テストスコープのものも含めて、 *.jar ファイルがダウンロードされます。1
-書いている時点のmavenバージョン 3.6.3&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description></item><item><title>Windowsのcmd.exeで、Mavenを使って新規プロジェクトを作る時、複数行に分けて書きたかっただけだった。</title><link>https://halflite.github.io/techlog/posts/20200120_maven_cmd/</link><pubDate>Mon, 20 Jan 2020 00:00:00 +0900</pubDate><guid>https://halflite.github.io/techlog/posts/20200120_maven_cmd/</guid><description>新しいライブラリやフレームワークを試す時、素振りも兼ねて、小さいJavaプロジェクトを作ってみるんですが、毎回Maven Archetypeの書き方を忘れて、自分のblogを読み返してしまったり。
+書いている時点のmavenバージョン 3.6.3&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>Windowsのcmd.exeで、Mavenを使って新規プロジェクトを作る時、複数行に分けて書きたかっただけだった。</title>
+      <link>https://halflite.github.io/techlog/posts/20200120_maven_cmd/</link>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://halflite.github.io/techlog/posts/20200120_maven_cmd/</guid>
+      <description>新しいライブラリやフレームワークを試す時、素振りも兼ねて、小さいJavaプロジェクトを作ってみるんですが、毎回Maven Archetypeの書き方を忘れて、自分のblogを読み返してしまったり。
 この度、blog移設なので、ここでも書き記しておく次第です。
-mvn archetype:generate ^
--DarchetypeArtifactId=maven-archetype-quickstart ^
--DinteractiveMode=false ^
--DgroupId=net.halflite ^
--DartifactId=testapp ^
--Dpackage=net.halflite.testapp もとねた
-Maven Quickstart Archetype – Maven Quickstart Archetype cmdのバッチファイルで、1コマンドを複数行にわたって記述したい場合 - Qiita</description></item></channel></rss>
+mvn archetype:generate ^-DarchetypeArtifactId=maven-archetype-quickstart ^-DinteractiveMode=false ^-DgroupId=net.halflite ^-DartifactId=testapp ^-Dpackage=net.halflite.testapp もとねた
+Maven Quickstart Archetype – Maven Quickstart Archetype cmdのバッチファイルで、1コマンドを複数行にわたって記述したい場合 - Qiita </description>
+    </item>
+    
+  </channel>
+</rss>
