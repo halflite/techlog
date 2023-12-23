@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</loc>
-    <lastmod>2023-06-02T00:00:00+09:00</lastmod>
+    <loc>https://halflite.github.io/techlog/</loc>
+    <lastmod>2023-12-23T00:00:00+09:00</lastmod>
   </url>
   <url>
-    <loc>https://halflite.github.io/techlog/</loc>
+    <loc>https://halflite.github.io/techlog/posts/20231223_blog/</loc>
+    <lastmod>2023-12-23T00:00:00+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</loc>
     <lastmod>2023-06-02T00:00:00+09:00</lastmod>
   </url>
   <url>
@@ -84,8 +88,5 @@
   <url>
     <loc>https://halflite.github.io/techlog/posts/about/</loc>
     <lastmod>2019-12-26T00:00:00+09:00</lastmod>
-  </url>
-  <url>
-    <loc>https://halflite.github.io/techlog/posts/20231223_blog/</loc>
   </url>
 </urlset>
