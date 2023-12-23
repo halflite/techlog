@@ -4,7 +4,7 @@
     <title>Etc on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/etc/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/etc/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2023-12-23T00:49:34+00:00</updated>
+    <updated>2023-12-23T01:21:18+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/etc/</id>
         <entry>
             <title>フログのデザインを変えました</title>
@@ -37,7 +37,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;ダウンロードしたzipファイルを解凍&lt;/li&gt;
-&lt;li&gt;docs/favicon に &lt;strong&gt;favicon.ico&lt;/strong&gt; &lt;strong&gt;favicon-16x16.png&lt;/strong&gt; &lt;strong&gt;favicon-32x32.png&lt;/strong&gt; をコピー&lt;/li&gt;
+&lt;li&gt;themes/hugo-geekblog/static/favicon に &lt;strong&gt;favicon.ico&lt;/strong&gt; &lt;strong&gt;favicon-16x16.png&lt;/strong&gt; &lt;strong&gt;favicon-32x32.png&lt;/strong&gt; をコピー&lt;/li&gt;
 &lt;li&gt;themes/hugo-geekblog/layouts/partials/head/favicons.htmlを修正&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;link&lt;/span&gt;
