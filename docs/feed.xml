@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2023-12-23T01:21:18+00:00</updated>
+    <updated>2023-12-23T01:25:04+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>フログのデザインを変えました</title>
@@ -13,7 +13,10 @@
             <published>2023-12-23T00:00:00+09:00</published>
             <updated>2023-12-23T00:00:00+09:00</updated>
             <content type="html">
-                &lt;p&gt;このグログは(Hugo)[https://gohugo.io/]で構築しているんです。&lt;/p&gt;
+                &lt;p&gt;このグログは&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://gohugo.io/&#34;title=&#34;The world’s fastest framework for building websites | Hugo&#34;
+&gt;Hugo&lt;/a&gt;で構築しているんです。&lt;/p&gt;
 &lt;p&gt;良いところは、「テンプレートと描写エンジンが別れている」でしょうか。 でも、それはタテマエ。 テンプレートが、かなりエンジンに依存しているんですね。 作ってメンテされていないHugoのテンプレートは、もう恐竜の墓場以下の存在です。&lt;/p&gt;
 &lt;p&gt;今回、使ったのは&lt;a
   class=&#34;gblog-markdown__link&#34;
