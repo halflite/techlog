@@ -4,7 +4,7 @@
     <title>Etc on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/etc/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/etc/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2023-12-23T00:01:16+00:00</updated>
+    <updated>2023-12-23T00:38:20+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/etc/</id>
         <entry>
             <title>Windows10にWSL/Ubuntu/Python/Pip環境を最短でインストールしたい</title>
@@ -293,6 +293,48 @@
 &gt;halflite.net&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
+        <entry>
+            <title>フログのデザインを変えました</title>
+            <link href="https://halflite.github.io/techlog/posts/20231223_blog/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20231223_blog/</id>
+            <published>0001-01-01T00:00:00+00:00</published>
+            <updated>0001-01-01T00:00:00+00:00</updated>
+            <content type="html">
+                &lt;p&gt;このグログは(Hugo)[https://gohugo.io/ &amp;ldquo;The world’s fastest framework for building websites | Hugo&amp;rdquo;]で構築しているんです。&lt;/p&gt;
+&lt;p&gt;良いところは、「テンプレートと描写エンジンが別れている」でしょうか。 でも、それはタテマエ。 テンプレートが、かなりエンジンに依存しているんですね。 作ってメンテされていないHugoのテンプレートは、もう恐竜の墓場以下の存在です。&lt;/p&gt;
+&lt;p&gt;今回、使ったのは&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://hugo-geekblog.geekdocs.de/&#34;
+&gt;Geekblog&lt;/a&gt; まぁまぁ、設定も素直ですし良いのではないでしょうか？&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Favicon覚え書き。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ジェネレーターで基本を作る
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://favicon.io/favicon-generator/&#34;
+&gt;Favicon Generator - Text to Favicon - favicon.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;フォント &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://fonts.google.com/specimen/Kaisei&amp;#43;Tokumin&#34;
+&gt;Kaisei Tokumin - Google Fonts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Font Color #FFFFFF&lt;/li&gt;
+&lt;li&gt;Background Color #209CEE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ダウンロードしたzipファイルを解凍&lt;/li&gt;
+&lt;li&gt;docs/favicon に &lt;strong&gt;favicon.ico&lt;/strong&gt; &lt;strong&gt;favicon-16x16.png&lt;/strong&gt; &lt;strong&gt;favicon-32x32.png&lt;/strong&gt; をコピー&lt;/li&gt;
+&lt;li&gt;themes/hugo-geekblog/layouts/partials/head/favicons.htmlを修正&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;link&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;rel&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;icon&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;image/x-icon&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{{ &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;favicon&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;favicon&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ico&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;relURL&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;}}&amp;#34;&lt;/span&gt; /&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
             </content>   
                                 <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
         </entry>
