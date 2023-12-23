@@ -431,11 +431,11 @@ Favicon覚え書き。
 <li>themes/hugo-geekblog/static/favicon に <strong>favicon.ico</strong> <strong>favicon-16x16.png</strong> <strong>favicon-32x32.png</strong> をコピー</li>
 <li>themes/hugo-geekblog/layouts/partials/head/favicons.htmlを修正</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">link</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;icon&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;image/x-icon&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ &#34;</span><span style="color:#a6e22e">favicon</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">favicon</span><span style="color:#960050;background-color:#1e0010">.</span><span style="color:#a6e22e">ico</span><span style="color:#960050;background-color:#1e0010">&#34;</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#a6e22e">relURL</span> <span style="color:#960050;background-color:#1e0010">}}&#34;</span> /&gt;
-</span></span></code></pre></div>
+<pre tabindex="0"><code>&lt;link
+  rel=&#34;icon&#34;
+  type=&#34;image/x-icon&#34;
+  href=&#34;{{ &#34;favicon/favicon.ico&#34; | relURL }}&#34; /&gt;
+</code></pre>
     </section>
   </article>
 
