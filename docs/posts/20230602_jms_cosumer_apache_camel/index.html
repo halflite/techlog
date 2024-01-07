@@ -7,13 +7,12 @@
   
 >
   <head>
-    <meta charset="UTF-8" />
-<meta name="referrer" content="no-referrer" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="Hugo 0.111.3">
-  <meta name="robots" content="index, follow" />
-  <meta name="description" content="TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
-継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&#34;topic:upload." />
+        <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Hugo 0.111.3">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 …" />
 
     <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編 | ひとり開発日記。</title>
 
@@ -42,10 +41,9 @@
     content="ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編"
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
-  <meta property="og:description" content="TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
-継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&#34;topic:upload." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/" />
+  <meta property="og:description" content="TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 …" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/" />
 
 <meta property="article:section" content="Posts" />
     <meta
@@ -59,9 +57,8 @@
 
 
   <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編" />
-  <meta name="twitter:description" content="TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
-継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&#34;topic:upload." />
+  <meta name="twitter:title" content="ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編" />
+  <meta name="twitter:description" content="TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 …" />
 
 <script type="application/ld+json">
   {

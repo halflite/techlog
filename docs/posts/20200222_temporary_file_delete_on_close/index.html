@@ -7,13 +7,12 @@
   
 >
   <head>
-    <meta charset="UTF-8" />
-<meta name="referrer" content="no-referrer" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="Hugo 0.111.3">
-  <meta name="robots" content="index, follow" />
-  <meta name="description" content="public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。1
-public static Closeable deleteOnClose(final Path tempFilePath) { return new Closeable() { @Override public void close() throws IOException { Files.deleteIfExists(tempFilePath); } }; } public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Closeable closeable = deleteOnClose(tempFilePath); Writer writer = Files." />
+        <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Hugo 0.111.3">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch …" />
 
     <title>Java NIO2 で一時ファイルを作成、処理後に削除 | ひとり開発日記。</title>
 
@@ -42,10 +41,9 @@ public static Closeable deleteOnClose(final Path tempFilePath) { return new Clos
     content="Java NIO2 で一時ファイルを作成、処理後に削除"
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
-  <meta property="og:description" content="public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。1
-public static Closeable deleteOnClose(final Path tempFilePath) { return new Closeable() { @Override public void close() throws IOException { Files.deleteIfExists(tempFilePath); } }; } public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Closeable closeable = deleteOnClose(tempFilePath); Writer writer = Files." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/" />
+  <meta property="og:description" content="public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch …" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20200222_temporary_file_delete_on_close/" />
 
 <meta property="article:section" content="Posts" />
     <meta
@@ -59,9 +57,8 @@ public static Closeable deleteOnClose(final Path tempFilePath) { return new Clos
 
 
   <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Java NIO2 で一時ファイルを作成、処理後に削除" />
-  <meta name="twitter:description" content="public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。1
-public static Closeable deleteOnClose(final Path tempFilePath) { return new Closeable() { @Override public void close() throws IOException { Files.deleteIfExists(tempFilePath); } }; } public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Closeable closeable = deleteOnClose(tempFilePath); Writer writer = Files." />
+  <meta name="twitter:title" content="Java NIO2 で一時ファイルを作成、処理後に削除" />
+  <meta name="twitter:description" content="public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch …" />
 
 <script type="application/ld+json">
   {

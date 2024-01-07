@@ -7,16 +7,14 @@
   
 >
   <head>
-    <meta charset="UTF-8" />
-<meta name="referrer" content="no-referrer" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="Hugo 0.111.3">
-  <meta name="robots" content="index, follow" />
-  <meta name="description" content="Heroku で、小さいアプリケーションを作りたいと思っていて。
+        <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Hugo 0.111.3">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Heroku で、小さいアプリケーションを作りたいと思っていて。
 MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。
-という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。
-https://github.com/halflite/postgresql-win-local こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
-ClearDB MySQL - Add-ons - Heroku Elements ↩︎" />
+という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、 …" />
 
     <title>2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。 | ひとり開発日記。</title>
 
@@ -47,11 +45,9 @@ ClearDB MySQL - Add-ons - Heroku Elements ↩︎" />
   <meta property="og:site_name" content="ひとり開発日記。" />
   <meta property="og:description" content="Heroku で、小さいアプリケーションを作りたいと思っていて。
 MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。
-という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。
-https://github.com/halflite/postgresql-win-local こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
-ClearDB MySQL - Add-ons - Heroku Elements ↩︎" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://halflite.github.io/techlog/posts/20200918_postgres_local/" />
+という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、 …" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20200918_postgres_local/" />
 
 <meta property="article:section" content="Posts" />
     <meta
@@ -65,12 +61,10 @@ ClearDB MySQL - Add-ons - Heroku Elements ↩︎" />
 
 
   <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。" />
+  <meta name="twitter:title" content="2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。" />
   <meta name="twitter:description" content="Heroku で、小さいアプリケーションを作りたいと思っていて。
 MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。
-という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。
-https://github.com/halflite/postgresql-win-local こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
-ClearDB MySQL - Add-ons - Heroku Elements ↩︎" />
+という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、 …" />
 
 <script type="application/ld+json">
   {

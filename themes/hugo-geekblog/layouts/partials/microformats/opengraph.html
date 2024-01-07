@@ -11,10 +11,10 @@
   <meta property="og:image" content="{{ . }}" />
 {{- end }}
 {{- with partial "utils/description" . }}
-  <meta property="og:description" content="{{ . | plainify | htmlUnescape | chomp }}" />
+  <meta property="og:description" content="{{ . | plainify | htmlUnescape | chomp | truncate 200}}" />
 {{- end }}
-<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
-<meta property="og:url" content="{{ .Permalink }}" />
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+  <meta property="og:url" content="{{ .Permalink }}" />
 {{- with .Params.audio }}
   <meta property="og:audio" content="{{ . }}" />
 {{- end }}

@@ -9,7 +9,7 @@
       "name": {{ .Site.Title }},
       "url": {{ .Site.BaseURL }},
       {{- with partial "utils/description" . }}
-      "description": "{{ . | plainify | htmlUnescape | chomp }}",
+      "description": "{{ . | plainify | htmlUnescape | chomp | truncate 200 }}",
       {{- end }}
       {{- with partial "utils/featured" . }}
       "thumbnailUrl": {{ . }},
