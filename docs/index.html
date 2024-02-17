@@ -309,7 +309,7 @@
         eclipseの設定を pom.xml に記述します。 Java17 / Maven 3.9.6 を想定しています。 文字コードはUTF-8、改行コードはLFになるように設定しています。 外部のライブラリのソースとJavadocも、ローカルにダウンロードするように設定しています。 &lt;properties&gt; &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.runtime.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}line.separator=\n${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; 上記を pom.xml を書き足して、以下のようにコマンドでEclipse設定ファイルを作り直します。
 mvn eclipse:clean eclipse:eclipse 大抵のEclipseの設定にはm2eが入っているでしょうし、m2eで。Eclipse設定ファイルを更新するのもありでしょう。
 まだまだ現役なEclipseとMaven、ついつい設定忘れがちなので、書き残してみました。1
-2018/10/12 に書いたものに、加筆修正して、再度公開しました。&#160;&#x21a9;&#xfe0e;
+2020/05/04 MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする に、加筆修正して、再度公開しました。&#160;&#x21a9;&#xfe0e;
       </section>
       <div class="gblog-post__readmore">
         
