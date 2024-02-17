@@ -30,3 +30,5 @@ outputs:
   term:
     - HTML
     - ATOM
+params:
+  ogImage: img/og-image.png

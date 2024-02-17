@@ -4,6 +4,7 @@ date: 2020-05-04T00:00:00+09:00
 draft: false
 tags:
   - java
+  - eclipse
 ---
 WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
 

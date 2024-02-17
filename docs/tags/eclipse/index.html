@@ -11,11 +11,9 @@
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Hugo 0.111.3">
-    <meta name="robots" content="index, follow" />
-    <meta name="description" content="bitter*smooth と言う音楽レビューサイトを作っています。
-この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！ …" />
+    <meta name="robots" content="noindex, nofollow" />
 
-    <title>Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています | ひとり開発日記。</title>
+    <title>Eclipse | ひとり開発日記。</title>
 
     <link
   rel="icon"
@@ -39,67 +37,19 @@
     
   <meta
     property="og:title"
-    content="Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています"
+    content="Eclipse"
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
-  <meta property="og:description" content="bitter*smooth と言う音楽レビューサイトを作っています。
-この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！ …" />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20211027_hugo_docker/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://halflite.github.io/techlog/tags/eclipse/" />
 
-<meta property="article:section" content="Posts" />
-    <meta
-      property="article:published_time"
-      content="2021-10-27T00:00:00+09:00"
-    />
-    <meta
-      property="article:modified_time"
-      content="2021-10-27T00:00:00+09:00"
-    />
+
 
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています" />
-  <meta name="twitter:description" content="bitter*smooth と言う音楽レビューサイトを作っています。
-この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！ …" />
+  <meta name="twitter:title" content="Eclipse" />
 
-<script type="application/ld+json">
-  {
-      "@context": "http://schema.org",
-      "@type": "BlogPosting",
-      "articleSection": "Posts",
-      "name": "Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています",
-      "url" : "https://halflite.github.io/techlog/posts/20211027_hugo_docker/",
-      "headline": "Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています",
-      "description": "bitter*smooth と言う音楽レビューサイトを作っています。\nこの環境、サーバーサイドはNetlify\/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2\/DockerDesktop\/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！\nWindows Terminalインストール\nWSL2インストール\nWindows Terminal を管理者権限で起動 wsl --install wsl --set-default-version 2 wsl --install -d Ubuntu VSCodeインストール\nWindows に Docker Desktop をインストール\nまぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？\nで、プロジェクトのトップで、 .devcontainer ディレクトリを作り、その配下に、 Dockerfile devcontainer.json の2つのファイルを作ります。\n.devcontainer\/Dockerfile 1 FROM klakegg\/hugo:0.88.0-alpine RUN apk update \u0026\u0026 apk --no-cache add git .devcontainer\/devcontainer.json 2 { \u0022name\u0022: \u0022bittersmooth\u0022, \u0022build\u0022: { \u0022dockerfile\u0022: \u0022Dockerfile\u0022, }, \u0022extensions\u0022: [ \u0022mhutchie.git-graph\u0022 ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。",
-      "wordCount" : "91",
-      "inLanguage": "en",
-      "isFamilyFriendly": "true",
-      "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://halflite.github.io/techlog/posts/20211027_hugo_docker/"
-      },
-      "keywords" : [ "etc" ],
-      "author" : [
-      ],
-      "copyrightHolder" : "ひとり開発日記。",
-      "copyrightYear" : "2021",
-      "dateCreated": "2021-10-27T00:00:00.00Z",
-      "datePublished": "2021-10-27T00:00:00.00Z",
-      "dateModified": "2021-10-27T00:00:00.00Z",
-      "publisher":{
-          "@type":"Organization",
-          "name": "ひとり開発日記。",
-          "url": "https://halflite.github.io/techlog/",
-          "logo": {
-              "@type": "ImageObject",
-              "url": "https://halflite.github.io/techlog/brand.svg",
-              "width":"32",
-              "height":"32"
-          }
-      }
-  }
-  </script>
+
 
 
     
@@ -171,7 +121,7 @@
   href="/techlog/custom.css"
   media="all"
 />
-  <link href="https://halflite.github.io/techlog/posts/20211027_hugo_docker/" rel="canonical" type="text/html" />
+  <link href="https://halflite.github.io/techlog/tags/eclipse/" rel="canonical" type="text/html" />
     <link href="https://halflite.github.io/techlog/feed.xml" rel="alternate" type="application/atom+xml" title="ひとり開発日記。 Atom Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
@@ -263,7 +213,9 @@
         
           <li>
             <a
-              class="gblog-nav__entry"
+              class="gblog-nav__entry
+                 is-active
+              "
               href="/techlog/tags/eclipse/"
             >
               Eclipse
@@ -335,22 +287,36 @@
 
       <main class="gblog-page container">
         
-  <article class="gblog-post">
-    <header class="gblog-post__header">
-      
-      
+  
+  
 
+  
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20240131_eclipse_maven_settings/">pom.xmlでEclipseの設定を定義する</a>
+        </h1>
+      </header>
 
-      <h1 class="gblog-post__title">Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</h1>
+      <section class="gblog-markdown">
+        eclipseの設定を pom.xml に記述します。 Java17 / Maven 3.9.6 を想定しています。 文字コードはUTF-8、改行コードはLFになるように設定しています。 外部のライブラリのソースとJavadocも、ローカルにダウンロードするように設定しています。 &lt;properties&gt; &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.runtime.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}line.separator=\n${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; 上記を pom.xml を書き足して、以下のようにコマンドでEclipse設定ファイルを作り直します。
+mvn eclipse:clean eclipse:eclipse 大抵のEclipseの設定にはm2eが入っているでしょうし、m2eで。Eclipse設定ファイルを更新するのもありでしょう。
+まだまだ現役なEclipseとMaven、ついつい設定忘れがちなので、書き残してみました。1
+2018/10/12 に書いたものに、加筆修正して、再度公開しました。&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
 
-      
-        <div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head">
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
           <span class="flex align-center no-wrap gblog-post__meta--update">
   <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
   <span class="gblog-post__tag">
-    <time datetime="2021-10-27T00:00:00&#43;09:00">
+    <time datetime="2024-01-31T00:00:00&#43;09:00">
       
-      Oct 27, 2021
+      Jan 31, 2024
     </time>
   </span>
 </span>
@@ -377,10 +343,30 @@
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a
       class="gblog-button__link"
-      href="/techlog/tags/etc/"
-      title="All posts tagged with 'etc'"
+      href="/techlog/tags/eclipse/"
+      title="All posts tagged with 'eclipse'"
     >
-      etc
+      eclipse
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center gblog-post__meta--tag">
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
     </a>
   </span>
 
@@ -396,91 +382,213 @@
 
 
         </div>
-      
-    </header>
-    <section class="gblog-markdown">
-      <p><a
-  class="gblog-markdown__link"
-  href="https://bittersmooth.halflite.net/"title="bitter*smooth"
->bitter*smooth</a> と言う音楽レビューサイトを作っています。</p>
-<p>この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！</p>
-<hr>
-<ul>
-<li>
-<p><a
-  class="gblog-markdown__link"
-  href="https://atmarkit.itmedia.co.jp/ait/articles/2104/01/news019.html"title="ついにWindows Terminalの設定がGUIで可能に　プレビュー版v1.7が公開【Windows Terminal完全マスター】：Windows 10 The Latest（1/2 ページ） - ＠IT"
->Windows Terminalインストール</a></p>
-</li>
-<li>
-<p>WSL2インストール</p>
-<ul>
-<li>Windows Terminal を管理者権限で起動</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>wsl --install
-</span></span><span style="display:flex;"><span>wsl --set-default-version <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>wsl --install -d Ubuntu
-</span></span></code></pre></div><ul>
-<li>
-<p><a
-  class="gblog-markdown__link"
-  href="https://azure.microsoft.com/ja-jp/products/visual-studio-code/"title="Visual Studio Code – コード エディター | Microsoft Azure"
->VSCodeインストール</a></p>
-</li>
-<li>
-<p><a
-  class="gblog-markdown__link"
-  href="https://docs.docker.jp/docker-for-windows/install.html"title="Windows に Docker Desktop をインストール — Docker-docs-ja 19.03 ドキュメント"
->Windows に Docker Desktop をインストール</a></p>
-</li>
-</ul>
-<hr>
-<p>まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？</p>
-<p>で、プロジェクトのトップで、 <code>.devcontainer</code> ディレクトリを作り、その配下に、 <code>Dockerfile</code> <code>devcontainer.json</code> の2つのファイルを作ります。</p>
-<ul>
-<li><code>.devcontainer/Dockerfile</code> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> klakegg/hugo:0.88.0-alpine</span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apk update <span style="color:#f92672">&amp;&amp;</span> apk --no-cache add git<span style="color:#960050;background-color:#1e0010">
-</span></span></span></code></pre></div><ul>
-<li><code>.devcontainer/devcontainer.json</code> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;bittersmooth&#34;</span>,
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;build&#34;</span>: {
-</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&#34;dockerfile&#34;</span>: <span style="color:#e6db74">&#34;Dockerfile&#34;</span>,
-</span></span><span style="display:flex;"><span>	},
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;extensions&#34;</span>: [
-</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;mhutchie.git-graph&#34;</span>
-</span></span><span style="display:flex;"><span>	]
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li><a
-  class="gblog-markdown__link"
-  href="https://docs.microsoft.com/ja-jp/learn/modules/use-docker-container-dev-env-vs-code/"title="Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs"
->Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs</a></li>
-</ul>
-<hr>
-<p>簡単に <code>Hugo</code> の環境が手に入るのですが、コレひとつだけ落とし穴があって、 <code>hugo server -w</code> でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ <code>hugo server -w</code> で確認すれば良いのかな？と言う感じでやっています。</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>alpineベースのイメージだと、Gitすら入っていないので <code>apk --no-cache add git</code> が、必要なのです。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>拡張機能、 <a
-  class="gblog-markdown__link"
-  href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph"title="Git Graph - Visual Studio Marketplace"
->Git Graph</a> 位は欲しいですよね…。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20200728_eclipse_pe/">2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</a>
+        </h1>
+      </header>
 
-    </section>
-  </article>
+      <section class="gblog-markdown">
+        TL;DR インストール用リポジトリーURLは、以下です
+https://propedit.osdn.jp/eclipse/updates/ 諸々など 現在、 Google Guice ベースで Bean Validation を入れようとしていて。 独自メッセージファイル ValidationMessages_ja.properties を作ろうかと思ったら、あれ、 Unicode でないとダメなのか…。 Spring-Boot だと、フツーに UTF-8 を読んでくれるんですけどね。
+Validator を DI する時に、設定を注入出来ないかな？って思ったのですが、どこにも情報が無い!! まぁ、仕方ないですわ。 Unicodeのまま実装しますかね。
+なので、Eclipse に PropertiesEditor をインストールしようと思って、 ぐぐって Eclipseで文字化けするプロパティファイルを編集する方法 を参考にインストール…、しようと思っても入らない!!
+まぁ、そういう事情もありましたよね 1 2 で、ドメイン/ホストを色々打ち替えて、上記のリポジトリーURLが分かった次第。
+本質的には、 JakartaEE / Hibernate が、メッセージファイルのフォーマットをUTF-8に公式対応してくれれば、それが良いのでしょうが…。
+ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&#160;&#x21a9;&#xfe0e;
+OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2020-07-28T00:00:00&#43;09:00">
+      
+      Jul 28, 2020
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/eclipse/"
+      title="All posts tagged with 'eclipse'"
+    >
+      eclipse
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center gblog-post__meta--tag">
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20200504_eclipse_setting_utf8/">MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
+Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
+解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
+&lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;!-- Eclipse --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
+mvn eclipse:clean eclipse:eclipse 元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow 旧blog 2018/10/12 の記事に加筆訂正して再掲しました。
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2020-05-04T00:00:00&#43;09:00">
+      
+      May 4, 2020
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/eclipse/"
+      title="All posts tagged with 'eclipse'"
+    >
+      eclipse
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center gblog-post__meta--tag">
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+  
+
+
+<nav class="gblog-paging flex flex-even align-center" role="navigation">
+  <div class="gblog-paging__item gblog-paging__item--prev">
+    
+  </div>
+  <div class="gblog-paging__state">Page 1 of 1</div>
+  <div class="gblog-paging__item gblog-paging__item--next">
+    
+  </div>
+</nav>
+
 
       </main>
 

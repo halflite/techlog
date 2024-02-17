@@ -5,4 +5,24 @@ my tech blog with Hugo
 
 ## theme
 
-* https://github.com/qqhann/hugo-primer
+* https://hugo-geekblog.geekdocs.de/
+
+## How to write.
+
+create new entry.
+
+```sh
+hugo new posts/article.md
+```
+
+check on local server.
+
+```sh
+hugo server
+```
+
+write out all.
+
+```sh
+hugo -D
+```
