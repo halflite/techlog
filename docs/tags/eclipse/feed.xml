@@ -4,7 +4,7 @@
     <title>Eclipse on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/eclipse/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/eclipse/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-02-17T11:29:55+00:00</updated>
+    <updated>2024-02-17T11:35:47+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/eclipse/</id>
         <entry>
             <title>pom.xmlでEclipseの設定を定義する</title>
@@ -58,7 +58,7 @@
 &lt;p&gt;大抵のEclipseの設定には&lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://projects.eclipse.org/projects/technology.m2e&#34;title=&#34;Eclipse Maven Integration - m2eclipse | projects.eclipse.org&#34;
-&gt;m2e&lt;/a&gt;が入っているでしょうし、m2eで。Eclipse設定ファイルを更新するのもありでしょう。&lt;/p&gt;
+&gt;m2e&lt;/a&gt;が入っているでしょうし、m2eでEclipse設定ファイルを更新するのもありでしょう。&lt;/p&gt;
 &lt;p&gt;&lt;a
   class=&#34;gblog-markdown__link--raw&#34;
   href=&#34;https://ibb.co/QP4wZ0s&#34;

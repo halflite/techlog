@@ -56,7 +56,7 @@ mvn eclipse:clean eclipse:eclipse
 
 ______
 
-大抵のEclipseの設定には[m2e](https://projects.eclipse.org/projects/technology.m2e "Eclipse Maven Integration - m2eclipse | projects.eclipse.org")が入っているでしょうし、m2eで。Eclipse設定ファイルを更新するのもありでしょう。
+大抵のEclipseの設定には[m2e](https://projects.eclipse.org/projects/technology.m2e "Eclipse Maven Integration - m2eclipse | projects.eclipse.org")が入っているでしょうし、m2eでEclipse設定ファイルを更新するのもありでしょう。
 
 [![m2e setting](https://i.ibb.co/QP4wZ0s/image.png)](https://ibb.co/QP4wZ0s)
 
