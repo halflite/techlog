@@ -4,7 +4,7 @@
     <title>Java on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/java/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/java/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-02-18T07:21:55+00:00</updated>
+    <updated>2024-03-08T05:14:07+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/java/</id>
         <entry>
             <title>pom.xmlでEclipseの設定を定義する</title>
@@ -14,7 +14,7 @@
             <updated>2024-01-31T00:00:00+09:00</updated>
             <content type="html">
                 &lt;ul&gt;
-&lt;li&gt;eclipseの設定を &lt;code&gt;pom.xml &lt;/code&gt;に記述します。&lt;/li&gt;
+&lt;li&gt;Eclipseの設定を &lt;code&gt;pom.xml&lt;/code&gt; に記述します。&lt;/li&gt;
 &lt;li&gt;Java17 / Maven 3.9.6 を想定しています。&lt;/li&gt;
 &lt;li&gt;文字コードはUTF-8、改行コードはLFになるように設定しています。&lt;/li&gt;
 &lt;li&gt;外部のライブラリのソースとJavadocも、ローカルにダウンロードするように設定しています。&lt;/li&gt;
