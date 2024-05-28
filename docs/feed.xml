@@ -4,10 +4,10 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-05-28T09:54:25+00:00</updated>
+    <updated>2024-05-28T09:59:05+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
-            <title>2024年 2020年 Javaベースのバッチを作るなら その1 環境と初期設定</title>
+            <title>2024年 Javaベースのバッチを作るなら その1 環境と初期設定</title>
             <link href="https://halflite.github.io/techlog/posts/20240407_java_based_batch/" rel="alternate" type="text/html"  hreflang="en" />
             <id>https://halflite.github.io/techlog/posts/20240407_java_based_batch/</id>
             <published>2024-04-07T00:00:00+09:00</published>
