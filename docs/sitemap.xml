@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://halflite.github.io/techlog/posts/20240131_eclipse_maven_settings/</loc>
-    <lastmod>2024-01-31T00:00:00+09:00</lastmod>
+    <loc>https://halflite.github.io/techlog/posts/20240407_java_based_batch/</loc>
+    <lastmod>2024-04-07T00:00:00+09:00</lastmod>
   </url>
   <url>
     <loc>https://halflite.github.io/techlog/</loc>
+    <lastmod>2024-04-07T00:00:00+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://halflite.github.io/techlog/posts/20240131_eclipse_maven_settings/</loc>
     <lastmod>2024-01-31T00:00:00+09:00</lastmod>
   </url>
   <url>

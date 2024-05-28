@@ -301,6 +301,78 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20201225_git_2/">2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        前回から、また変わったので。
+sudo yum -y remove git sudo yum -y install https://repo.ius.io/ius-release-el7.rpm sudo yum -y install git224 git --version 元ネタ
+iusの最新リンクが変更になったので注意 - Qiita CentOS7にGit2系をyumでインストール - Qiita 
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2020-12-25T00:00:00&#43;09:00">
+      
+      Dec 25, 2020
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/linux/"
+      title="All posts tagged with 'linux'"
+    >
+      linux
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20200918_postgres_local/">2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</a>
         </h1>
       </header>
@@ -1018,78 +1090,6 @@ Maven Quickstart Archetype – Maven Quickstart Archetype cmdのバッチファ�
       title="All posts tagged with 'java'"
     >
       java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200117_git_ver/">2020年1月、CentOS7にgit2.xをyumで入れたかっただけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-         CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!! Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!! git --version って、まだ1.x系なの? しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール… え&hellip;??? 依存ライブラリが無いの…??? sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install git --enablerepo=ius --disablerepo=base 上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!
-結局、こうなりますわ。
-sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates 
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-01-17T01:00:00&#43;09:00">
-      
-      Jan 17, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/linux/"
-      title="All posts tagged with 'linux'"
-    >
-      linux
     </a>
   </span>
 

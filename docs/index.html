@@ -301,6 +301,88 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20240407_java_based_batch/">2024年 2020年 Javaベースのバッチを作るなら その1 環境と初期設定</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        前回、2020年 Javaベースのバッチを作るなら の続き。
+これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+Rancher Desktop をインストール Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml .|-- .devcontainer| |-- Dockerfile| |-- devcontainer.json| `-- docker-compose.yml|-- .gitignore|-- LICENSE`-- README.md .devcontainer/Dockerfile 1
+# Amazon Corretto with Java 21 / Debian 12FROM maven:3.9-amazoncorretto-21-debian-bookwormRUN apt update &amp;&amp; apt -y install git &amp;&amp; \unlink /etc/localtime &amp;&amp; \ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime .
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20240407_java_based_batch/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-04-07T00:00:00&#43;09:00">
+      
+      Apr 7, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20240131_eclipse_maven_settings/">pom.xmlでEclipseの設定を定義する</a>
         </h1>
       </header>
@@ -1142,78 +1224,6 @@ Quarkus - Guides - Latest https://quarkus.
       title="All posts tagged with 'java'"
     >
       java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20201225_git_2/">2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        前回から、また変わったので。
-sudo yum -y remove git sudo yum -y install https://repo.ius.io/ius-release-el7.rpm sudo yum -y install git224 git --version 元ネタ
-iusの最新リンクが変更になったので注意 - Qiita CentOS7にGit2系をyumでインストール - Qiita 
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-12-25T00:00:00&#43;09:00">
-      
-      Dec 25, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/linux/"
-      title="All posts tagged with 'linux'"
-    >
-      linux
     </a>
   </span>
 
