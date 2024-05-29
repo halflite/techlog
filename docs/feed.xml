@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-05-28T09:59:05+00:00</updated>
+    <updated>2024-05-29T02:30:36+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>2024年 Javaベースのバッチを作るなら その1 環境と初期設定</title>
@@ -17,18 +17,18 @@
   class=&#34;gblog-markdown__link&#34;
   href=&#34;../20200625_java_based_batch/&#34;
 &gt;2020年 Javaベースのバッチを作るなら&lt;/a&gt; の続き。&lt;/p&gt;
-&lt;p&gt;これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。&lt;/p&gt;
+&lt;p&gt;Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://rancherdesktop.io/&#34;title=&#34;Rancher Desktop by SUSE&#34;
-&gt;Rancher Desktop&lt;/a&gt; をインストール&lt;/li&gt;
+&gt;Rancher Desktop&lt;/a&gt; をインストール、起動 &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://azure.microsoft.com/ja-jp/products/visual-studio-code&#34;title=&#34;Visual Studio Code – コード エディター | Microsoft Azure&#34;
 &gt;Visual Studio Code&lt;/a&gt; と その拡張 &lt;code&gt;Remote Container&lt;/code&gt; をインストール&lt;/li&gt;
 &lt;li&gt;リモートの Git で新規リポジトリを作成&lt;/li&gt;
-&lt;li&gt;チェックアウト&lt;/li&gt;
+&lt;li&gt;チェックアウト &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
 &lt;li&gt;Visual Studio Codeでフォルダーを開く&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;.devcontainer&lt;/code&gt; と言うフォルダーを作る&lt;/li&gt;
 &lt;li&gt;配下に3ファイル作る &lt;code&gt;Dockerfile&lt;/code&gt; &lt;code&gt;devcontainer.json&lt;/code&gt; &lt;code&gt;docker-compose.yml&lt;/code&gt;&lt;/li&gt;
@@ -42,13 +42,13 @@
 |-- LICENSE
 `-- README.md
 &lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;p&gt;&lt;code&gt;.devcontainer/Dockerfile&lt;/code&gt; &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;.devcontainer/Dockerfile&lt;/code&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Amazon Corretto with Java 21 / Debian 12
 FROM maven:3.9-amazoncorretto-21-debian-bookworm
 RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     unlink /etc/localtime &amp;amp;&amp;amp; \
     ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;.devcontainer/devcontainer.json&lt;/code&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;.devcontainer/devcontainer.json&lt;/code&gt; &lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;batch&amp;#34;&lt;/span&gt;,
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;dockerComposeFile&amp;#34;&lt;/span&gt;: [
@@ -118,15 +118,21 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;driver&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;bridge&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;p&gt;この後、「コンテナーで再開」を選んで実行、で &lt;code&gt;Debian&lt;/code&gt;/&lt;code&gt;Java&lt;/code&gt;/&lt;code&gt;Maven&lt;/code&gt; の開発環境が入りますよね。&lt;br&gt;
-ここからは &lt;code&gt;mvn&lt;/code&gt; コマンドで作業していくのが早いのではないでしょうか？&lt;/p&gt;
+ここからは&lt;code&gt;mvn&lt;/code&gt;コマンドで作業していくのが早いのではないでしょうか？&lt;/p&gt;
 &lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34;&gt;
-&lt;p&gt;お好みで。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;WSL2&lt;/code&gt; &lt;code&gt;Ubuntu&lt;/code&gt; のインストールに関しては割愛。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id=&#34;fn:2&#34;&gt;
-&lt;p&gt;お好みで。とは言え &lt;code&gt;Java&lt;/code&gt; &lt;code&gt;XML&lt;/code&gt; &lt;code&gt;YAML&lt;/code&gt; の拡張は欲しいですよね。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;gitクライアントのインストールに関しては割愛。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;お好みで。ここでは、リモートコンテナからもgit使いたいので、gitのインストールとローカル時間を日本に設定だけしています。&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;お好みで。とは言え &lt;code&gt;Java&lt;/code&gt; &lt;code&gt;XML&lt;/code&gt; &lt;code&gt;YAML&lt;/code&gt; の拡張は欲しいですよね。&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;

@@ -8,12 +8,12 @@ tags:
 
 前回、[2020年 Javaベースのバッチを作るなら](../20200625_java_based_batch/) の続き。
 
-これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
 
-1. [Rancher Desktop](https://rancherdesktop.io/ "Rancher Desktop by SUSE") をインストール
+1. [Rancher Desktop](https://rancherdesktop.io/ "Rancher Desktop by SUSE") をインストール、起動 [^1]
 2. [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code "Visual Studio Code – コード エディター | Microsoft Azure") と その拡張 `Remote Container` をインストール
 3. リモートの Git で新規リポジトリを作成
-4. チェックアウト
+4. チェックアウト [^2]
 5. Visual Studio Codeでフォルダーを開く
 6. `.devcontainer` と言うフォルダーを作る
 7. 配下に3ファイル作る `Dockerfile` `devcontainer.json` `docker-compose.yml` 
@@ -32,7 +32,7 @@ tags:
 
 _____
 
-`.devcontainer/Dockerfile` [^1]
+`.devcontainer/Dockerfile` [^3]
 
 ```
 # Amazon Corretto with Java 21 / Debian 12
@@ -42,7 +42,7 @@ RUN apt update && apt -y install git && \
     ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 ```
 
-`.devcontainer/devcontainer.json` [^2]
+`.devcontainer/devcontainer.json` [^4]
 
 ```json
 {
@@ -121,7 +121,9 @@ networks:
 ____
 
 この後、「コンテナーで再開」を選んで実行、で `Debian`/`Java`/`Maven` の開発環境が入りますよね。  
-ここからは `mvn` コマンドで作業していくのが早いのではないでしょうか？
+ここからは`mvn`コマンドで作業していくのが早いのではないでしょうか？
 
-[^1]: お好みで。
-[^2]: お好みで。とは言え `Java` `XML` `YAML` の拡張は欲しいですよね。
+[^1]: `WSL2` `Ubuntu` のインストールに関しては割愛。
+[^2]: gitクライアントのインストールに関しては割愛。
+[^3]: お好みで。ここでは、リモートコンテナからもgit使いたいので、gitのインストールとローカル時間を日本に設定だけしています。
+[^4]: お好みで。とは言え `Java` `XML` `YAML` の拡張は欲しいですよね。

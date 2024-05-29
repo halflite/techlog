@@ -307,9 +307,9 @@
 
       <section class="gblog-markdown">
         前回、2020年 Javaベースのバッチを作るなら の続き。
-これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
-Rancher Desktop をインストール Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml .|-- .devcontainer| |-- Dockerfile| |-- devcontainer.json| `-- docker-compose.yml|-- .gitignore|-- LICENSE`-- README.md .devcontainer/Dockerfile 1
-# Amazon Corretto with Java 21 / Debian 12FROM maven:3.9-amazoncorretto-21-debian-bookwormRUN apt update &amp;&amp; apt -y install git &amp;&amp; \unlink /etc/localtime &amp;&amp; \ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime .
+Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml . |-- .devcontainer | |-- Dockerfile | |-- devcontainer.json | `-- docker-compose.yml |-- .gitignore |-- LICENSE `-- README.md .devcontainer/Dockerfile 3
+# Amazon Corretto with Java 21 / Debian 12 FROM maven:3.9-amazoncorretto-21-debian-bookworm RUN apt update &amp;&amp; apt -y install git &amp;&amp; \ unlink /etc/localtime &amp;&amp; \ ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime .
       </section>
       <div class="gblog-post__readmore">
         

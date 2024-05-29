@@ -13,8 +13,8 @@
     <meta name="generator" content="Hugo 0.111.3">
     <meta name="robots" content="index, follow" />
     <meta name="description" content="前回、2020年 Javaベースのバッチを作るなら の続き。
-これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
-Rancher Desktop をインストール Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト Visual Studio Codeでフォルダー …" />
+Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 …" />
 
     <title>2024年 Javaベースのバッチを作るなら その1 環境と初期設定 | ひとり開発日記。</title>
 
@@ -44,8 +44,8 @@ Rancher Desktop をインストール Visual Studio Code と その拡張 Remote
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
   <meta property="og:description" content="前回、2020年 Javaベースのバッチを作るなら の続き。
-これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
-Rancher Desktop をインストール Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト Visual Studio Codeでフォルダー …" />
+Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 …" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240407_java_based_batch/" />
 
@@ -63,8 +63,8 @@ Rancher Desktop をインストール Visual Studio Code と その拡張 Remote
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="2024年 Javaベースのバッチを作るなら その1 環境と初期設定" />
   <meta name="twitter:description" content="前回、2020年 Javaベースのバッチを作るなら の続き。
-これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
-Rancher Desktop をインストール Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト Visual Studio Codeでフォルダー …" />
+Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 …" />
 
 <script type="application/ld+json">
   {
@@ -74,8 +74,8 @@ Rancher Desktop をインストール Visual Studio Code と その拡張 Remote
       "name": "2024年 Javaベースのバッチを作るなら その1 環境と初期設定",
       "url" : "https://halflite.github.io/techlog/posts/20240407_java_based_batch/",
       "headline": "2024年 Javaベースのバッチを作るなら その1 環境と初期設定",
-      "description": "前回、2020年 Javaベースのバッチを作るなら の続き。\nこれが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。\nRancher Desktop をインストール Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml .\r|-- .devcontainer\r| |-- Dockerfile\r| |-- devcontainer.json\r| `-- docker-compose.yml\r|-- .gitignore\r|-- LICENSE\r`-- README.md .devcontainer\/Dockerfile 1\n# Amazon Corretto with Java 21 \/ Debian 12\rFROM maven:3.9-amazoncorretto-21-debian-bookworm\rRUN apt update \u0026\u0026 apt -y install git \u0026\u0026 \\\runlink \/etc\/localtime \u0026\u0026 \\\rln -s \/usr\/share\/zoneinfo\/Asia\/Tokyo \/etc\/localtime .",
-      "wordCount" : "198",
+      "description": "前回、2020年 Javaベースのバッチを作るなら の続き。\nWindows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。\nRancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml . |-- .devcontainer | |-- Dockerfile | |-- devcontainer.json | `-- docker-compose.yml |-- .gitignore |-- LICENSE `-- README.md .devcontainer\/Dockerfile 3\n# Amazon Corretto with Java 21 \/ Debian 12 FROM maven:3.9-amazoncorretto-21-debian-bookworm RUN apt update \u0026\u0026 apt -y install git \u0026\u0026 \\ unlink \/etc\/localtime \u0026\u0026 \\ ln -s \/usr\/share\/zoneinfo\/Asia\/Tokyo \/etc\/localtime .",
+      "wordCount" : "202",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -406,18 +406,18 @@ Rancher Desktop をインストール Visual Studio Code と その拡張 Remote
   class="gblog-markdown__link"
   href="../20200625_java_based_batch/"
 >2020年 Javaベースのバッチを作るなら</a> の続き。</p>
-<p>これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。</p>
+<p>Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。</p>
 <ol>
 <li><a
   class="gblog-markdown__link"
   href="https://rancherdesktop.io/"title="Rancher Desktop by SUSE"
->Rancher Desktop</a> をインストール</li>
+>Rancher Desktop</a> をインストール、起動 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
 <li><a
   class="gblog-markdown__link"
   href="https://azure.microsoft.com/ja-jp/products/visual-studio-code"title="Visual Studio Code – コード エディター | Microsoft Azure"
 >Visual Studio Code</a> と その拡張 <code>Remote Container</code> をインストール</li>
 <li>リモートの Git で新規リポジトリを作成</li>
-<li>チェックアウト</li>
+<li>チェックアウト <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
 <li>Visual Studio Codeでフォルダーを開く</li>
 <li><code>.devcontainer</code> と言うフォルダーを作る</li>
 <li>配下に3ファイル作る <code>Dockerfile</code> <code>devcontainer.json</code> <code>docker-compose.yml</code></li>
@@ -431,13 +431,13 @@ Rancher Desktop をインストール Visual Studio Code と その拡張 Remote
 |-- LICENSE
 `-- README.md
 </code></pre><hr>
-<p><code>.devcontainer/Dockerfile</code> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p><code>.devcontainer/Dockerfile</code> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
 <pre tabindex="0"><code># Amazon Corretto with Java 21 / Debian 12
 FROM maven:3.9-amazoncorretto-21-debian-bookworm
 RUN apt update &amp;&amp; apt -y install git &amp;&amp; \
     unlink /etc/localtime &amp;&amp; \
     ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-</code></pre><p><code>.devcontainer/devcontainer.json</code> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+</code></pre><p><code>.devcontainer/devcontainer.json</code> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;batch&#34;</span>,
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;dockerComposeFile&#34;</span>: [
@@ -507,15 +507,21 @@ RUN apt update &amp;&amp; apt -y install git &amp;&amp; \
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">bridge</span>
 </span></span></code></pre></div><hr>
 <p>この後、「コンテナーで再開」を選んで実行、で <code>Debian</code>/<code>Java</code>/<code>Maven</code> の開発環境が入りますよね。<br>
-ここからは <code>mvn</code> コマンドで作業していくのが早いのではないでしょうか？</p>
+ここからは<code>mvn</code>コマンドで作業していくのが早いのではないでしょうか？</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p>お好みで。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><code>WSL2</code> <code>Ubuntu</code> のインストールに関しては割愛。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p>お好みで。とは言え <code>Java</code> <code>XML</code> <code>YAML</code> の拡張は欲しいですよね。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>gitクライアントのインストールに関しては割愛。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>お好みで。ここでは、リモートコンテナからもgit使いたいので、gitのインストールとローカル時間を日本に設定だけしています。&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>お好みで。とは言え <code>Java</code> <code>XML</code> <code>YAML</code> の拡張は欲しいですよね。&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
