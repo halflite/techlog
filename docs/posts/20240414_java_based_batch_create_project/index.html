@@ -78,7 +78,7 @@
       "url" : "https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/",
       "headline": "2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る",
       "description": "前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\nプロジェクトを作る まずバージョン確認\n\u003e mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: \/usr\/share\/maven Java version: 21.0.3, vendor: Amazon.com Inc., runtime: \/usr\/lib\/jvm\/java-21-amazon-corretto Default locale: en_US, platform encoding: UTF-8 OS name: \u0022linux\u0022, version: \u00225.15.146.1-microsoft-standard-wsl2\u0022, arch: \u0022amd64\u0022, family: \u0022unix\u0022 初期プロジェクト作成 1\nmvn archetype:generate \\ -DarchetypeArtifactId=maven-archetype-quickstart \\ -DinteractiveMode=false \\ -DartifactId=csvbatch \\ -DgroupId=app \\ -Dpackage=csvbatch.app このようなプロジェクトが作られます。\n. |-- LICENSE |-- README.md `-- csvbatch |-- pom.xml `-- src |-- main | `-- java | `-- csvbatch | `-- app | `-- App.",
-      "wordCount" : "105",
+      "wordCount" : "127",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -460,8 +460,27 @@
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>pom.xml に諸々を追加することになります。</p>
-<p>基本スタックは以前書いた <a
+<p>pom.xml に諸々を追加することになります。<br>
+初期はこんなものが自動生成されます</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>app<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>csvbatch<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;packaging&gt;</span>jar<span style="color:#f92672">&lt;/packaging&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;version&gt;</span>1.0-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;name&gt;</span>csvbatch<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;url&gt;</span>http://maven.apache.org<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;groupId&gt;</span>junit<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;version&gt;</span>3.8.1<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/dependencies&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/project&gt;</span>
+</span></span></code></pre></div><p>基本スタックは以前書いた <a
   class="gblog-markdown__link"
   href="../20220925_aws_lambda_guice/"
 >AWS Lambda FunctionでJavaを採用したい</a> に準拠したいと思います。</p>

@@ -59,7 +59,29 @@ mvn archetype:generate \
 
 ### 以降
 
-pom.xml に諸々を追加することになります。
+pom.xml に諸々を追加することになります。  
+初期はこんなものが自動生成されます
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>app</groupId>
+  <artifactId>csvbatch</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>csvbatch</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
+```
 
 基本スタックは以前書いた [AWS Lambda FunctionでJavaを採用したい](../20220925_aws_lambda_guice/) に準拠したいと思います。
 
