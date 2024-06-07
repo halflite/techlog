@@ -293,6 +293,97 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20210530_quarkus/">Quarkusに入門してみた</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
+入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
+最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
+mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
+色々揃っているよな、でも外れると何も出来ないよな 色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 2
+プレゼンテーション層、(所謂)「HTMLテンプレート」は Qute Templating Engine があるんですが、マジでこれしかないの…？ Thymeleaf はおろか、 FreeMarker にも届かないんでは…。
+DBアクセスには、 Hibernate/JPA とか、そのラッパー Panache とかあるんですが、それ以外は…。
+まぁ、そもそも Quarkus の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。
+Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
+でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
+このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
+Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W&#160;&#x21a9;&#xfe0e;
+Quarkus - Guides - Latest https://quarkus.
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20210530_quarkus/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2021-05-30T00:00:00&#43;09:00">
+      
+      May 30, 2021
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20201225_git_2/">2020年12月 CentOS7にgit2.xをyumで入れたかっただけだった。</a>
         </h1>
       </header>
@@ -979,79 +1070,6 @@ mvn dependency:copy-dependencies -DincludeScope=test 上記を実行すると、
     <time datetime="2020-02-13T00:00:00&#43;09:00">
       
       Feb 13, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200120_maven_cmd/">Windowsのcmd.exeで、Mavenを使って新規プロジェクトを作る時、複数行に分けて書きたかっただけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        新しいライブラリやフレームワークを試す時、素振りも兼ねて、小さいJavaプロジェクトを作ってみるんですが、毎回Maven Archetypeの書き方を忘れて、自分のblogを読み返してしまったり。
-この度、blog移設なので、ここでも書き記しておく次第です。
-mvn archetype:generate ^-DarchetypeArtifactId=maven-archetype-quickstart ^-DinteractiveMode=false ^-DgroupId=net.halflite ^-DartifactId=testapp ^-Dpackage=net.halflite.testapp もとねた
-Maven Quickstart Archetype – Maven Quickstart Archetype cmdのバッチファイルで、1コマンドを複数行にわたって記述したい場合 - Qiita 
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-01-20T00:00:00&#43;09:00">
-      
-      Jan 20, 2020
     </time>
   </span>
 </span>

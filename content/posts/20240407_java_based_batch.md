@@ -10,6 +10,8 @@ tags:
 
 Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
 
+要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。
+
 1. [Rancher Desktop](https://rancherdesktop.io/ "Rancher Desktop by SUSE") をインストール、起動 [^1]
 2. [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code "Visual Studio Code – コード エディター | Microsoft Azure") と その拡張 `Remote Container` をインストール
 3. リモートの Git で新規リポジトリを作成
@@ -122,6 +124,8 @@ ____
 
 この後、「コンテナーで再開」を選んで実行、で `Debian`/`Java`/`Maven` の開発環境が入りますよね。  
 ここからは`mvn`コマンドで作業していくのが早いのではないでしょうか？
+
+次は [2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る](../20240414_java_based_batch_create_project/)
 
 [^1]: `WSL2` `Ubuntu` のインストールに関しては割愛。
 [^2]: gitクライアントのインストールに関しては割愛。

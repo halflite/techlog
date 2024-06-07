@@ -301,6 +301,90 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20240414_java_based_batch_create_project/">2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
+開発環境は、 VSCode と Rancher Desktop だけでやってみます。
+プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: /usr/share/maven Java version: 21.0.3, vendor: Amazon.com Inc., runtime: /usr/lib/jvm/java-21-amazon-corretto Default locale: en_US, platform encoding: UTF-8 OS name: &#34;linux&#34;, version: &#34;5.15.146.1-microsoft-standard-wsl2&#34;, arch: &#34;amd64&#34;, family: &#34;unix&#34; 初期プロジェクト作成 1
+mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DartifactId=csvbatch \ -DgroupId=app \ -Dpackage=csvbatch.app このようなプロジェクトが作られます。
+. |-- LICENSE |-- README.md `-- csvbatch |-- pom.xml `-- src |-- main | `-- java | `-- csvbatch | `-- app | `-- App.
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20240414_java_based_batch_create_project/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-04-14T00:00:00&#43;09:00">
+      
+      Apr 14, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20240407_java_based_batch/">2024年 Javaベースのバッチを作るなら その1 環境と初期設定</a>
         </h1>
       </header>
@@ -308,6 +392,7 @@
       <section class="gblog-markdown">
         前回、2020年 Javaベースのバッチを作るなら の続き。
 Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。
 Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml . |-- .devcontainer | |-- Dockerfile | |-- devcontainer.json | `-- docker-compose.yml |-- .gitignore |-- LICENSE `-- README.md .devcontainer/Dockerfile 3
 # Amazon Corretto with Java 21 / Debian 12 FROM maven:3.9-amazoncorretto-21-debian-bookworm RUN apt update &amp;&amp; apt -y install git &amp;&amp; \ unlink /etc/localtime &amp;&amp; \ ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime .
       </section>
@@ -1103,97 +1188,6 @@ Maven 3.8.1 で mvn install 出来ない(maven-default-http-blocker)されたメ
     <time datetime="2021-06-27T00:00:00&#43;09:00">
       
       Jun 27, 2021
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20210530_quarkus/">Quarkusに入門してみた</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        Quarkusに入門してみた Quarkus - Creating Your First Application Quarkus を、ちょろっと触っています。
-入門編として、「HTMLで入力フォームを作って、画像投稿掲示板を作る」までやってみたいかな、位のモチベーションですかね…。いや、まだ何も出来ていませんが…。
-最初に触った感想 とりあえず、簡単に出来るよな 色々揃っているよな、でも外れると何も出来ないよな Vert.x が鬼門かもしれないな とりあえず、簡単に出来るよな とりあえず、mavenでプロジェクト作って、 Hello, World! とか、適当にJSONを出力するのとかは、Javaの基礎知識ある人なら、10分程度で出来るんですよ。
-mvn clean compile quarkus:dev で実行させた後、Eclipseとかでデバッグするには、ポート5005のリモート・デバッグを使えばいい、と。1
-色々揃っているよな、でも外れると何も出来ないよな 色々道具は揃っているんですが。 ただ、本当に限定的なんですよね…。 2
-プレゼンテーション層、(所謂)「HTMLテンプレート」は Qute Templating Engine があるんですが、マジでこれしかないの…？ Thymeleaf はおろか、 FreeMarker にも届かないんでは…。
-DBアクセスには、 Hibernate/JPA とか、そのラッパー Panache とかあるんですが、それ以外は…。
-まぁ、そもそも Quarkus の役割を考えると、「Backend for Frontendをそこまで作り込むな」と言う主張なのかもしれませんが…。
-Vert.x が鬼門かもしれないな Spring Boot って、結局、HttpServletの(適度に)厚いラッパーだったわけで、昔ながらのServletを知っていれば、何とか応用も効いたと思うんですが、 Vert.x は、ホントよく分からんですねぇ。 JAX-RSの下がどうなっているか、きちんと調べないと分からん、と言う。
-でもね とは言え、新しい技術に触れると、ホントにワクワクしますわ。
-このフレームワークが、どう転ぶのかも分からないんですが、でも、これからのJava標準準拠であることを考えると、やっぱり避けて通れないんでしょうね。 3
-Maven testをeclipseでデバッグ | infoScoop開発者ブログ https://bit.ly/2TJzH6W&#160;&#x21a9;&#xfe0e;
-Quarkus - Guides - Latest https://quarkus.
-      </section>
-      <div class="gblog-post__readmore">
-        
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/techlog/posts/20210530_quarkus/"
-          >
-            Read full post
-            <i class="gblog-icon">gblog_arrow_right</i>
-          </a>
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2021-05-30T00:00:00&#43;09:00">
-      
-      May 30, 2021
     </time>
   </span>
 </span>

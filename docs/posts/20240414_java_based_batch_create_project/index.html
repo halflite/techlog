@@ -12,12 +12,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Hugo 0.111.3">
     <meta name="robots" content="index, follow" />
-    <meta name="description" content="前回、2020年 Javaベースのバッチを作るなら の続き。
-Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
-要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。
-Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote …" />
+    <meta name="description" content="前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
+開発環境は、 VSCode と Rancher Desktop だけでやってみます。
+プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: …" />
 
-    <title>2024年 Javaベースのバッチを作るなら その1 環境と初期設定 | ひとり開発日記。</title>
+    <title>2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る | ひとり開発日記。</title>
 
     <link
   rel="icon"
@@ -41,58 +41,58 @@ Rancher Desktop をインストール、起動 1 Visual Studio Code と その�
     
   <meta
     property="og:title"
-    content="2024年 Javaベースのバッチを作るなら その1 環境と初期設定"
+    content="2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る"
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
-  <meta property="og:description" content="前回、2020年 Javaベースのバッチを作るなら の続き。
-Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
-要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。
-Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote …" />
+  <meta property="og:description" content="前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
+開発環境は、 VSCode と Rancher Desktop だけでやってみます。
+プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: …" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240407_java_based_batch/" />
+  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/" />
 
 <meta property="article:section" content="Posts" />
     <meta
       property="article:published_time"
-      content="2024-04-07T00:00:00+09:00"
+      content="2024-04-14T00:00:00+09:00"
     />
     <meta
       property="article:modified_time"
-      content="2024-04-07T00:00:00+09:00"
+      content="2024-04-14T00:00:00+09:00"
     />
 
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2024年 Javaベースのバッチを作るなら その1 環境と初期設定" />
-  <meta name="twitter:description" content="前回、2020年 Javaベースのバッチを作るなら の続き。
-Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
-要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。
-Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote …" />
+  <meta name="twitter:title" content="2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る" />
+  <meta name="twitter:description" content="前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
+開発環境は、 VSCode と Rancher Desktop だけでやってみます。
+プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: …" />
 
 <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "BlogPosting",
       "articleSection": "Posts",
-      "name": "2024年 Javaベースのバッチを作るなら その1 環境と初期設定",
-      "url" : "https://halflite.github.io/techlog/posts/20240407_java_based_batch/",
-      "headline": "2024年 Javaベースのバッチを作るなら その1 環境と初期設定",
-      "description": "前回、2020年 Javaベースのバッチを作るなら の続き。\nWindows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。\n要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。\nRancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml . |-- .devcontainer | |-- Dockerfile | |-- devcontainer.json | `-- docker-compose.yml |-- .gitignore |-- LICENSE `-- README.md .devcontainer\/Dockerfile 3\n# Amazon Corretto with Java 21 \/ Debian 12 FROM maven:3.9-amazoncorretto-21-debian-bookworm RUN apt update \u0026\u0026 apt -y install git \u0026\u0026 \\ unlink \/etc\/localtime \u0026\u0026 \\ ln -s \/usr\/share\/zoneinfo\/Asia\/Tokyo \/etc\/localtime .",
-      "wordCount" : "208",
+      "name": "2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る",
+      "url" : "https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/",
+      "headline": "2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る",
+      "description": "前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\nプロジェクトを作る まずバージョン確認\n\u003e mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: \/usr\/share\/maven Java version: 21.0.3, vendor: Amazon.com Inc., runtime: \/usr\/lib\/jvm\/java-21-amazon-corretto Default locale: en_US, platform encoding: UTF-8 OS name: \u0022linux\u0022, version: \u00225.15.146.1-microsoft-standard-wsl2\u0022, arch: \u0022amd64\u0022, family: \u0022unix\u0022 初期プロジェクト作成 1\nmvn archetype:generate \\ -DarchetypeArtifactId=maven-archetype-quickstart \\ -DinteractiveMode=false \\ -DartifactId=csvbatch \\ -DgroupId=app \\ -Dpackage=csvbatch.app このようなプロジェクトが作られます。\n. |-- LICENSE |-- README.md `-- csvbatch |-- pom.xml `-- src |-- main | `-- java | `-- csvbatch | `-- app | `-- App.",
+      "wordCount" : "105",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://halflite.github.io/techlog/posts/20240407_java_based_batch/"
+          "@id": "https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/"
       },
       "keywords" : [ "java" ],
       "author" : [
       ],
       "copyrightHolder" : "ひとり開発日記。",
       "copyrightYear" : "2024",
-      "dateCreated": "2024-04-07T00:00:00.00Z",
-      "datePublished": "2024-04-07T00:00:00.00Z",
-      "dateModified": "2024-04-07T00:00:00.00Z",
+      "dateCreated": "2024-04-14T00:00:00.00Z",
+      "datePublished": "2024-04-14T00:00:00.00Z",
+      "dateModified": "2024-04-14T00:00:00.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "ひとり開発日記。",
@@ -177,7 +177,7 @@ Rancher Desktop をインストール、起動 1 Visual Studio Code と その�
   href="/techlog/custom.css"
   media="all"
 />
-  <link href="https://halflite.github.io/techlog/posts/20240407_java_based_batch/" rel="canonical" type="text/html" />
+  <link href="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/" rel="canonical" type="text/html" />
     <link href="https://halflite.github.io/techlog/feed.xml" rel="alternate" type="application/atom+xml" title="ひとり開発日記。 Atom Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
@@ -347,16 +347,16 @@ Rancher Desktop をインストール、起動 1 Visual Studio Code と その�
       
 
 
-      <h1 class="gblog-post__title">2024年 Javaベースのバッチを作るなら その1 環境と初期設定</h1>
+      <h1 class="gblog-post__title">2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</h1>
 
       
         <div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head">
           <span class="flex align-center no-wrap gblog-post__meta--update">
   <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
   <span class="gblog-post__tag">
-    <time datetime="2024-04-07T00:00:00&#43;09:00">
+    <time datetime="2024-04-14T00:00:00&#43;09:00">
       
-      Apr 7, 2024
+      Apr 14, 2024
     </time>
   </span>
 </span>
@@ -407,129 +407,69 @@ Rancher Desktop をインストール、起動 1 Visual Studio Code と その�
     <section class="gblog-markdown">
       <p>前回、<a
   class="gblog-markdown__link"
-  href="../20200625_java_based_batch/"
->2020年 Javaベースのバッチを作るなら</a> の続き。</p>
-<p>Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。</p>
-<p>要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。</p>
-<ol>
-<li><a
+  href="../20240407_java_based_batch/"
+>2024年 Javaベースのバッチを作るなら その1 環境と初期設定</a> の続き。</p>
+<p>開発環境は、 VSCode と Rancher Desktop だけでやってみます。</p>
+<hr>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="プロジェクトを作る"
+    >
+        プロジェクトを作る
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/#プロジェクトを作る" class="gblog-post__anchor clip flex align-center" aria-label="Anchor プロジェクトを作る" href="#%e3%83%97%e3%83%ad%e3%82%b8%e3%82%a7%e3%82%af%e3%83%88%e3%82%92%e4%bd%9c%e3%82%8b">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>まずバージョン確認</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>&gt; mvn --version
+</span></span><span style="display:flex;"><span>Apache Maven 3.9.6 <span style="color:#f92672">(</span>bc0240f3c744dd6b6ec2920b3cd08dcc295161ae<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Maven home: /usr/share/maven
+</span></span><span style="display:flex;"><span>Java version: 21.0.3, vendor: Amazon.com Inc., runtime: /usr/lib/jvm/java-21-amazon-corretto
+</span></span><span style="display:flex;"><span>Default locale: en_US, platform encoding: UTF-8
+</span></span><span style="display:flex;"><span>OS name: <span style="color:#e6db74">&#34;linux&#34;</span>, version: <span style="color:#e6db74">&#34;5.15.146.1-microsoft-standard-wsl2&#34;</span>, arch: <span style="color:#e6db74">&#34;amd64&#34;</span>, family: <span style="color:#e6db74">&#34;unix&#34;</span>
+</span></span></code></pre></div><p>初期プロジェクト作成 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mvn archetype:generate <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -DarchetypeArtifactId<span style="color:#f92672">=</span>maven-archetype-quickstart <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -DinteractiveMode<span style="color:#f92672">=</span>false <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -DartifactId<span style="color:#f92672">=</span>csvbatch <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -DgroupId<span style="color:#f92672">=</span>app <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -Dpackage<span style="color:#f92672">=</span>csvbatch.app
+</span></span></code></pre></div><p>このようなプロジェクトが作られます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>|-- LICENSE
+</span></span><span style="display:flex;"><span>|-- README.md
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>-- csvbatch
+</span></span><span style="display:flex;"><span>    |-- pom.xml
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">`</span>-- src
+</span></span><span style="display:flex;"><span>        |-- main
+</span></span><span style="display:flex;"><span>        |   <span style="color:#e6db74">`</span>-- java
+</span></span><span style="display:flex;"><span>        |       <span style="color:#e6db74">`</span>-- csvbatch
+</span></span><span style="display:flex;"><span>        |           <span style="color:#e6db74">`</span>-- app
+</span></span><span style="display:flex;"><span>        |               <span style="color:#e6db74">`</span>-- App.java
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">`</span>-- test
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">`</span>-- java
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">`</span>-- csvbatch
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">`</span>-- app
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">`</span>-- AppTest.java
+</span></span></code></pre></div><div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="以降"
+    >
+        以降
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/#以降" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 以降" href="#%e4%bb%a5%e9%99%8d">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>pom.xml に諸々を追加することになります。</p>
+<p>基本スタックは以前書いた <a
   class="gblog-markdown__link"
-  href="https://rancherdesktop.io/"title="Rancher Desktop by SUSE"
->Rancher Desktop</a> をインストール、起動 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
-<li><a
-  class="gblog-markdown__link"
-  href="https://azure.microsoft.com/ja-jp/products/visual-studio-code"title="Visual Studio Code – コード エディター | Microsoft Azure"
->Visual Studio Code</a> と その拡張 <code>Remote Container</code> をインストール</li>
-<li>リモートの Git で新規リポジトリを作成</li>
-<li>チェックアウト <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
-<li>Visual Studio Codeでフォルダーを開く</li>
-<li><code>.devcontainer</code> と言うフォルダーを作る</li>
-<li>配下に3ファイル作る <code>Dockerfile</code> <code>devcontainer.json</code> <code>docker-compose.yml</code></li>
-</ol>
-<pre tabindex="0"><code>.
-|-- .devcontainer
-|   |-- Dockerfile
-|   |-- devcontainer.json
-|   `-- docker-compose.yml
-|-- .gitignore
-|-- LICENSE
-`-- README.md
-</code></pre><hr>
-<p><code>.devcontainer/Dockerfile</code> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
-<pre tabindex="0"><code># Amazon Corretto with Java 21 / Debian 12
-FROM maven:3.9-amazoncorretto-21-debian-bookworm
-RUN apt update &amp;&amp; apt -y install git &amp;&amp; \
-    unlink /etc/localtime &amp;&amp; \
-    ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-</code></pre><p><code>.devcontainer/devcontainer.json</code> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;batch&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;dockerComposeFile&#34;</span>: [
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;docker-compose.yml&#34;</span>
-</span></span><span style="display:flex;"><span>  ],
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;workspaceFolder&#34;</span>: <span style="color:#e6db74">&#34;/workspace&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;service&#34;</span>: <span style="color:#e6db74">&#34;api&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;forwardPorts&#34;</span>: [
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">8080</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">5432</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">61616</span>
-</span></span><span style="display:flex;"><span>  ],
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;customizations&#34;</span>: {
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;vscode&#34;</span>: {
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;extensions&#34;</span>: [
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ms-ceintl.vscode-language-pack-ja&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;vscjava.vscode-java-pack&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;redhat.vscode-xml&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;redhat.vscode-yaml&#34;</span>
-</span></span><span style="display:flex;"><span>      ],
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;settings&#34;</span>: {
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;editor.formatOnSave&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;editor.formatOnPaste&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;editor.insertSpaces&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;editor.tabSize&#34;</span>: <span style="color:#ae81ff">2</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;editor.wordWrapColumn&#34;</span>: <span style="color:#ae81ff">240</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;editor.wordWrap&#34;</span>: <span style="color:#e6db74">&#34;wordWrapColumn&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;files.encoding&#34;</span>: <span style="color:#e6db74">&#34;utf8&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;files.eol&#34;</span>: <span style="color:#e6db74">&#34;\n&#34;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;files.trimTrailingWhitespace&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;[xml]&#34;</span>: {
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;editor.formatOnSave&#34;</span>: <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>        },
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;[java]&#34;</span>: {
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;java.compile.nullAnalysis.mode&#34;</span>: <span style="color:#e6db74">&#34;disabled&#34;</span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>      }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  },
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;postCreateCommand&#34;</span>: <span style="color:#e6db74">&#34;echo &#39;nameserver 127.0.0.11\nnameserver 1.1.1.1&#39; &gt; /etc/resolv.conf&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><code>.devcontainer/docker-compose.yml</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#34;3&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">api</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">build</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">context</span>: <span style="color:#ae81ff">.</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">Dockerfile</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">api</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">command</span>: <span style="color:#ae81ff">sleep infinity</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">8080</span>:<span style="color:#ae81ff">8080</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">9000</span>:<span style="color:#ae81ff">8000</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">expose</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">8080</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">../:/workspace:cached</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">JPDA_ADDRESS=8000</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">JPDA_TRANSPORT=dt_socket</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">localnw</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">networks</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">localnw</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">bridge</span>
-</span></span></code></pre></div><hr>
-<p>この後、「コンテナーで再開」を選んで実行、で <code>Debian</code>/<code>Java</code>/<code>Maven</code> の開発環境が入りますよね。<br>
-ここからは<code>mvn</code>コマンドで作業していくのが早いのではないでしょうか？</p>
-<p>次は <a
-  class="gblog-markdown__link"
-  href="../20240414_java_based_batch_create_project/"
->2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</a></p>
+  href="../20220925_aws_lambda_guice/"
+>AWS Lambda FunctionでJavaを採用したい</a> に準拠したいと思います。</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><code>WSL2</code> <code>Ubuntu</code> のインストールに関しては割愛。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>gitクライアントのインストールに関しては割愛。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>お好みで。ここでは、リモートコンテナからもgit使いたいので、gitのインストールとローカル時間を日本に設定だけしています。&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p>お好みで。とは言え <code>Java</code> <code>XML</code> <code>YAML</code> の拡張は欲しいですよね。&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>単発バッチだと、ネストを深くしないために、アーティファクトID/グループIDは短くしたほうが良いでしょう&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>

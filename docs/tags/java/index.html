@@ -295,6 +295,90 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20240414_java_based_batch_create_project/">2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
+開発環境は、 VSCode と Rancher Desktop だけでやってみます。
+プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: /usr/share/maven Java version: 21.0.3, vendor: Amazon.com Inc., runtime: /usr/lib/jvm/java-21-amazon-corretto Default locale: en_US, platform encoding: UTF-8 OS name: &#34;linux&#34;, version: &#34;5.15.146.1-microsoft-standard-wsl2&#34;, arch: &#34;amd64&#34;, family: &#34;unix&#34; 初期プロジェクト作成 1
+mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DartifactId=csvbatch \ -DgroupId=app \ -Dpackage=csvbatch.app このようなプロジェクトが作られます。
+. |-- LICENSE |-- README.md `-- csvbatch |-- pom.xml `-- src |-- main | `-- java | `-- csvbatch | `-- app | `-- App.
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20240414_java_based_batch_create_project/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-04-14T00:00:00&#43;09:00">
+      
+      Apr 14, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20240407_java_based_batch/">2024年 Javaベースのバッチを作るなら その1 環境と初期設定</a>
         </h1>
       </header>
@@ -302,6 +386,7 @@
       <section class="gblog-markdown">
         前回、2020年 Javaベースのバッチを作るなら の続き。
 Windows11での開発だと、これが今のところ、自分なりに、まぁまぁ良い手順かな、と言うのを書きます。
+要件として、「DBから昨日のデータ取ってきて、CSVに変換、メールで管理者に送信」を想定しています。
 Rancher Desktop をインストール、起動 1 Visual Studio Code と その拡張 Remote Container をインストール リモートの Git で新規リポジトリを作成 チェックアウト 2 Visual Studio Codeでフォルダーを開く .devcontainer と言うフォルダーを作る 配下に3ファイル作る Dockerfile devcontainer.json docker-compose.yml . |-- .devcontainer | |-- Dockerfile | |-- devcontainer.json | `-- docker-compose.yml |-- .gitignore |-- LICENSE `-- README.md .devcontainer/Dockerfile 3
 # Amazon Corretto with Java 21 / Debian 12 FROM maven:3.9-amazoncorretto-21-debian-bookworm RUN apt update &amp;&amp; apt -y install git &amp;&amp; \ unlink /etc/localtime &amp;&amp; \ ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime .
       </section>
@@ -1123,100 +1208,6 @@ OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタ
       
         <span class="flex align-center no-wrap gblog-post__meta--tag">
           <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200504_eclipse_setting_utf8/">MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
-Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
-解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
-&lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;!-- Eclipse --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
-mvn eclipse:clean eclipse:eclipse 元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow 旧blog 2018/10/12 の記事に加筆訂正して再掲しました。
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-05-04T00:00:00&#43;09:00">
-      
-      May 4, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/eclipse/"
-      title="All posts tagged with 'eclipse'"
-    >
-      eclipse
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
           
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a
