@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-08-08T07:35:22+00:00</updated>
+    <updated>2024-08-08T07:38:54+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</title>
@@ -255,7 +255,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
   href=&#34;https://bittersmooth.halflite.net/&#34;title=&#34;bitter*smooth&#34;
 &gt;音楽ブログ&lt;/a&gt; を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 &lt;a
   class=&#34;gblog-markdown__link&#34;
-  href=&#34;/posts/20211027_hugo_docker/&#34;
+  href=&#34;/techlog/posts/20211027_hugo_docker/&#34;
 &gt;前回&lt;/a&gt; の続編です。&lt;/p&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h3 id=&#34;要点&#34;
