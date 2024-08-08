@@ -300,9 +300,9 @@
       </header>
 
       <section class="gblog-markdown">
-        音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。
+        音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 前回 の続編です。
 要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)&ldquo;VSCode&rdquo; を使って Markdown で書く Bitbucket にコミット/プッシュ Netlify で公開 これ、一回慣れてしまうと簡単なんですけど、それまでが四苦八苦だったので、備忘録代わりに書いておきます。
-VSCode をインストール Git for Windows も、事前にインストールしておきましょう 拡張機能 日本語拡張 と Dev Containers は必須でしょうね。 Rancher Desktop/WSL2 をインストール Rancher Desktop をインストールする際、最近はWSL2/Ubuntuが自動で入るみたいですね Bitbucketで、とりあえずリポジトリを作ってCloneする プライベートリボジトリで作るのが良いでしょう ローカルにクローンします。 これがプロジェクトになります。 公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する WSL2の中身はUbuntuなので、ターミナルから、Ubuntuを選び、以下で鍵ペアが作れるのではないでしょうか ユーザー名はC:Users配下の、自分のディレクトリを参照して下さい bitbucketに公開鍵を登録するのは、公式手順に従うのが良いでしょう Windows で個人用 SSH キーをセットアップする | Bitbucket Cloud | アトラシアン サポート sudo ssh-keygen ls -la /root/.ssh/ # 公開鍵を表示 sudo cat /root/.ssh/id_rsa.pub # 秘密鍵をローカルにコピー sudo cp /root/.
+VSCode をインストール Git for Windows も、事前にインストールしておきましょう 拡張機能 日本語拡張 と Dev Containers は必須でしょうね。 Rancher Desktop/WSL2 をインストール Rancher Desktop をインストールする際、最近はWSL2/Ubuntuが自動で入るみたいですね Bitbucketで、とりあえずリポジトリを作ってCloneする プライベートリボジトリで作るのが良いでしょう ローカルにクローンします。 これがプロジェクトになります。 公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する WSL2の中身はUbuntuなので、ターミナルから、Ubuntuを選び、以下で鍵ペアが作れるのではないでしょうか ユーザー名はC:Users配下の、自分のディレクトリを参照して下さい bitbucketに公開鍵を登録するのは、公式手順に従うのが良いでしょう Windows で個人用 SSH キーをセットアップする | Bitbucket Cloud | アトラシアン サポート sudo ssh-keygen ls -la /root/.ssh/ # 公開鍵を表示 sudo cat /root/.
       </section>
       <div class="gblog-post__readmore">
         

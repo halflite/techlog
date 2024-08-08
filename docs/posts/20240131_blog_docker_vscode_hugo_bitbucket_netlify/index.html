@@ -12,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Hugo 0.111.3">
     <meta name="robots" content="index, follow" />
-    <meta name="description" content="音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。
-要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown で書く Bitbucket にコミッ …" />
+    <meta name="description" content="音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 前回 の続編です。
+要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown …" />
 
     <title>Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術 | ひとり開発日記。</title>
 
@@ -42,8 +42,8 @@
     content="Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術"
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
-  <meta property="og:description" content="音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。
-要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown で書く Bitbucket にコミッ …" />
+  <meta property="og:description" content="音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 前回 の続編です。
+要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown …" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/" />
 
@@ -60,8 +60,8 @@
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術" />
-  <meta name="twitter:description" content="音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。
-要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown で書く Bitbucket にコミッ …" />
+  <meta name="twitter:description" content="音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 前回 の続編です。
+要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown …" />
 
 <script type="application/ld+json">
   {
@@ -71,8 +71,8 @@
       "name": "Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術",
       "url" : "https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/",
       "headline": "Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術",
-      "description": "音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。\n要点 秘密鍵\/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker\/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown で書く Bitbucket にコミット\/プッシュ Netlify で公開 これ、一回慣れてしまうと簡単なんですけど、それまでが四苦八苦だったので、備忘録代わりに書いておきます。\nVSCode をインストール Git for Windows も、事前にインストールしておきましょう 拡張機能 日本語拡張 と Dev Containers は必須でしょうね。 Rancher Desktop\/WSL2 をインストール Rancher Desktop をインストールする際、最近はWSL2\/Ubuntuが自動で入るみたいですね Bitbucketで、とりあえずリポジトリを作ってCloneする プライベートリボジトリで作るのが良いでしょう ローカルにクローンします。 これがプロジェクトになります。 公開\/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する WSL2の中身はUbuntuなので、ターミナルから、Ubuntuを選び、以下で鍵ペアが作れるのではないでしょうか ユーザー名はC:Users配下の、自分のディレクトリを参照して下さい bitbucketに公開鍵を登録するのは、公式手順に従うのが良いでしょう Windows で個人用 SSH キーをセットアップする | Bitbucket Cloud | アトラシアン サポート sudo ssh-keygen ls -la \/root\/.ssh\/ # 公開鍵を表示 sudo cat \/root\/.ssh\/id_rsa.pub # 秘密鍵をローカルにコピー sudo cp \/root\/.",
-      "wordCount" : "187",
+      "description": "音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 前回 の続編です。\n要点 秘密鍵\/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker\/仮想環境を作る Visual Studio Code (所謂)“VSCode” を使って Markdown で書く Bitbucket にコミット\/プッシュ Netlify で公開 これ、一回慣れてしまうと簡単なんですけど、それまでが四苦八苦だったので、備忘録代わりに書いておきます。\nVSCode をインストール Git for Windows も、事前にインストールしておきましょう 拡張機能 日本語拡張 と Dev Containers は必須でしょうね。 Rancher Desktop\/WSL2 をインストール Rancher Desktop をインストールする際、最近はWSL2\/Ubuntuが自動で入るみたいですね Bitbucketで、とりあえずリポジトリを作ってCloneする プライベートリボジトリで作るのが良いでしょう ローカルにクローンします。 これがプロジェクトになります。 公開\/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する WSL2の中身はUbuntuなので、ターミナルから、Ubuntuを選び、以下で鍵ペアが作れるのではないでしょうか ユーザー名はC:Users配下の、自分のディレクトリを参照して下さい bitbucketに公開鍵を登録するのは、公式手順に従うのが良いでしょう Windows で個人用 SSH キーをセットアップする | Bitbucket Cloud | アトラシアン サポート sudo ssh-keygen ls -la \/root\/.ssh\/ # 公開鍵を表示 sudo cat \/root\/.",
+      "wordCount" : "189",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -402,7 +402,10 @@
       <p><a
   class="gblog-markdown__link"
   href="https://bittersmooth.halflite.net/"title="bitter*smooth"
->音楽ブログ</a> を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。</p>
+>音楽ブログ</a> を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 <a
+  class="gblog-markdown__link"
+  href="/posts/20211027_hugo_docker/"
+>前回</a> の続編です。</p>
 <div class="flex align-center gblog-post__anchorwrap">
     <h3 id="要点"
     >

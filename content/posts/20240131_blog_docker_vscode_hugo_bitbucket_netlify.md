@@ -5,7 +5,7 @@ draft: false
 tags:
   - etc
 ---
-[音楽ブログ](https://bittersmooth.halflite.net/ "bitter*smooth") を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。
+[音楽ブログ](https://bittersmooth.halflite.net/ "bitter*smooth") を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。 [前回](/posts/20211027_hugo_docker/) の続編です。
 
 ### 要点
 
