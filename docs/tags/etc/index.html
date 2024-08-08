@@ -295,6 +295,87 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/">Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        音楽ブログ を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。
+要点 秘密鍵/公開鍵は難しいけど、頑張って！ netlify.toml がハマりどころ 環境 Rancher Desktop で Docker/仮想環境を作る Visual Studio Code (所謂)&ldquo;VSCode&rdquo; を使って Markdown で書く Bitbucket にコミット/プッシュ Netlify で公開 これ、一回慣れてしまうと簡単なんですけど、それまでが四苦八苦だったので、備忘録代わりに書いておきます。
+VSCode をインストール Git for Windows も、事前にインストールしておきましょう 拡張機能 日本語拡張 と Dev Containers は必須でしょうね。 Rancher Desktop/WSL2 をインストール Rancher Desktop をインストールする際、最近はWSL2/Ubuntuが自動で入るみたいですね Bitbucketで、とりあえずリポジトリを作ってCloneする プライベートリボジトリで作るのが良いでしょう ローカルにクローンします。 これがプロジェクトになります。 公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する WSL2の中身はUbuntuなので、ターミナルから、Ubuntuを選び、以下で鍵ペアが作れるのではないでしょうか ユーザー名はC:Users配下の、自分のディレクトリを参照して下さい bitbucketに公開鍵を登録するのは、公式手順に従うのが良いでしょう Windows で個人用 SSH キーをセットアップする | Bitbucket Cloud | アトラシアン サポート sudo ssh-keygen ls -la /root/.ssh/ # 公開鍵を表示 sudo cat /root/.ssh/id_rsa.pub # 秘密鍵をローカルにコピー sudo cp /root/.
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-01-31T00:00:00&#43;09:00">
+      
+      Jan 31, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/etc/"
+      title="All posts tagged with 'etc'"
+    >
+      etc
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20231223_blog/">ブログのデザインを変えました</a>
         </h1>
       </header>

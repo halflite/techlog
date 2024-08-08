@@ -4,8 +4,237 @@
     <title>Etc on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/etc/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/etc/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-06-07T07:40:56+00:00</updated>
+    <updated>2024-08-08T07:29:24+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/etc/</id>
+        <entry>
+            <title>Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術</title>
+            <link href="https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/</id>
+            <published>2024-01-31T00:00:00+09:00</published>
+            <updated>2024-01-31T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://bittersmooth.halflite.net/&#34;title=&#34;bitter*smooth&#34;
+&gt;音楽ブログ&lt;/a&gt; を数年書いているのですが、安いWindows11環境で、以下のような技術スタックで書いています。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;要点&#34;
+    &gt;
+        要点
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#要点&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 要点&#34; href=&#34;#%e8%a6%81%e7%82%b9&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;秘密鍵/公開鍵は難しいけど、頑張って！&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;netlify.toml&lt;/code&gt; がハマりどころ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;環境&#34;
+    &gt;
+        環境
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#環境&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 環境&#34; href=&#34;#%e7%92%b0%e5%a2%83&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://rancherdesktop.io/&#34;title=&#34;Rancher Desktop by SUSE&#34;
+&gt;Rancher Desktop&lt;/a&gt; で Docker/仮想環境を作る&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://azure.microsoft.com/ja-jp/products/visual-studio-code&#34;title=&#34;Visual Studio Code – コード エディター | Microsoft Azure&#34;
+&gt;Visual Studio Code&lt;/a&gt; (所謂)&amp;ldquo;VSCode&amp;rdquo; を使って Markdown で書く&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://bitbucket.org/product/&#34;title=&#34;Bitbucket | Git solution for teams using Jira&#34;
+&gt;Bitbucket&lt;/a&gt; にコミット/プッシュ&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.netlify.com/&#34;title=&#34;Scale &amp; Ship Faster with a Composable Web Architecture | Netlify&#34;
+&gt;Netlify&lt;/a&gt; で公開&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;これ、一回慣れてしまうと簡単なんですけど、それまでが四苦八苦だったので、備忘録代わりに書いておきます。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;vscode-をインストール&#34;
+    &gt;
+        VSCode をインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#vscode-をインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor VSCode をインストール&#34; href=&#34;#vscode-%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://gitforwindows.org/&#34;title=&#34;Git for Windows&#34;
+&gt;Git for Windows&lt;/a&gt; も、事前にインストールしておきましょう&lt;/li&gt;
+&lt;li&gt;拡張機能 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja&#34;title=&#34;Japanese Language Pack for Visual Studio Code - Visual Studio Marketplace&#34;
+&gt;日本語拡張&lt;/a&gt; と &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers&#34;title=&#34;Dev Containers - Visual Studio Marketplace&#34;
+&gt;Dev Containers&lt;/a&gt; は必須でしょうね。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;rancher-desktopwsl2-をインストール&#34;
+    &gt;
+        Rancher Desktop/WSL2 をインストール
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#rancher-desktopwsl2-をインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Rancher Desktop/WSL2 をインストール&#34; href=&#34;#rancher-desktopwsl2-%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Rancher Desktop をインストールする際、最近はWSL2/Ubuntuが自動で入るみたいですね&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;bitbucketでとりあえずリポジトリを作ってcloneする&#34;
+    &gt;
+        Bitbucketで、とりあえずリポジトリを作ってCloneする
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#bitbucketでとりあえずリポジトリを作ってcloneする&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Bitbucketで、とりあえずリポジトリを作ってCloneする&#34; href=&#34;#bitbucket%e3%81%a7%e3%81%a8%e3%82%8a%e3%81%82%e3%81%88%e3%81%9a%e3%83%aa%e3%83%9d%e3%82%b8%e3%83%88%e3%83%aa%e3%82%92%e4%bd%9c%e3%81%a3%e3%81%a6clone%e3%81%99%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;プライベートリボジトリで作るのが良いでしょう&lt;/li&gt;
+&lt;li&gt;ローカルにクローンします。 これがプロジェクトになります。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;公開秘密の鍵ペアを作りbitbucketに公開鍵を登録する&#34;
+    &gt;
+        公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#公開秘密の鍵ペアを作りbitbucketに公開鍵を登録する&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する&#34; href=&#34;#%e5%85%ac%e9%96%8b%e7%a7%98%e5%af%86%e3%81%ae%e9%8d%b5%e3%83%9a%e3%82%a2%e3%82%92%e4%bd%9c%e3%82%8abitbucket%e3%81%ab%e5%85%ac%e9%96%8b%e9%8d%b5%e3%82%92%e7%99%bb%e9%8c%b2%e3%81%99%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;WSL2の中身はUbuntuなので、ターミナルから、Ubuntuを選び、以下で鍵ペアが作れるのではないでしょうか
+&lt;ul&gt;
+&lt;li&gt;ユーザー名は&lt;code&gt;C:Users&lt;/code&gt;配下の、自分のディレクトリを参照して下さい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;bitbucketに公開鍵を登録するのは、公式手順に従うのが良いでしょう
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://support.atlassian.com/ja/bitbucket-cloud/docs/set-up-personal-ssh-keys-on-windows/&#34;title=&#34;Windows で個人用 SSH キーをセットアップする | Bitbucket Cloud | アトラシアン サポート&#34;
+&gt;Windows で個人用 SSH キーをセットアップする | Bitbucket Cloud | アトラシアン サポート&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ssh-keygen
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ls -la /root/.ssh/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 公開鍵を表示&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo cat /root/.ssh/id_rsa.pub
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 秘密鍵をローカルにコピー&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo cp /root/.ssh/id_rsa /mnt/c/Users/&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;ユーザー名&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;rancher-desktopvscode-でローカル仮想環境を作る&#34;
+    &gt;
+        Rancher Desktop/VSCode でローカル仮想環境を作る
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#rancher-desktopvscode-でローカル仮想環境を作る&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Rancher Desktop/VSCode でローカル仮想環境を作る&#34; href=&#34;#rancher-desktopvscode-%e3%81%a7%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e4%bb%ae%e6%83%b3%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e3%82%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;プロジェクトのトップに &lt;code&gt;.devcontainer&lt;/code&gt; と言うディレクトリを作ります&lt;/li&gt;
+&lt;li&gt;以下に3つのファイル &lt;code&gt;id_rsa&lt;/code&gt; &lt;code&gt;devcontainer.json&lt;/code&gt; &lt;code&gt;Dockerfile&lt;/code&gt; を置きます&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;id_rsa&#34;
+    &gt;
+        id_rsa
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#id_rsa&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor id_rsa&#34; href=&#34;#id_rsa&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;上記で作った秘密鍵 &lt;code&gt;id_rsa&lt;/code&gt; を &lt;code&gt;.devcontainer&lt;/code&gt; 配下にコピーします&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;devcontainerjson&#34;
+    &gt;
+        devcontainer.json
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#devcontainerjson&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor devcontainer.json&#34; href=&#34;#devcontainerjson&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;blog&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;dockerfile&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dockerfile&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;customizations&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;vscode&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;extensions&amp;#34;&lt;/span&gt;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ms-ceintl.vscode-language-pack-ja&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;settings&amp;#34;&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;本当に最小限の拡張して入っていないので &lt;code&gt;extensions&lt;/code&gt; や &lt;code&gt;settings&lt;/code&gt; は色々弄ったら楽しいと思います。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;dockerfile&#34;
+    &gt;
+        Dockerfile
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#dockerfile&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Dockerfile&#34; href=&#34;#dockerfile&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 拡張機能入りdokcer image&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; klakegg/hugo:0.111.3-ext-debian&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;COPY&lt;/span&gt; id_rsa /root/.ssh/&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; apt update &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt -y install nodejs git &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    chmod &lt;span style=&#34;color:#ae81ff&#34;&gt;600&lt;/span&gt; /root/.ssh/id_rsa &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    ssh-keyscan -H bitbucket.org &amp;gt;&amp;gt; /root/.ssh/known_hosts&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;この &lt;code&gt;Dockerfile&lt;/code&gt; の肝心なところは、以下です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;拡張機能を入れたHugoのDockerイメージを使っています
+&lt;ul&gt;
+&lt;li&gt;ターミナル使うなら、debianが良いですよね&lt;/li&gt;
+&lt;li&gt;最近のHugoは、拡張機能を入れられるようになったので、テンプレートによっては、Node.jsをインストールしないと、ビルドができなかったりします&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ホスト(手元のWinマシン)から、リモート(Docker/仮想環境)に 秘密鍵 &lt;code&gt;id_rsa&lt;/code&gt; をコピーし、権限を限定させ、ホストに鍵を認識させる &lt;code&gt;ssh-keyscan&lt;/code&gt; コマンドを打つ設定を入れています。
+&lt;ul&gt;
+&lt;li&gt;これがないと、リモートのターミナルから、Gitのプッシュも出来なかったりします&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;netlifytomlを書く&#34;
+    &gt;
+        netlify.tomlを書く
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#netlifytomlを書く&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor netlify.tomlを書く&#34; href=&#34;#netlifytoml%e3%82%92%e6%9b%b8%e3%81%8f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;これが一番のハマりどころ&lt;/p&gt;
+&lt;p&gt;プロジェクトトップに &lt;code&gt;netlify.toml&lt;/code&gt; と言うファイルを作っておくのです&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;build&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;publish&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;public&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;context&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;production&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;environment&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;HUGO_VERSION&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.111.3&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;HUGO_ENV&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;HUGO_ENABLEGITINFO&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;netlifyのデフォルトのHugoのヴァージョン、とにかく古いので、最近のテンプレートを使うと、ビルドが普通にコケます。
+なので。 &lt;code&gt;HUGO_VERSION = &amp;quot;0.111.3&amp;quot;&lt;/code&gt; 等、指定してあげると、普通にビルドされます。&lt;/p&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/etc" term="etc" label="etc" />
+        </entry>
         <entry>
             <title>ブログのデザインを変えました</title>
             <link href="https://halflite.github.io/techlog/posts/20231223_blog/" rel="alternate" type="text/html"  hreflang="en" />
