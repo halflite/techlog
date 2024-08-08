@@ -1,6 +1,6 @@
 ---
 title: "Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術"
-date: 2024-01-31T00:00:00+09:00
+date: 2024-02-14T00:00:00+09:00
 draft: false
 tags:
   - etc

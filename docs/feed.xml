@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-08-08T07:38:54+00:00</updated>
+    <updated>2024-08-08T08:07:16+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</title>
@@ -245,10 +245,10 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
         </entry>
         <entry>
             <title>Docker/VSCode/Hugo/Bitbucket/Netlifyでブログを書く技術</title>
-            <link href="https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/" rel="alternate" type="text/html"  hreflang="en" />
-            <id>https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/</id>
-            <published>2024-01-31T00:00:00+09:00</published>
-            <updated>2024-01-31T00:00:00+09:00</updated>
+            <link href="https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/</id>
+            <published>2024-02-14T00:00:00+09:00</published>
+            <updated>2024-02-14T00:00:00+09:00</updated>
             <content type="html">
                 &lt;p&gt;&lt;a
   class=&#34;gblog-markdown__link&#34;
@@ -262,7 +262,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         要点
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#要点&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 要点&#34; href=&#34;#%e8%a6%81%e7%82%b9&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#要点&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 要点&#34; href=&#34;#%e8%a6%81%e7%82%b9&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -275,7 +275,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         環境
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#環境&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 環境&#34; href=&#34;#%e7%92%b0%e5%a2%83&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#環境&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 環境&#34; href=&#34;#%e7%92%b0%e5%a2%83&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -303,7 +303,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         VSCode をインストール
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#vscode-をインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor VSCode をインストール&#34; href=&#34;#vscode-%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#vscode-をインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor VSCode をインストール&#34; href=&#34;#vscode-%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -325,7 +325,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         Rancher Desktop/WSL2 をインストール
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#rancher-desktopwsl2-をインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Rancher Desktop/WSL2 をインストール&#34; href=&#34;#rancher-desktopwsl2-%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#rancher-desktopwsl2-をインストール&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Rancher Desktop/WSL2 をインストール&#34; href=&#34;#rancher-desktopwsl2-%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -337,7 +337,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         Bitbucketで、とりあえずリポジトリを作ってCloneする
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#bitbucketでとりあえずリポジトリを作ってcloneする&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Bitbucketで、とりあえずリポジトリを作ってCloneする&#34; href=&#34;#bitbucket%e3%81%a7%e3%81%a8%e3%82%8a%e3%81%82%e3%81%88%e3%81%9a%e3%83%aa%e3%83%9d%e3%82%b8%e3%83%88%e3%83%aa%e3%82%92%e4%bd%9c%e3%81%a3%e3%81%a6clone%e3%81%99%e3%82%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#bitbucketでとりあえずリポジトリを作ってcloneする&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Bitbucketで、とりあえずリポジトリを作ってCloneする&#34; href=&#34;#bitbucket%e3%81%a7%e3%81%a8%e3%82%8a%e3%81%82%e3%81%88%e3%81%9a%e3%83%aa%e3%83%9d%e3%82%b8%e3%83%88%e3%83%aa%e3%82%92%e4%bd%9c%e3%81%a3%e3%81%a6clone%e3%81%99%e3%82%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -350,7 +350,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#公開秘密の鍵ペアを作りbitbucketに公開鍵を登録する&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する&#34; href=&#34;#%e5%85%ac%e9%96%8b%e7%a7%98%e5%af%86%e3%81%ae%e9%8d%b5%e3%83%9a%e3%82%a2%e3%82%92%e4%bd%9c%e3%82%8abitbucket%e3%81%ab%e5%85%ac%e9%96%8b%e9%8d%b5%e3%82%92%e7%99%bb%e9%8c%b2%e3%81%99%e3%82%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#公開秘密の鍵ペアを作りbitbucketに公開鍵を登録する&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 公開/秘密の鍵ペアを作り、Bitbucketに公開鍵を登録する&#34; href=&#34;#%e5%85%ac%e9%96%8b%e7%a7%98%e5%af%86%e3%81%ae%e9%8d%b5%e3%83%9a%e3%82%a2%e3%82%92%e4%bd%9c%e3%82%8abitbucket%e3%81%ab%e5%85%ac%e9%96%8b%e9%8d%b5%e3%82%92%e7%99%bb%e9%8c%b2%e3%81%99%e3%82%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -380,7 +380,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         Rancher Desktop/VSCode でローカル仮想環境を作る
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#rancher-desktopvscode-でローカル仮想環境を作る&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Rancher Desktop/VSCode でローカル仮想環境を作る&#34; href=&#34;#rancher-desktopvscode-%e3%81%a7%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e4%bb%ae%e6%83%b3%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e3%82%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#rancher-desktopvscode-でローカル仮想環境を作る&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Rancher Desktop/VSCode でローカル仮想環境を作る&#34; href=&#34;#rancher-desktopvscode-%e3%81%a7%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e4%bb%ae%e6%83%b3%e7%92%b0%e5%a2%83%e3%82%92%e4%bd%9c%e3%82%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -393,7 +393,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         id_rsa
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#id_rsa&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor id_rsa&#34; href=&#34;#id_rsa&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#id_rsa&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor id_rsa&#34; href=&#34;#id_rsa&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -403,7 +403,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         devcontainer.json
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#devcontainerjson&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor devcontainer.json&#34; href=&#34;#devcontainerjson&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#devcontainerjson&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor devcontainer.json&#34; href=&#34;#devcontainerjson&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -427,7 +427,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         Dockerfile
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#dockerfile&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Dockerfile&#34; href=&#34;#dockerfile&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#dockerfile&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Dockerfile&#34; href=&#34;#dockerfile&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -456,7 +456,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
     &gt;
         netlify.tomlを書く
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240131_blog_docker_vscode_hugo_bitbucket_netlify/#netlifytomlを書く&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor netlify.tomlを書く&#34; href=&#34;#netlifytoml%e3%82%92%e6%9b%b8%e3%81%8f&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240214_blog_docker_vscode_hugo_bitbucket_netlify/#netlifytomlを書く&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor netlify.tomlを書く&#34; href=&#34;#netlifytoml%e3%82%92%e6%9b%b8%e3%81%8f&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
