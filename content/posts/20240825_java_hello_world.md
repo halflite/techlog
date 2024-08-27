@@ -37,9 +37,9 @@ _____
 
 …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。
 
-* サーバーはJetty Embedded
-* DIは、Guice/Guice-Servletに従う
-* 設定値は取得は Apache Geronimo(MicroProfile Config)
+* サーバーは Jetty Embedded
+* DIは Guice/Guice-Servletに従う
+* 設定値の取得は Apache Geronimo/MicroProfile Config
 * HTMLテンプレートは(多分)一番シンプルな FreeMarker
 * JSON出力は、一番軽量で早い Gson
 * ログは Slf4j/Log4j2 
@@ -68,7 +68,9 @@ _____
 
 #### 結構面倒くさいポイントその3 FreemarkerServlet の設定値 {#freemarkercongig}
 
-`FreemarkerServlet` に関しては、Tomcatとかに書く `web.xml` 用の7は記述あるんですが [Using FreeMarker with servlets - Apache FreeMarker Manual](https://freemarker.apache.org/docs/pgui_misc_servlet.html) 、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。 
+*  [Using FreeMarker with servlets - Apache FreeMarker Manual](https://freemarker.apache.org/docs/pgui_misc_servlet.html)
+
+`FreemarkerServlet` に関しては、Tomcatとかに書く `web.xml` 用の記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。 
 
 わたくしの個人解としては、まずプロパティファイルに、こう書く。[microprofile-config.properties](https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/resources/META-INF/microprofile-config.properties)
 

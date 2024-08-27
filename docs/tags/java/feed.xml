@@ -4,7 +4,7 @@
     <title>Java on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/java/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/java/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-08-27T14:51:15+00:00</updated>
+    <updated>2024-08-27T18:58:16+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/java/</id>
         <entry>
             <title>2024年8月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</title>
@@ -70,9 +70,9 @@
 &lt;/ul&gt;
 &lt;p&gt;…で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;サーバーはJetty Embedded&lt;/li&gt;
-&lt;li&gt;DIは、Guice/Guice-Servletに従う&lt;/li&gt;
-&lt;li&gt;設定値は取得は Apache Geronimo(MicroProfile Config)&lt;/li&gt;
+&lt;li&gt;サーバーは Jetty Embedded&lt;/li&gt;
+&lt;li&gt;DIは Guice/Guice-Servletに従う&lt;/li&gt;
+&lt;li&gt;設定値の取得は Apache Geronimo/MicroProfile Config&lt;/li&gt;
 &lt;li&gt;HTMLテンプレートは(多分)一番シンプルな FreeMarker&lt;/li&gt;
 &lt;li&gt;JSON出力は、一番軽量で早い Gson&lt;/li&gt;
 &lt;li&gt;ログは Slf4j/Log4j2&lt;/li&gt;
@@ -120,10 +120,13 @@
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;code&gt;FreemarkerServlet&lt;/code&gt; に関しては、Tomcatとかに書く &lt;code&gt;web.xml&lt;/code&gt; 用の7は記述あるんですが &lt;a
+&lt;ul&gt;
+&lt;li&gt;&lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://freemarker.apache.org/docs/pgui_misc_servlet.html&#34;
-&gt;Using FreeMarker with servlets - Apache FreeMarker Manual&lt;/a&gt; 、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。&lt;/p&gt;
+&gt;Using FreeMarker with servlets - Apache FreeMarker Manual&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;FreemarkerServlet&lt;/code&gt; に関しては、Tomcatとかに書く &lt;code&gt;web.xml&lt;/code&gt; 用の記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。&lt;/p&gt;
 &lt;p&gt;わたくしの個人解としては、まずプロパティファイルに、こう書く。&lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/resources/META-INF/microprofile-config.properties&#34;
