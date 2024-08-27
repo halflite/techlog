@@ -74,8 +74,8 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
       "name": "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった",
       "url" : "https://halflite.github.io/techlog/posts/20240825_java_hello_world/",
       "headline": "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった",
-      "description": "前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\nhalflite\/guice-freemarker-servlet: Guice \/ Freemarker \/ Servlet で、自分で作ってみました。結構面倒くさい！\nこれに関しては、幾つかの縛りがあります。 例えば「“Hello World\u0022を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外になると思っても良いでしょう。\n立ち上げるのには、それなりの速さが欲しいよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとしてJSON出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。\nサーバーはJetty Embedded DIは、Guice\/Guice-Servletに従う 設定値は取得は Apache Geronimo(MicroProfile Config) HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j\/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -\u003e Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。\nだから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。\n結構面倒くさいポイントその1 FreemarkerServlet のパッケージ 昔のFreeMarkerには、freemarker.ext.servlet.FreemarkerServlet ってクラスがあったんですが、今ではそれが依存するパッケージが違うので、コンパイルが通りません。 freemarker.ext.jakarta.servlet.FreemarkerServlet に変える必要があるのです\n結構面倒くさいポイントその2 FreemarkerServlet の設定値 FreemarkerServlet に関しては、Tomcatとかに書く web.xml には記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。\nわたくしの個人解としては、まずプロパティファイルに、こう書く。\n# FreeMarker Parameters freemarker.TemplatePath = classpath:views freemarker.",
-      "wordCount" : "169",
+      "description": "前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\nhalflite\/guice-freemarker-servlet: Guice \/ Freemarker \/ Servlet で、自分で作ってみました。結構面倒くさい！\nこれに関しては、幾つかの縛りがあります。 例えば「“Hello World\u0022を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。\n立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとしてJSON出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。\nサーバーはJetty Embedded DIは、Guice\/Guice-Servletに従う 設定値は取得は Apache Geronimo(MicroProfile Config) HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j\/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -\u003e Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。\nだから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。\n結構面倒くさいポイントその1 FreemarkerServlet のパッケージ 昔のFreeMarkerには、freemarker.ext.servlet.FreemarkerServlet ってクラスがあったんですが、今ではそれが依存するパッケージが違うので、コンパイルが通りません。 freemarker.ext.jakarta.servlet.FreemarkerServlet に変える必要があるのです\n結構面倒くさいポイントその2 FreemarkerServlet の設定値 FreemarkerServlet に関しては、Tomcatとかに書く web.xml には記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。\nわたくしの個人解としては、まずプロパティファイルに、こう書く。\n# FreeMarker Parameters freemarker.",
+      "wordCount" : "170",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -416,9 +416,10 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
 </ul>
 <p>で、自分で作ってみました。結構面倒くさい！</p>
 <p>これに関しては、幾つかの縛りがあります。
-例えば「&ldquo;Hello World&quot;を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外になると思っても良いでしょう。</p>
+例えば「&ldquo;Hello World&quot;を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。</p>
 <ul>
 <li>立ち上げるのには、それなりの速さが欲しいよね</li>
+<li>当然、仮想化が前提にあるよね</li>
 <li>それなりにDI出来るコンテナ欲しいよね</li>
 <li>設定値をDI出来る仕組み欲しいよね</li>
 <li>HTMLテンプレートも欲しいよね</li>

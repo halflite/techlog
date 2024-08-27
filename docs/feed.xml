@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-08-27T02:56:19+00:00</updated>
+    <updated>2024-08-27T03:18:59+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>2024年8月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</title>
@@ -27,9 +27,10 @@
 &lt;/ul&gt;
 &lt;p&gt;で、自分で作ってみました。結構面倒くさい！&lt;/p&gt;
 &lt;p&gt;これに関しては、幾つかの縛りがあります。
-例えば「&amp;ldquo;Hello World&amp;quot;を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外になると思っても良いでしょう。&lt;/p&gt;
+例えば「&amp;ldquo;Hello World&amp;quot;を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;立ち上げるのには、それなりの速さが欲しいよね&lt;/li&gt;
+&lt;li&gt;当然、仮想化が前提にあるよね&lt;/li&gt;
 &lt;li&gt;それなりにDI出来るコンテナ欲しいよね&lt;/li&gt;
 &lt;li&gt;設定値をDI出来る仕組み欲しいよね&lt;/li&gt;
 &lt;li&gt;HTMLテンプレートも欲しいよね&lt;/li&gt;
