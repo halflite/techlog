@@ -295,6 +295,82 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20200625_java_based_batch/">2020年 Javaベースのバッチを作るなら</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
+そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。
+ある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。
+今、自分で作るとするなら、こんな感じかな
+ある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。
+参考 Serverless時代のJavaについて あるある案件&#160;&#x21a9;&#xfe0e;
+惰性とも言う&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2020-06-25T12:00:00&#43;09:00">
+      
+      Jun 25, 2020
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20200504_eclipse_setting_utf8/">MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</a>
         </h1>
       </header>

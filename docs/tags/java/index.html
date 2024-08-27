@@ -295,6 +295,95 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20240825_java_hello_world/">2024年8月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        前回、2021年6月 Javaプログラミングで &ldquo;Hello World&rdquo; を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。
+開発環境は、 VSCode と Rancher Desktop だけでやってみます。
+halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で作ってみました。結構面倒くさい！
+これに関しては、幾つかの縛りがあります。 例えば「&ldquo;Hello World&quot;を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外になると思っても良いでしょう。
+立ち上げるのには、それなりの速さが欲しいよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとしてJSON出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。
+サーバーはJetty Embedded DIは、Guice/Guice-Servletに従う 設定値は取得は Apache Geronimo(MicroProfile Config) HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -&gt; Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。
+だから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。
+結構面倒くさいポイントその1 FreemarkerServlet のパッケージ 昔のFreeMarkerには、freemarker.ext.servlet.FreemarkerServlet ってクラスがあったんですが、今ではそれが依存するパッケージが違うので、コンパイルが通りません。 freemarker.ext.jakarta.servlet.FreemarkerServlet に変える必要があるのです
+結構面倒くさいポイントその2 FreemarkerServlet の設定値 FreemarkerServlet に関しては、Tomcatとかに書く web.xml には記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。
+わたくしの個人解としては、まずプロパティファイルに、こう書く。
+# FreeMarker Parameters freemarker.TemplatePath = classpath:views freemarker.
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20240825_java_hello_world/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-08-27T00:00:00&#43;09:00">
+      
+      Aug 27, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20240414_java_based_batch_create_project/">2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</a>
         </h1>
       </header>
@@ -1132,82 +1221,6 @@ OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタ
     
       
         <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200625_java_based_batch/">2020年 Javaベースのバッチを作るなら</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
-そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。
-ある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。
-今、自分で作るとするなら、こんな感じかな
-ある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。
-参考 Serverless時代のJavaについて あるある案件&#160;&#x21a9;&#xfe0e;
-惰性とも言う&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-06-25T12:00:00&#43;09:00">
-      
-      Jun 25, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
           
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a

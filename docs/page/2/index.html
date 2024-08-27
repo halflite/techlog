@@ -301,6 +301,93 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20211027_hugo_docker/">Windows10/VSCode/WSL2/Docker/Hugoでblogを書いています</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        bitter*smooth と言う音楽レビューサイトを作っています。
+この環境、サーバーサイドはNetlify/Hugo、ローカルではVSCodeでMarkdownを書く、と言う環境で構築しているのですが、あれ？そもそもVSCodeを使うなら、WSL2/DockerDesktop/Remote-Containersでローカル確認もすれば良いんじゃない？と思って、やったらサクッと出来ました！
+Windows Terminalインストール
+WSL2インストール
+Windows Terminal を管理者権限で起動 wsl --install wsl --set-default-version 2 wsl --install -d Ubuntu VSCodeインストール
+Windows に Docker Desktop をインストール
+まぁ、ここら辺までは、Windows10で開発している人ならフツーに出来るんでないでしょうか？
+で、プロジェクトのトップで、 .devcontainer ディレクトリを作り、その配下に、 Dockerfile devcontainer.json の2つのファイルを作ります。
+.devcontainer/Dockerfile 1 FROM klakegg/hugo:0.88.0-alpine RUN apk update &amp;&amp; apk --no-cache add git .devcontainer/devcontainer.json 2 { &#34;name&#34;: &#34;bittersmooth&#34;, &#34;build&#34;: { &#34;dockerfile&#34;: &#34;Dockerfile&#34;, }, &#34;extensions&#34;: [ &#34;mhutchie.git-graph&#34; ] } Visual Studio Code を使用して Docker コンテナーを開発環境として使用する - Learn | Microsoft Docs 簡単に Hugo の環境が手に入るのですが、コレひとつだけ落とし穴があって、 hugo server -w でライブローディングが効かないんですね。 まぁ、VSCodeだとMarkdownのプレビューも簡単ですし、最終確認だけ hugo server -w で確認すれば良いのかな？と言う感じでやっています。
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20211027_hugo_docker/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2021-10-27T00:00:00&#43;09:00">
+      
+      Oct 27, 2021
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/etc/"
+      title="All posts tagged with 'etc'"
+    >
+      etc
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20210627_java_dev/">2021年6月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</a>
         </h1>
       </header>
@@ -1024,86 +1111,6 @@ mvn eclipse:clean eclipse:eclipse 元ネタ Define Eclipse project encoding as U
     
       
         <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200222_temporary_file_delete_on_close/">Java NIO2 で一時ファイルを作成、処理後に削除</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。1
-public static Closeable deleteOnClose(final Path tempFilePath) { return new Closeable() { @Override public void close() throws IOException { Files.deleteIfExists(tempFilePath); } }; } public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Closeable closeable = deleteOnClose(tempFilePath); Writer writer = Files.
-      </section>
-      <div class="gblog-post__readmore">
-        
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/techlog/posts/20200222_temporary_file_delete_on_close/"
-          >
-            Read full post
-            <i class="gblog-icon">gblog_arrow_right</i>
-          </a>
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-02-22T00:00:00&#43;09:00">
-      
-      Feb 22, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
           
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a
