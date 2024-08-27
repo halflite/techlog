@@ -14,7 +14,7 @@
     <meta name="robots" content="index, follow" />
     <meta name="description" content="前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
-halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で作ってみました。 …" />
+自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッ …" />
 
     <title>2024年8月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった | ひとり開発日記。</title>
 
@@ -45,7 +45,7 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
   <meta property="og:site_name" content="ひとり開発日記。" />
   <meta property="og:description" content="前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
-halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で作ってみました。 …" />
+自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッ …" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240825_java_hello_world/" />
 
@@ -64,7 +64,7 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
   <meta name="twitter:title" content="2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった" />
   <meta name="twitter:description" content="前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
-halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で作ってみました。 …" />
+自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッ …" />
 
 <script type="application/ld+json">
   {
@@ -74,8 +74,8 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
       "name": "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった",
       "url" : "https://halflite.github.io/techlog/posts/20240825_java_hello_world/",
       "headline": "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった",
-      "description": "前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\nhalflite\/guice-freemarker-servlet: Guice \/ Freemarker \/ Servlet で、自分で作ってみました。結構面倒くさい！\nこれに関しては、幾つかの縛りがあります。 例えば「“Hello World\u0022を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。\n立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとしてJSON出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。\nサーバーはJetty Embedded DIは、Guice\/Guice-Servletに従う 設定値は取得は Apache Geronimo(MicroProfile Config) HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j\/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -\u003e Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。\nだから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。\n結構面倒くさいポイントその1 FreemarkerServlet のパッケージ 昔のFreeMarkerには、freemarker.ext.servlet.FreemarkerServlet ってクラスがあったんですが、今ではそれが依存するパッケージが違うので、コンパイルが通りません。 freemarker.ext.jakarta.servlet.FreemarkerServlet に変える必要があるのです\n結構面倒くさいポイントその2 FreemarkerServlet の設定値 FreemarkerServlet に関しては、Tomcatとかに書く web.xml には記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。\nわたくしの個人解としては、まずプロパティファイルに、こう書く。\n# FreeMarker Parameters freemarker.",
-      "wordCount" : "170",
+      "description": "前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\n自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッケージ 結構面倒くさいポイントその3 FreemarkerServlet の設定値 結構面倒くさいポイントその4 java.util.logging(jul) 自分で作ってみた halflite\/guice-freemarker-servlet: Guice \/ Freemarker \/ Servlet で、自分で作ってみました。結構面倒くさい！\nこれに関しては、幾つかの縛りがあります。 例えば「“Hello World\u0022を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。\n立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとして使うことを考えてJSONも出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。\nサーバーはJetty Embedded DIは、Guice\/Guice-Servletに従う 設定値は取得は Apache Geronimo(MicroProfile Config) HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j\/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -\u003e Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。\nだから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。\n結構面倒くさいポイントその1 Guice-Servlet初期化 Servlets · google\/guice Wiki 上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 GuiceFilter の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めてしまえば、わざわざその設定も不要ということです。",
+      "wordCount" : "196",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -404,10 +404,41 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
     <section class="gblog-markdown">
       <p>前回、<a
   class="gblog-markdown__link"
-  href="../20240407_java_based_batch/"
+  href="../20210627_java_dev/"
 >2021年6月 Javaプログラミングで &ldquo;Hello World&rdquo; を出したいだけだった</a> の続き。 と言うか、自分で何かしらの結果を出したいですしね。</p>
 <p>開発環境は、 VSCode と Rancher Desktop だけでやってみます。</p>
+<ul>
+<li><a
+  class="gblog-markdown__link"
+  href="#myapp"
+>自分で作ってみた</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#guiceservletinit"
+>結構面倒くさいポイントその1 Guice-Servlet初期化</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#jakartapackage"
+>結構面倒くさいポイントその2 FreemarkerServlet のパッケージ</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#freemarkercongig"
+>結構面倒くさいポイントその3 FreemarkerServlet の設定値</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#julltoslfj"
+>結構面倒くさいポイントその4 java.util.logging(jul)</a></li>
+</ul>
 <hr>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h4 id="myapp"
+    >
+        自分で作ってみた
+    </h4>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#myapp" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 自分で作ってみた" href="#myapp">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
 <ul>
 <li><a
   class="gblog-markdown__link"
@@ -423,7 +454,7 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
 <li>それなりにDI出来るコンテナ欲しいよね</li>
 <li>設定値をDI出来る仕組み欲しいよね</li>
 <li>HTMLテンプレートも欲しいよね</li>
-<li>APIとしてJSON出力して欲しいよね</li>
+<li>APIとして使うことを考えてJSONも出力して欲しいよね</li>
 <li>ログを統一的に出す機構が欲しいよね</li>
 </ul>
 <p>…で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。</p>
@@ -435,31 +466,50 @@ halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で�
 <li>JSON出力は、一番軽量で早い Gson</li>
 <li>ログは Slf4j/Log4j2</li>
 </ul>
-<hr>
 <p>JavaでWebアプリケーションで避けて通れないのが、Java EE -&gt; Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。</p>
 <p>だから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。</p>
-<hr>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h4 id="結構面倒くさいポイントその1-freemarkerservlet-のパッケージ"
+    <h4 id="guiceservletinit"
     >
-        結構面倒くさいポイントその1 FreemarkerServlet のパッケージ
+        結構面倒くさいポイントその1 Guice-Servlet初期化
     </h4>
-    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#結構面倒くさいポイントその1-freemarkerservlet-のパッケージ" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結構面倒くさいポイントその1 FreemarkerServlet のパッケージ" href="#%e7%b5%90%e6%a7%8b%e9%9d%a2%e5%80%92%e3%81%8f%e3%81%95%e3%81%84%e3%83%9d%e3%82%a4%e3%83%b3%e3%83%88%e3%81%9d%e3%81%ae1-freemarkerservlet-%e3%81%ae%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8">
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#guiceservletinit" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結構面倒くさいポイントその1 Guice-Servlet初期化" href="#guiceservletinit">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>昔のFreeMarkerには、<code>freemarker.ext.servlet.FreemarkerServlet</code> ってクラスがあったんですが、今ではそれが依存するパッケージが違うので、コンパイルが通りません。 <code>freemarker.ext.jakarta.servlet.FreemarkerServlet</code> に変える必要があるのです</p>
+<ul>
+<li><a
+  class="gblog-markdown__link"
+  href="https://github.com/google/guice/wiki/Servlets"
+>Servlets · google/guice Wiki</a></li>
+</ul>
+<p>上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 <code>GuiceFilter</code> の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めてしまえば、わざわざその設定も不要ということです。</p>
+<p>ここら辺を分からないと「…？」と悩むことになります。</p>
+<hr>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h4 id="結構面倒くさいポイントその2-freemarkerservlet-の設定値"
+    <h4 id="jakartapackage"
     >
-        結構面倒くさいポイントその2 FreemarkerServlet の設定値
+        結構面倒くさいポイントその2 FreemarkerServlet のパッケージ
     </h4>
-    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#結構面倒くさいポイントその2-freemarkerservlet-の設定値" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結構面倒くさいポイントその2 FreemarkerServlet の設定値" href="#%e7%b5%90%e6%a7%8b%e9%9d%a2%e5%80%92%e3%81%8f%e3%81%95%e3%81%84%e3%83%9d%e3%82%a4%e3%83%b3%e3%83%88%e3%81%9d%e3%81%ae2-freemarkerservlet-%e3%81%ae%e8%a8%ad%e5%ae%9a%e5%80%a4">
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#jakartapackage" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結構面倒くさいポイントその2 FreemarkerServlet のパッケージ" href="#jakartapackage">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>昔のFreeMarkerには、<code>freemarker.ext.servlet.FreemarkerServlet</code> ってクラスがあったんですが、今ではそれが依存するServletのパッケージが違うので、Jakarta EE対象のコンテナを使おうとしても、コンパイルが通りません。 <code>freemarker.ext.jakarta.servlet.FreemarkerServlet</code> に変える必要があるのです</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h4 id="freemarkercongig"
+    >
+        結構面倒くさいポイントその3 FreemarkerServlet の設定値
+    </h4>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#freemarkercongig" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結構面倒くさいポイントその3 FreemarkerServlet の設定値" href="#freemarkercongig">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
 <p><code>FreemarkerServlet</code> に関しては、Tomcatとかに書く <code>web.xml</code> には記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。</p>
-<p>わたくしの個人解としては、まずプロパティファイルに、こう書く。</p>
+<p>わたくしの個人解としては、まずプロパティファイルに、こう書く。<a
+  class="gblog-markdown__link"
+  href="https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/resources/META-INF/microprofile-config.properties"
+>microprofile-config.properties</a></p>
 <pre tabindex="0"><code># FreeMarker Parameters
 freemarker.TemplatePath = classpath:views
 freemarker.NoCache = true
@@ -474,7 +524,11 @@ freemarker.locale = ja_JP
 freemarker.number_format = 0.##########
 freemarker.time_zone = JST
 freemarker.date_format = yyyy/MM/dd HH:mm:ss
-</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">/** FreeMarker設定値を作成する */</span>
+</code></pre><p>そして、DI設定の時に、こう書く <a
+  class="gblog-markdown__link"
+  href="https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/ConfigModule.java"
+>ConfigModule.java</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">/** FreeMarker設定値を作成する */</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Provides</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Singleton</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Named</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;freemarker.init.parameters&#34;</span><span style="color:#f92672">)</span>
@@ -497,11 +551,11 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
   href="https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/AppContextListener.java"title="guice-freemarker-servlet/app/src/main/java/app/inject/AppContextListener.java at main · halflite/guice-freemarker-servlet"
 >AppContextListener.java</a></p>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h4 id="結構面倒くさいポイントその3-javautilloggingjul"
+    <h4 id="julltoslfj"
     >
-        結構面倒くさいポイントその3 java.util.logging(jul)
+        結構面倒くさいポイントその4 java.util.logging(jul)
     </h4>
-    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#結構面倒くさいポイントその3-javautilloggingjul" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結構面倒くさいポイントその3 java.util.logging(jul)" href="#%e7%b5%90%e6%a7%8b%e9%9d%a2%e5%80%92%e3%81%8f%e3%81%95%e3%81%84%e3%83%9d%e3%82%a4%e3%83%b3%e3%83%88%e3%81%9d%e3%81%ae3-javautilloggingjul">
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#julltoslfj" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結構面倒くさいポイントその4 java.util.logging(jul)" href="#julltoslfj">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -510,7 +564,10 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
 <p>だから、まず依存ライブラリに <a
   class="gblog-markdown__link"
   href="https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j"title="Maven Repository: org.slf4j » jul-to-slf4j"
->jul-to-slf4j</a>を含め、更にアプリ立ち上げ最初の方で、それなりの記述が必要です。</p>
+>jul-to-slf4j</a>を含め、更にアプリ立ち上げ最初の方で、それなりの記述が必要です。 <a
+  class="gblog-markdown__link"
+  href="https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/App.java"
+>App.java</a></p>
 <pre tabindex="0"><code>    SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
 </code></pre><hr>
