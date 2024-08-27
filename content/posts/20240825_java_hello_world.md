@@ -1,6 +1,6 @@
 ---
 title: "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった"
-date: 2024-08-27T00:00:00+09:00
+date: 2024-08-25T00:00:00+09:00
 draft: false
 tags:
   - java

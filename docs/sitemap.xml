@@ -3,11 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://halflite.github.io/techlog/posts/20240825_java_hello_world/</loc>
-    <lastmod>2024-08-27T00:00:00+09:00</lastmod>
+    <lastmod>2024-08-25T00:00:00+09:00</lastmod>
   </url>
   <url>
     <loc>https://halflite.github.io/techlog/</loc>
-    <lastmod>2024-08-27T00:00:00+09:00</lastmod>
+    <lastmod>2024-08-25T00:00:00+09:00</lastmod>
   </url>
   <url>
     <loc>https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/</loc>
@@ -28,6 +28,10 @@
   <url>
     <loc>https://halflite.github.io/techlog/posts/20231223_blog/</loc>
     <lastmod>2023-12-23T00:00:00+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://halflite.github.io/techlog/posts/20231010_java_project_created/</loc>
+    <lastmod>2023-10-10T00:00:00+09:00</lastmod>
   </url>
   <url>
     <loc>https://halflite.github.io/techlog/posts/20230602_jms_cosumer_apache_camel/</loc>
