@@ -4,7 +4,7 @@
     <title>Java on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/java/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/java/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-08-27T11:40:50+00:00</updated>
+    <updated>2024-08-27T14:51:15+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/java/</id>
         <entry>
             <title>2024年8月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</title>
@@ -94,8 +94,12 @@
   href=&#34;https://github.com/google/guice/wiki/Servlets&#34;
 &gt;Servlets · google/guice Wiki&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 &lt;code&gt;GuiceFilter&lt;/code&gt; の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めてしまえば、わざわざその設定も不要ということです。&lt;/p&gt;
-&lt;p&gt;ここら辺を分からないと「…？」と悩むことになります。&lt;/p&gt;
+&lt;p&gt;上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 &lt;code&gt;GuiceFilter&lt;/code&gt; の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めて、そこに設定を書いてしまえば、わざわざ &lt;code&gt;web.xml&lt;/code&gt; 設定も不要ということです。 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/ConfigModule.java&#34;
+&gt;ConfigModule.java&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;contextHandler&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;addFilter&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;GuiceFilter&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; EnumSet&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;allOf&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;DispatcherType&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ここら辺を分からないと「…？」と悩むことになります。&lt;/p&gt;
 &lt;hr&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h4 id=&#34;jakartapackage&#34;
@@ -116,7 +120,10 @@
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;code&gt;FreemarkerServlet&lt;/code&gt; に関しては、Tomcatとかに書く &lt;code&gt;web.xml&lt;/code&gt; には記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;FreemarkerServlet&lt;/code&gt; に関しては、Tomcatとかに書く &lt;code&gt;web.xml&lt;/code&gt; 用の7は記述あるんですが &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://freemarker.apache.org/docs/pgui_misc_servlet.html&#34;
+&gt;Using FreeMarker with servlets - Apache FreeMarker Manual&lt;/a&gt; 、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。&lt;/p&gt;
 &lt;p&gt;わたくしの個人解としては、まずプロパティファイルに、こう書く。&lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/resources/META-INF/microprofile-config.properties&#34;

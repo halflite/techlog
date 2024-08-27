@@ -52,7 +52,11 @@ JavaでWebアプリケーションで避けて通れないのが、Java EE -> Ja
 
 * [Servlets · google/guice Wiki](https://github.com/google/guice/wiki/Servlets)
 
-上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 `GuiceFilter` の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めてしまえば、わざわざその設定も不要ということです。
+上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 `GuiceFilter` の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めて、そこに設定を書いてしまえば、わざわざ `web.xml` 設定も不要ということです。 [ConfigModule.java](https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/ConfigModule.java)
+
+```java
+contextHandler.addFilter(GuiceFilter.class, "/*", EnumSet.allOf(DispatcherType.class));
+```
 
 ここら辺を分からないと「…？」と悩むことになります。
 
@@ -64,7 +68,7 @@ _____
 
 #### 結構面倒くさいポイントその3 FreemarkerServlet の設定値 {#freemarkercongig}
 
-`FreemarkerServlet` に関しては、Tomcatとかに書く `web.xml` には記述あるんですが、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。
+`FreemarkerServlet` に関しては、Tomcatとかに書く `web.xml` 用の7は記述あるんですが [Using FreeMarker with servlets - Apache FreeMarker Manual](https://freemarker.apache.org/docs/pgui_misc_servlet.html) 、コレ、スタンドアローンの時にどうやって設定したら良いの？みたいなのがあります。 
 
 わたくしの個人解としては、まずプロパティファイルに、こう書く。[microprofile-config.properties](https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/resources/META-INF/microprofile-config.properties)
 
