@@ -809,12 +809,24 @@ Favicon覚え書き。
 
       <section class="gblog-markdown">
         単に、自分の備忘録です。
-初期プロジェクト作成 pom.xmlを何かする 初期プロジェクト作成 mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ -Dpackage=app 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。
+初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 初期プロジェクト作成 いまは、大概、仮想環境で初期から作るでしょう。1
+mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ -Dpackage=app 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。
 pom.xmlを何かする pom.xml に諸々を追加することになります。
 初期はこんなものが自動生成されます
-&lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;web_app_example&lt;/groupId&gt; &lt;artifactId&gt;app&lt;/artifactId&gt; &lt;packaging&gt;jar&lt;/packaging&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;name&gt;csvbatch&lt;/name&gt; &lt;url&gt;http://maven.apache.org&lt;/url&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;3.8.1&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt; ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。
+&lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;web_app_example&lt;/groupId&gt; &lt;artifactId&gt;app&lt;/artifactId&gt; &lt;packaging&gt;jar&lt;/packaging&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;name&gt;csvbatch&lt;/name&gt; &lt;url&gt;http://maven.apache.org&lt;/url&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;3.8.1&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt; ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。2
+コンパルのJavaバージョン &lt;properties&gt; &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; この3行だけで、「Java17でコンパイル、ソースコードはUTF-8」が決まります。3
+FatJar/UberJar 作成設定 &lt;build&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt; &lt;version&gt;3.7.1&lt;/version&gt; &lt;configuration&gt; &lt;descriptorRefs&gt; &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt; &lt;/descriptorRefs&gt; &lt;archive&gt; &lt;manifest&gt; &lt;mainClass&gt;app.App&lt;/mainClass&gt; &lt;/manifest&gt; &lt;/archive&gt; &lt;finalName&gt;${project.
       </section>
       <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20231010_java_project_created/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
         
       </div>
 

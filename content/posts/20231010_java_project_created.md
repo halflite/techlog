@@ -10,10 +10,14 @@ tags:
 
 * [初期プロジェクト作成](#create_init_project)
 * [pom.xmlを何かする](#edit_pom_xml)
+* [コンパルのJavaバージョン](#java_ver_setting)
+* [FatJar/UberJar 作成設定](#fatjar_setting)
 
 _____
 
 ### 初期プロジェクト作成 {#create_init_project}
+
+いまは、大概、仮想環境で初期から作るでしょう。[^1]
 
 ```sh
 mvn archetype:generate \
@@ -52,4 +56,63 @@ pom.xml に諸々を追加することになります。
 </project>
 ```
 
-ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。
+ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。[^2]
+
+### コンパルのJavaバージョン {#java_ver_setting}
+
+```xml
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+```
+
+この3行だけで、「Java17でコンパイル、ソースコードはUTF-8」が決まります。[^3]
+
+### FatJar/UberJar 作成設定 {#fatjar_setting}
+
+```xml
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.7.1</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>app.App</mainClass>
+            </manifest>
+          </archive>
+          <finalName>${project.name}-${project.version}</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+```
+
+`pom.xml` に上記を足すと、FatJar/UberJar(単独で立ち上がるJar)が作られます
+
+```sh
+cd app
+mvn clean package
+java -jar target/app-1.0.0.jar
+```
+
+[^1]: 個人的には [maven:3.9-amazoncorretto-21-debian-bookworm](https://hub.docker.com/layers/library/maven/3.9-amazoncorretto-21-debian-bookworm/images/sha256-87b397c16601f63e605ebc55c8ced21c92e43ad897d235f16c082d20603a4686) をベースにするのが良いと思っています。 debianだから、とりあえずの機能は `apt install` で入るし。
+[^2]: でも、流石に2023年に、 デフォルトが JUnit3 なのはちょっとね…。
+[^3]: [Mavenの真実とウソ | PPT](https://www.slideshare.net/slideshow/maven-196821326/196821326)

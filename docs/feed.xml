@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-08-27T18:58:16+00:00</updated>
+    <updated>2024-08-28T23:13:21+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>2024年8月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</title>
@@ -808,6 +808,14 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
   class=&#34;gblog-markdown__link&#34;
   href=&#34;#edit_pom_xml&#34;
 &gt;pom.xmlを何かする&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;#java_ver_setting&#34;
+&gt;コンパルのJavaバージョン&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;#fatjar_setting&#34;
+&gt;FatJar/UberJar 作成設定&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
@@ -819,6 +827,7 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
+&lt;p&gt;いまは、大概、仮想環境で初期から作るでしょう。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn archetype:generate &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -DarchetypeArtifactId&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;maven-archetype-quickstart &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -DinteractiveMode&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;false &lt;span style=&#34;color:#ae81ff&#34;&gt;\
@@ -855,7 +864,85 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/project&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;java_ver_setting&#34;
+    &gt;
+        コンパルのJavaバージョン
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20231010_java_project_created/#java_ver_setting&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor コンパルのJavaバージョン&#34; href=&#34;#java_ver_setting&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;maven.compiler.source&amp;gt;&lt;/span&gt;17&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/maven.compiler.source&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;maven.compiler.target&amp;gt;&lt;/span&gt;17&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/maven.compiler.target&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;project.build.sourceEncoding&amp;gt;&lt;/span&gt;UTF-8&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/project.build.sourceEncoding&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;この3行だけで、「Java17でコンパイル、ソースコードはUTF-8」が決まります。&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;fatjar_setting&#34;
+    &gt;
+        FatJar/UberJar 作成設定
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20231010_java_project_created/#fatjar_setting&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor FatJar/UberJar 作成設定&#34; href=&#34;#fatjar_setting&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.maven.plugins&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;maven-assembly-plugin&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;3.7.1&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;descriptorRefs&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;descriptorRef&amp;gt;&lt;/span&gt;jar-with-dependencies&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/descriptorRef&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/descriptorRefs&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;archive&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;manifest&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;mainClass&amp;gt;&lt;/span&gt;app.App&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/mainClass&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/manifest&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/archive&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;finalName&amp;gt;&lt;/span&gt;${project.name}-${project.version}&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/finalName&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;appendAssemblyId&amp;gt;&lt;/span&gt;false&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/appendAssemblyId&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;executions&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;execution&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;id&amp;gt;&lt;/span&gt;make-assembly&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/id&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;phase&amp;gt;&lt;/span&gt;package&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/phase&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;goals&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;goal&amp;gt;&lt;/span&gt;single&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/goal&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/goals&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/execution&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/executions&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;pom.xml&lt;/code&gt; に上記を足すと、FatJar/UberJar(単独で立ち上がるJar)が作られます&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd app
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn clean package
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;java -jar target/app-1.0.0.jar
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;個人的には &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://hub.docker.com/layers/library/maven/3.9-amazoncorretto-21-debian-bookworm/images/sha256-87b397c16601f63e605ebc55c8ced21c92e43ad897d235f16c082d20603a4686&#34;
+&gt;maven:3.9-amazoncorretto-21-debian-bookworm&lt;/a&gt; をベースにするのが良いと思っています。 debianだから、とりあえずの機能は &lt;code&gt;apt install&lt;/code&gt; で入るし。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;でも、流石に2023年に、 デフォルトが JUnit3 なのはちょっとね…。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.slideshare.net/slideshow/maven-196821326/196821326&#34;
+&gt;Mavenの真実とウソ | PPT&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 
             </content>   
                                 <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />

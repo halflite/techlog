@@ -13,7 +13,8 @@
     <meta name="generator" content="Hugo 0.111.3">
     <meta name="robots" content="index, follow" />
     <meta name="description" content="単に、自分の備忘録です。
-初期プロジェクト作成 pom.xmlを何かする 初期プロジェクト作成 mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ …" />
+初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 初期プロジェクト作成 いまは、大概、仮想環境で初期から作るでしょう。1
+mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ …" />
 
     <title>2023年 Javaベースのプロジェクトを作る | ひとり開発日記。</title>
 
@@ -43,7 +44,8 @@
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
   <meta property="og:description" content="単に、自分の備忘録です。
-初期プロジェクト作成 pom.xmlを何かする 初期プロジェクト作成 mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ …" />
+初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 初期プロジェクト作成 いまは、大概、仮想環境で初期から作るでしょう。1
+mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ …" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://halflite.github.io/techlog/posts/20231010_java_project_created/" />
 
@@ -61,7 +63,8 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="2023年 Javaベースのプロジェクトを作る" />
   <meta name="twitter:description" content="単に、自分の備忘録です。
-初期プロジェクト作成 pom.xmlを何かする 初期プロジェクト作成 mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ …" />
+初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 初期プロジェクト作成 いまは、大概、仮想環境で初期から作るでしょう。1
+mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ …" />
 
 <script type="application/ld+json">
   {
@@ -71,8 +74,8 @@
       "name": "2023年 Javaベースのプロジェクトを作る",
       "url" : "https://halflite.github.io/techlog/posts/20231010_java_project_created/",
       "headline": "2023年 Javaベースのプロジェクトを作る",
-      "description": "単に、自分の備忘録です。\n初期プロジェクト作成 pom.xmlを何かする 初期プロジェクト作成 mvn archetype:generate \\ -DarchetypeArtifactId=maven-archetype-quickstart \\ -DinteractiveMode=false \\ -DgroupId=web_app_example \\ -DartifactId=app \\ -Dpackage=app 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。\npom.xmlを何かする pom.xml に諸々を追加することになります。\n初期はこんなものが自動生成されます\n\u003cproject xmlns=\u0022http:\/\/maven.apache.org\/POM\/4.0.0\u0022 xmlns:xsi=\u0022http:\/\/www.w3.org\/2001\/XMLSchema-instance\u0022 xsi:schemaLocation=\u0022http:\/\/maven.apache.org\/POM\/4.0.0 http:\/\/maven.apache.org\/maven-v4_0_0.xsd\u0022\u003e \u003cmodelVersion\u003e4.0.0\u003c\/modelVersion\u003e \u003cgroupId\u003eweb_app_example\u003c\/groupId\u003e \u003cartifactId\u003eapp\u003c\/artifactId\u003e \u003cpackaging\u003ejar\u003c\/packaging\u003e \u003cversion\u003e1.0-SNAPSHOT\u003c\/version\u003e \u003cname\u003ecsvbatch\u003c\/name\u003e \u003curl\u003ehttp:\/\/maven.apache.org\u003c\/url\u003e \u003cdependencies\u003e \u003cdependency\u003e \u003cgroupId\u003ejunit\u003c\/groupId\u003e \u003cartifactId\u003ejunit\u003c\/artifactId\u003e \u003cversion\u003e3.8.1\u003c\/version\u003e \u003cscope\u003etest\u003c\/scope\u003e \u003c\/dependency\u003e \u003c\/dependencies\u003e \u003c\/project\u003e ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。",
-      "wordCount" : "43",
+      "description": "単に、自分の備忘録です。\n初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar\/UberJar 作成設定 初期プロジェクト作成 いまは、大概、仮想環境で初期から作るでしょう。1\nmvn archetype:generate \\ -DarchetypeArtifactId=maven-archetype-quickstart \\ -DinteractiveMode=false \\ -DgroupId=web_app_example \\ -DartifactId=app \\ -Dpackage=app 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。\npom.xmlを何かする pom.xml に諸々を追加することになります。\n初期はこんなものが自動生成されます\n\u003cproject xmlns=\u0022http:\/\/maven.apache.org\/POM\/4.0.0\u0022 xmlns:xsi=\u0022http:\/\/www.w3.org\/2001\/XMLSchema-instance\u0022 xsi:schemaLocation=\u0022http:\/\/maven.apache.org\/POM\/4.0.0 http:\/\/maven.apache.org\/maven-v4_0_0.xsd\u0022\u003e \u003cmodelVersion\u003e4.0.0\u003c\/modelVersion\u003e \u003cgroupId\u003eweb_app_example\u003c\/groupId\u003e \u003cartifactId\u003eapp\u003c\/artifactId\u003e \u003cpackaging\u003ejar\u003c\/packaging\u003e \u003cversion\u003e1.0-SNAPSHOT\u003c\/version\u003e \u003cname\u003ecsvbatch\u003c\/name\u003e \u003curl\u003ehttp:\/\/maven.apache.org\u003c\/url\u003e \u003cdependencies\u003e \u003cdependency\u003e \u003cgroupId\u003ejunit\u003c\/groupId\u003e \u003cartifactId\u003ejunit\u003c\/artifactId\u003e \u003cversion\u003e3.8.1\u003c\/version\u003e \u003cscope\u003etest\u003c\/scope\u003e \u003c\/dependency\u003e \u003c\/dependencies\u003e \u003c\/project\u003e ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。2\nコンパルのJavaバージョン \u003cproperties\u003e \u003cmaven.compiler.source\u003e17\u003c\/maven.compiler.source\u003e \u003cmaven.compiler.target\u003e17\u003c\/maven.compiler.target\u003e \u003cproject.build.sourceEncoding\u003eUTF-8\u003c\/project.build.sourceEncoding\u003e \u003c\/properties\u003e この3行だけで、「Java17でコンパイル、ソースコードはUTF-8」が決まります。3\nFatJar\/UberJar 作成設定 \u003cbuild\u003e \u003cplugins\u003e \u003cplugin\u003e \u003cgroupId\u003eorg.apache.maven.plugins\u003c\/groupId\u003e \u003cartifactId\u003emaven-assembly-plugin\u003c\/artifactId\u003e \u003cversion\u003e3.7.1\u003c\/version\u003e \u003cconfiguration\u003e \u003cdescriptorRefs\u003e \u003cdescriptorRef\u003ejar-with-dependencies\u003c\/descriptorRef\u003e \u003c\/descriptorRefs\u003e \u003carchive\u003e \u003cmanifest\u003e \u003cmainClass\u003eapp.App\u003c\/mainClass\u003e \u003c\/manifest\u003e \u003c\/archive\u003e \u003cfinalName\u003e${project.",
+      "wordCount" : "110",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -409,6 +412,14 @@
   class="gblog-markdown__link"
   href="#edit_pom_xml"
 >pom.xmlを何かする</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#java_ver_setting"
+>コンパルのJavaバージョン</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#fatjar_setting"
+>FatJar/UberJar 作成設定</a></li>
 </ul>
 <hr>
 <div class="flex align-center gblog-post__anchorwrap">
@@ -420,6 +431,7 @@
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
+<p>いまは、大概、仮想環境で初期から作るでしょう。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mvn archetype:generate <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -DarchetypeArtifactId<span style="color:#f92672">=</span>maven-archetype-quickstart <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -DinteractiveMode<span style="color:#f92672">=</span>false <span style="color:#ae81ff">\
@@ -456,7 +468,85 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dependency&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/dependencies&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/project&gt;</span>
-</span></span></code></pre></div><p>ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。</p>
+</span></span></code></pre></div><p>ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="java_ver_setting"
+    >
+        コンパルのJavaバージョン
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20231010_java_project_created/#java_ver_setting" class="gblog-post__anchor clip flex align-center" aria-label="Anchor コンパルのJavaバージョン" href="#java_ver_setting">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>  <span style="color:#f92672">&lt;properties&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;maven.compiler.source&gt;</span>17<span style="color:#f92672">&lt;/maven.compiler.source&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;maven.compiler.target&gt;</span>17<span style="color:#f92672">&lt;/maven.compiler.target&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span style="color:#f92672">&lt;/project.build.sourceEncoding&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/properties&gt;</span>
+</span></span></code></pre></div><p>この3行だけで、「Java17でコンパイル、ソースコードはUTF-8」が決まります。<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="fatjar_setting"
+    >
+        FatJar/UberJar 作成設定
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20231010_java_project_created/#fatjar_setting" class="gblog-post__anchor clip flex align-center" aria-label="Anchor FatJar/UberJar 作成設定" href="#fatjar_setting">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>  <span style="color:#f92672">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-assembly-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;version&gt;</span>3.7.1<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;descriptorRefs&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;descriptorRef&gt;</span>jar-with-dependencies<span style="color:#f92672">&lt;/descriptorRef&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/descriptorRefs&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;archive&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;manifest&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;mainClass&gt;</span>app.App<span style="color:#f92672">&lt;/mainClass&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/manifest&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/archive&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;finalName&gt;</span>${project.name}-${project.version}<span style="color:#f92672">&lt;/finalName&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;appendAssemblyId&gt;</span>false<span style="color:#f92672">&lt;/appendAssemblyId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;executions&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;execution&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;id&gt;</span>make-assembly<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;phase&gt;</span>package<span style="color:#f92672">&lt;/phase&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;goals&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;goal&gt;</span>single<span style="color:#f92672">&lt;/goal&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/goals&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/execution&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/executions&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/build&gt;</span>
+</span></span></code></pre></div><p><code>pom.xml</code> に上記を足すと、FatJar/UberJar(単独で立ち上がるJar)が作られます</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cd app
+</span></span><span style="display:flex;"><span>mvn clean package
+</span></span><span style="display:flex;"><span>java -jar target/app-1.0.0.jar
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>個人的には <a
+  class="gblog-markdown__link"
+  href="https://hub.docker.com/layers/library/maven/3.9-amazoncorretto-21-debian-bookworm/images/sha256-87b397c16601f63e605ebc55c8ced21c92e43ad897d235f16c082d20603a4686"
+>maven:3.9-amazoncorretto-21-debian-bookworm</a> をベースにするのが良いと思っています。 debianだから、とりあえずの機能は <code>apt install</code> で入るし。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>でも、流石に2023年に、 デフォルトが JUnit3 なのはちょっとね…。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a
+  class="gblog-markdown__link"
+  href="https://www.slideshare.net/slideshow/maven-196821326/196821326"
+>Mavenの真実とウソ | PPT</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 
     </section>
   </article>
