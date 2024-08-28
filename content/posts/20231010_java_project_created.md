@@ -43,7 +43,7 @@ pom.xml に諸々を追加することになります。
   <artifactId>app</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>csvbatch</name>
+  <name>app</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
