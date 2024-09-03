@@ -74,8 +74,8 @@
       "name": "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった",
       "url" : "https://halflite.github.io/techlog/posts/20240825_java_hello_world/",
       "headline": "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった",
-      "description": "前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\n自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッケージ 結構面倒くさいポイントその3 FreemarkerServlet の設定値 結構面倒くさいポイントその4 java.util.logging(jul) 自分で作ってみた halflite\/guice-freemarker-servlet: Guice \/ Freemarker \/ Servlet で、自分で作ってみました。結構面倒くさい！\nこれに関しては、幾つかの縛りがあります。 例えば「“Hello World\u0022を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。\n立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとして使うことを考えてJSONも出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。\nサーバーは Jetty Embedded DIは Guice\/Guice-Servletに従う 設定値の取得は Apache Geronimo\/MicroProfile Config HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j\/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -\u003e Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。\nだから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。\n結構面倒くさいポイントその1 Guice-Servlet初期化 Servlets · google\/guice Wiki 上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 GuiceFilter の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めて、そこに設定を書いてしまえば、わざわざ web.",
-      "wordCount" : "212",
+      "description": "前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\n自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッケージ 結構面倒くさいポイントその3 FreemarkerServlet の設定値 結構面倒くさいポイントその4 java.util.logging(jul) 〆の感想 自分で作ってみた halflite\/guice-freemarker-servlet: Guice \/ Freemarker \/ Servlet で、自分で作ってみました。結構面倒くさい！\nこれに関しては、幾つかの縛りがあります。 例えば「“Hello World\u0022を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。\n立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとして使うことを考えてJSONも出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。\nサーバーは Jetty Embedded DIは Guice\/Guice-Servletに従う 設定値の取得は Apache Geronimo\/MicroProfile Config HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j\/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -\u003e Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。\nだから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。\n結構面倒くさいポイントその1 Guice-Servlet初期化 Servlets · google\/guice Wiki 上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 GuiceFilter の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めて、そこに設定を書いてしまえば、わざわざ web.",
+      "wordCount" : "234",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -360,7 +360,7 @@
 
 <span class="flex align-center no-wrap gblog-post__meta--readtime">
   <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
+  <span class="gblog-post__tag">2 min read</span>
 </span>
 
 
@@ -428,6 +428,10 @@
   class="gblog-markdown__link"
   href="#julltoslfj"
 >結構面倒くさいポイントその4 java.util.logging(jul)</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#endoffile"
+>〆の感想</a></li>
 </ul>
 <hr>
 <div class="flex align-center gblog-post__anchorwrap">
@@ -580,8 +584,18 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
 >App.java</a></p>
 <pre tabindex="0"><code>    SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
-</code></pre><hr>
+</code></pre><div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="endoffile"
+    >
+        〆の感想
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240825_java_hello_world/#endoffile" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 〆の感想" href="#endoffile">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
 <p>いやはや、&ldquo;Hello World&quot;だけでも、こんなに難しい2024年でしたね。</p>
+<p>DBとか使うんだったら、トランザクション境界のことを考えると、素直に Spring-Boot とか Quarkus とか使ったほうが良いのですが、ちょっとした 「入力に対して、別のAPIを叩いて、その結果をJSONで返す」ような BFF(Backend For Frontend) 機能だったら、これくらいで良いのでしょうか？</p>
+<p>実際、手元のPCで <code>java -jar target/app-1.0.0.jar</code> コマンド打つと、立ち上がりまで2秒ちょっとなので、やはり Simple is the Best. ですね。</p>
 
     </section>
   </article>

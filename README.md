@@ -18,11 +18,11 @@ hugo new posts/article.md
 check on local server.
 
 ```sh
-hugo server
+hugo server -D
 ```
 
 write out all.
 
 ```sh
-hugo -D
+hugo
 ```

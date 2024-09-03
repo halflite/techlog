@@ -15,6 +15,7 @@ tags:
 * [結構面倒くさいポイントその2 FreemarkerServlet のパッケージ](#jakartapackage)
 * [結構面倒くさいポイントその3 FreemarkerServlet の設定値](#freemarkercongig)
 * [結構面倒くさいポイントその4 java.util.logging(jul)](#julltoslfj)
+* [〆の感想](#endoffile)
 
 _____
 
@@ -128,6 +129,10 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
     SLF4JBridgeHandler.install();
 ```
 
-_____
+### 〆の感想 {#endoffile}
 
 いやはや、"Hello World"だけでも、こんなに難しい2024年でしたね。
+
+DBとか使うんだったら、トランザクション境界のことを考えると、素直に Spring-Boot とか Quarkus とか使ったほうが良いのですが、ちょっとした 「入力に対して、別のAPIを叩いて、その結果をJSONで返す」ような BFF(Backend For Frontend) 機能だったら、これくらいで良いのでしょうか？ 
+
+実際、手元のPCで `java -jar target/app-1.0.0.jar` コマンド打つと、立ち上がりまで2秒ちょっとなので、やはり Simple is the Best. ですね。
