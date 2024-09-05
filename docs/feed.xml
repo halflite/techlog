@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-09-03T05:20:24+00:00</updated>
+    <updated>2024-09-05T21:22:55+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>2024年8月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</title>
@@ -64,6 +64,7 @@
 &lt;p&gt;これに関しては、幾つかの縛りがあります。
 例えば「&amp;ldquo;Hello World&amp;quot;を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;コンパイル＆ビルドに迷いたくないよね&lt;/li&gt;
 &lt;li&gt;立ち上げるのには、それなりの速さが欲しいよね&lt;/li&gt;
 &lt;li&gt;当然、仮想化が前提にあるよね&lt;/li&gt;
 &lt;li&gt;それなりにDI出来るコンテナ欲しいよね&lt;/li&gt;
@@ -72,8 +73,12 @@
 &lt;li&gt;APIとして使うことを考えてJSONも出力して欲しいよね&lt;/li&gt;
 &lt;li&gt;ログを統一的に出す機構が欲しいよね&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;…で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。&lt;/p&gt;
+&lt;p&gt;(所謂) &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://12factor.net/ja/&#34;title=&#34;The Twelve-Factor App （日本語訳）&#34;
+&gt;The Twelve-Factor App&lt;/a&gt; ですよね。 そこら辺を踏まえた上での、自分が考えるアーキテクチャは以下です。&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;コンパイル＆ビルドは Maven&lt;/li&gt;
 &lt;li&gt;サーバーは Jetty Embedded&lt;/li&gt;
 &lt;li&gt;DIは Guice/Guice-Servletに従う&lt;/li&gt;
 &lt;li&gt;設定値の取得は Apache Geronimo/MicroProfile Config&lt;/li&gt;
@@ -170,7 +175,8 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    LOG&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;debug&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;freemarker init params: {}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; params&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; params&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;で、DIで取ってこれた値を、 &lt;code&gt;FreemarkerServlet&lt;/code&gt; に渡せば良い、と言う寸法です。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;単に、プロパティファイルからキーの先頭に &lt;code&gt;freemarker.&lt;/code&gt; が入っている要素を抜き出し、キーの先頭から &lt;code&gt;freemarker.&lt;/code&gt; を削除した連想配列を作る、これが本当に面倒くさい！&lt;/p&gt;
+&lt;p&gt;で、DIで取ってこれた値を、 &lt;code&gt;FreemarkerServlet&lt;/code&gt; に渡せば良い、と言う寸法です。
 &lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/AppContextListener.java&#34;title=&#34;guice-freemarker-servlet/app/src/main/java/app/inject/AppContextListener.java at main · halflite/guice-freemarker-servlet&#34;
@@ -813,7 +819,12 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
             <updated>2023-10-10T00:00:00+09:00</updated>
             <content type="html">
                 &lt;p&gt;単に、自分の備忘録です。&lt;/p&gt;
+&lt;p&gt;ローカル開発環境は Windows11 / WSL2 / VSCode / RancherDesktop です。&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;#create_repository&#34;
+&gt;リポジトリ作成&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a
   class=&#34;gblog-markdown__link&#34;
   href=&#34;#create_init_project&#34;
@@ -833,6 +844,20 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;create_repository&#34;
+    &gt;
+        リポジトリ作成
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20231010_java_project_created/#create_repository&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor リポジトリ作成&#34; href=&#34;#create_repository&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;GitHub や BitBUcket にリポジトリを作る&lt;/li&gt;
+&lt;li&gt;VSCode でチェックアウト&lt;/li&gt;
+&lt;li&gt;devcontainerの設定を作る。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h3 id=&#34;create_init_project&#34;
     &gt;
         初期プロジェクト作成
@@ -841,13 +866,14 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
-&lt;p&gt;いまは、大概、仮想環境で初期から作るでしょう。&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn archetype:generate &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -DarchetypeArtifactId&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;maven-archetype-quickstart &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -DinteractiveMode&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;false &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -DgroupId&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;web_app_example &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -DartifactId&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;app &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -Dpackage&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;app
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd app
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn clean compile
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。&lt;/p&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h3 id=&#34;edit_pom_xml&#34;
@@ -941,10 +967,10 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34;&gt;
-&lt;p&gt;個人的には &lt;a
+&lt;p&gt;2024/04/07 追記 &lt;a
   class=&#34;gblog-markdown__link&#34;
-  href=&#34;https://hub.docker.com/layers/library/maven/3.9-amazoncorretto-21-debian-bookworm/images/sha256-87b397c16601f63e605ebc55c8ced21c92e43ad897d235f16c082d20603a4686&#34;
-&gt;maven:3.9-amazoncorretto-21-debian-bookworm&lt;/a&gt; をベースにするのが良いと思っています。 debianだから、とりあえずの機能は &lt;code&gt;apt install&lt;/code&gt; で入るし。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+  href=&#34;/techlog/posts/20240407_java_based_batch/&#34;
+&gt;2024年 Javaベースのバッチを作るなら その1 環境と初期設定&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id=&#34;fn:2&#34;&gt;
 &lt;p&gt;でも、流石に2023年に、 デフォルトが JUnit3 なのはちょっとね…。&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
@@ -1377,8 +1403,8 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@Singleton&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AnyService&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;APIGatewayProxyRequestEvent input&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// do something
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; APIGatewayProxyResponseEvent  &lt;span style=&#34;color:#a6e22e&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;APIGatewayProxyRequestEvent input&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// do something and return something
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AppModule&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;extends&lt;/span&gt; AbstractModule &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;

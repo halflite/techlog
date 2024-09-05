@@ -59,8 +59,8 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 @Singleton
 public class AnyService {
 
-  public void execute(APIGatewayProxyRequestEvent input) {
-    // do something
+  public APIGatewayProxyResponseEvent  execute(APIGatewayProxyRequestEvent input) {
+    // do something and return something
   }
 }
 ```

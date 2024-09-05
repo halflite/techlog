@@ -28,6 +28,7 @@ _____
 これに関しては、幾つかの縛りがあります。
 例えば「"Hello World"を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。
 
+* コンパイル＆ビルドに迷いたくないよね
 * 立ち上げるのには、それなりの速さが欲しいよね
 * 当然、仮想化が前提にあるよね
 * それなりにDI出来るコンテナ欲しいよね
@@ -36,8 +37,9 @@ _____
 * APIとして使うことを考えてJSONも出力して欲しいよね
 * ログを統一的に出す機構が欲しいよね
 
-…で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。
+(所謂) [The Twelve-Factor App](https://12factor.net/ja/ "The Twelve-Factor App （日本語訳）") ですよね。 そこら辺を踏まえた上での、自分が考えるアーキテクチャは以下です。
 
+* コンパイル＆ビルドは Maven
 * サーバーは Jetty Embedded
 * DIは Guice/Guice-Servletに従う
 * 設定値の取得は Apache Geronimo/MicroProfile Config
@@ -113,6 +115,8 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
     return params;
   }
 ```
+
+単に、プロパティファイルからキーの先頭に `freemarker.` が入っている要素を抜き出し、キーの先頭から `freemarker.` を削除した連想配列を作る、これが本当に面倒くさい！
 
 で、DIで取ってこれた値を、 `FreemarkerServlet` に渡せば良い、と言う寸法です。 
 [AppContextListener.java](https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/AppContextListener.java "guice-freemarker-servlet/app/src/main/java/app/inject/AppContextListener.java at main · halflite/guice-freemarker-servlet")

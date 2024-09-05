@@ -8,6 +8,9 @@ tags:
 
 単に、自分の備忘録です。
 
+ローカル開発環境は Windows11 / WSL2 / VSCode / RancherDesktop です。
+
+* [リポジトリ作成](#create_repository)
 * [初期プロジェクト作成](#create_init_project)
 * [pom.xmlを何かする](#edit_pom_xml)
 * [コンパルのJavaバージョン](#java_ver_setting)
@@ -15,9 +18,13 @@ tags:
 
 _____
 
-### 初期プロジェクト作成 {#create_init_project}
+### リポジトリ作成 {#create_repository}
 
-いまは、大概、仮想環境で初期から作るでしょう。[^1]
+1. GitHub や BitBUcket にリポジトリを作る
+2. VSCode でチェックアウト
+3. devcontainerの設定を作る。[^1]
+
+### 初期プロジェクト作成 {#create_init_project}
 
 ```sh
 mvn archetype:generate \
@@ -26,6 +33,8 @@ mvn archetype:generate \
   -DgroupId=web_app_example \
   -DartifactId=app \
   -Dpackage=app
+cd app
+mvn clean compile
 ```
 
 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。
@@ -113,6 +122,6 @@ mvn clean package
 java -jar target/app-1.0.0.jar
 ```
 
-[^1]: 個人的には [maven:3.9-amazoncorretto-21-debian-bookworm](https://hub.docker.com/layers/library/maven/3.9-amazoncorretto-21-debian-bookworm/images/sha256-87b397c16601f63e605ebc55c8ced21c92e43ad897d235f16c082d20603a4686) をベースにするのが良いと思っています。 debianだから、とりあえずの機能は `apt install` で入るし。
+[^1]: 2024/04/07 追記 [2024年 Javaベースのバッチを作るなら その1 環境と初期設定](/techlog/posts/20240407_java_based_batch/)
 [^2]: でも、流石に2023年に、 デフォルトが JUnit3 なのはちょっとね…。
 [^3]: [Mavenの真実とウソ | PPT](https://www.slideshare.net/slideshow/maven-196821326/196821326)

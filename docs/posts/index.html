@@ -302,10 +302,8 @@
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
 自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッケージ 結構面倒くさいポイントその3 FreemarkerServlet の設定値 結構面倒くさいポイントその4 java.util.logging(jul) 〆の感想 自分で作ってみた halflite/guice-freemarker-servlet: Guice / Freemarker / Servlet で、自分で作ってみました。結構面倒くさい！
 これに関しては、幾つかの縛りがあります。 例えば「&ldquo;Hello World&quot;を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。
-立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとして使うことを考えてJSONも出力して欲しいよね ログを統一的に出す機構が欲しいよね …で、そこら辺を踏まえた上での、自分が考えるアーキテクチャ。
-サーバーは Jetty Embedded DIは Guice/Guice-Servletに従う 設定値の取得は Apache Geronimo/MicroProfile Config HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -&gt; Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。
-だから、ちょっとしたWebアプリケーションは、小さく作って、いつでも交換できるように疎結合にしておく、が、大切ですかね。
-結構面倒くさいポイントその1 Guice-Servlet初期化 Servlets · google/guice Wiki 上記を読むと、よくあるコンテナ(Tomcat)とかにデプロイすることを前提として、 GuiceFilter の設置を書いているのですが、そもそも、アプリコンテナ全体をGuiceのDI対象に含めて、そこに設定を書いてしまえば、わざわざ web.
+コンパイル＆ビルドに迷いたくないよね 立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとして使うことを考えてJSONも出力して欲しいよね ログを統一的に出す機構が欲しいよね (所謂) The Twelve-Factor App ですよね。 そこら辺を踏まえた上での、自分が考えるアーキテクチャは以下です。
+コンパイル＆ビルドは Maven サーバーは Jetty Embedded DIは Guice/Guice-Servletに従う 設定値の取得は Apache Geronimo/MicroProfile Config HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -&gt; Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。
       </section>
       <div class="gblog-post__readmore">
         
@@ -801,13 +799,12 @@ Favicon覚え書き。
 
       <section class="gblog-markdown">
         単に、自分の備忘録です。
-初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 初期プロジェクト作成 いまは、大概、仮想環境で初期から作るでしょう。1
-mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ -Dpackage=app 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。
+ローカル開発環境は Windows11 / WSL2 / VSCode / RancherDesktop です。
+リポジトリ作成 初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 リポジトリ作成 GitHub や BitBUcket にリポジトリを作る VSCode でチェックアウト devcontainerの設定を作る。1 初期プロジェクト作成 mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ -Dpackage=app cd app mvn clean compile 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。
 pom.xmlを何かする pom.xml に諸々を追加することになります。
 初期はこんなものが自動生成されます
 &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;web_app_example&lt;/groupId&gt; &lt;artifactId&gt;app&lt;/artifactId&gt; &lt;packaging&gt;jar&lt;/packaging&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;name&gt;app&lt;/name&gt; &lt;url&gt;http://maven.apache.org&lt;/url&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;3.8.1&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt; ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。2
-コンパルのJavaバージョン &lt;properties&gt; &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; この3行だけで、「Java17でコンパイル、ソースコードはUTF-8」が決まります。3
-FatJar/UberJar 作成設定 &lt;build&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt; &lt;version&gt;3.7.1&lt;/version&gt; &lt;configuration&gt; &lt;descriptorRefs&gt; &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt; &lt;/descriptorRefs&gt; &lt;archive&gt; &lt;manifest&gt; &lt;mainClass&gt;app.App&lt;/mainClass&gt; &lt;/manifest&gt; &lt;/archive&gt; &lt;finalName&gt;${project.
+コンパルのJavaバージョン &lt;properties&gt; &lt;maven.
       </section>
       <div class="gblog-post__readmore">
         

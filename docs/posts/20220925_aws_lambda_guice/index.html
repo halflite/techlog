@@ -69,7 +69,7 @@
       "url" : "https://halflite.github.io/techlog/posts/20220925_aws_lambda_guice/",
       "headline": "AWS Lambda FunctionでJavaを採用したい",
       "description": "承前 AWS Lambda Function を Java で作るというお仕事をしています 基本的に Spring-Boot がメインの現場です Spring-Framawaork はやめておけ、と公式でも言われてますね。1 Java で何かしらする時は、背骨(フレームワーク)欲しいですよね DI(DependencyInjection) 無いと、もう無理ですよね Guice\/Dagger を使えと言われていますが、どっち使ったらいいの？ 色々なケースがありますが 自分でやったこと 自分でやったこと google\/guice Apache Geronimo Config google\/guava で、どうやってビジネスロジック注入する？を考えて、やっぱりgoogle\/guiceかなぁって。\n設定注入は、Apache Geronimo Configかな 2\nDaggerはコンパイル時DI、Guice実行時DI。コンパイル時にDI設定やればそっちの方が速いと思いがちですが、実際やってみると、Javaは起動するとかなり速いので、あまり差が無いのですね。 まぁ、そもそも AWS Lambda Function って、プロダクション的に小さいですし 3 そうすると、コードや設定少ないGuiceの方がいいですよね。\nケース よくあるケースですが、 API Gateway で、何かを送ってもらって、何かをやるみたいなことをやってみましょうか。\npublic class App implements RequestHandler\u003cAPIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent\u003e { private final AnyService anyService; @Override public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) { this.anyService.execute(input); APIGatewayProxyResponseEvent res = ... \/\/ do something return res; } public App() { Injector injector = Guice.",
-      "wordCount" : "150",
+      "wordCount" : "153",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -510,8 +510,8 @@
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Singleton</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnyService</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">execute</span><span style="color:#f92672">(</span>APIGatewayProxyRequestEvent input<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> APIGatewayProxyResponseEvent  <span style="color:#a6e22e">execute</span><span style="color:#f92672">(</span>APIGatewayProxyRequestEvent input<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something and return something
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppModule</span> <span style="color:#66d9ef">extends</span> AbstractModule <span style="color:#f92672">{</span>
