@@ -12,9 +12,51 @@ tags:
 
 実は「Daggerでバッチプログラム」って全然サンプルないんですよ。 Daggerって、Android用のフレームワークだと思われているのかもしれませんが…。
 
+* [依存ライブラリ](#dependncy_library)
 * [Maven設定](#comile_setting)
 
 _____
+
+### 依存ライブラリ {#dependncy_library}
+
+```ch
+mvn dependency:tree
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< batch.daggar.example:batch >---------------------
+[INFO] Building batch 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.6.1:tree (default-cli) @ batch ---
+[INFO] batch.daggar.example:batch:jar:1.0.0
+[INFO] +- com.google.dagger:dagger:jar:2.52:compile
+[INFO] |  +- jakarta.inject:jakarta.inject-api:jar:2.0.1:compile
+[INFO] |  \- javax.inject:javax.inject:jar:1:compile
+[INFO] +- org.apache.geronimo.config:geronimo-config-impl:jar:1.2.3:compile
+[INFO] |  \- org.eclipse.microprofile.config:microprofile-config-api:jar:1.4:compile
+[INFO] +- org.apache.logging.log4j:log4j-slf4j2-impl:jar:2.23.1:compile
+[INFO] |  +- org.apache.logging.log4j:log4j-api:jar:2.23.1:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:2.0.9:compile
+[INFO] |  \- org.apache.logging.log4j:log4j-core:jar:2.23.1:runtime
+[INFO] +- org.slf4j:jul-to-slf4j:jar:2.0.16:compile
+[INFO] \- org.junit.jupiter:junit-jupiter:jar:5.11.0:test
+[INFO]    +- org.junit.jupiter:junit-jupiter-api:jar:5.11.0:test
+[INFO]    |  +- org.opentest4j:opentest4j:jar:1.3.0:test
+[INFO]    |  +- org.junit.platform:junit-platform-commons:jar:1.11.0:test
+[INFO]    |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO]    +- org.junit.jupiter:junit-jupiter-params:jar:5.11.0:test
+[INFO]    \- org.junit.jupiter:junit-jupiter-engine:jar:5.11.0:test
+[INFO]       \- org.junit.platform:junit-platform-engine:jar:1.11.0:test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.952 s
+[INFO] Finished at: 2024-09-07T00:55:58Z
+[INFO] ------------------------------------------------------------------------
+```
+
+まぁ、`Java 17` 位になると `commons-lang` も `guava` も要らなくなるし `jul-to-slf4j` もケースによっては要らんかもね、と言うお話。
 
 ### Maven設定 {#comile_setting}
 
