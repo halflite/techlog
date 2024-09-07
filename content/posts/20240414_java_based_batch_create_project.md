@@ -10,9 +10,13 @@ tags:
 
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
 
+* [プロジェクトを作る](#create_project)
+* [依存ライブラリを追加](#add_libs)
+* [実行クラス](#main_app_class)
+
 _____
 
-### プロジェクトを作る
+### プロジェクトを作る {#create_project}
 
 まずバージョン確認
 
@@ -57,7 +61,7 @@ mvn archetype:generate \
                         `-- AppTest.java
 ```
 
-### 以降
+### 依存ライブラリを追加 {#add_libs}
 
 pom.xml に諸々を追加することになります。  
 初期はこんなものが自動生成されます
@@ -83,6 +87,32 @@ pom.xml に諸々を追加することになります。
 </project>
 ```
 
-基本スタックは以前書いた [AWS Lambda FunctionでJavaを採用したい](../20220925_aws_lambda_guice/) に準拠したいと思います。
+基本スタックは以前書いた [AWS Lambda FunctionでJavaを採用したい](/techlog/posts/20220925_aws_lambda_guice/) に準拠したいと思います。 そして、依存ライブラリを粛々と足す、と言う運びです。
+
+### 実行クラス {#main_app_class}
+
+```java
+@Singleton
+public class AnyService {
+
+  public void execute() {
+    // do something and return something
+  }
+}
+```
+
+```java
+public class App {
+
+  @Override
+  public static void main(String[] args) {
+    Injector injector = Guice.createInjector(new AppModule());
+    AnyService anyService = injector.getInstance(AnyService.class);
+    anyService.execute();
+  }
+}
+```
+
+これ位シンプル方がメインアプリには良いですよね。
 
 [^1]: 単発バッチだと、ネストを深くしないために、アーティファクトID/グループIDは短くしたほうが良いでしょう

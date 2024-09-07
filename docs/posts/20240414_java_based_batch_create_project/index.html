@@ -14,8 +14,8 @@
     <meta name="robots" content="index, follow" />
     <meta name="description" content="前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
-プロジェクトを作る まずバージョン確認
-&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: …" />
+プロジェクトを作る 依存ライブラリを追加 実行クラス プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 …" />
 
     <title>2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る | ひとり開発日記。</title>
 
@@ -46,8 +46,8 @@
   <meta property="og:site_name" content="ひとり開発日記。" />
   <meta property="og:description" content="前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
-プロジェクトを作る まずバージョン確認
-&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: …" />
+プロジェクトを作る 依存ライブラリを追加 実行クラス プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 …" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/" />
 
@@ -66,8 +66,8 @@
   <meta name="twitter:title" content="2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る" />
   <meta name="twitter:description" content="前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。
 開発環境は、 VSCode と Rancher Desktop だけでやってみます。
-プロジェクトを作る まずバージョン確認
-&gt; mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: …" />
+プロジェクトを作る 依存ライブラリを追加 実行クラス プロジェクトを作る まずバージョン確認
+&gt; mvn --version Apache Maven 3.9.6 …" />
 
 <script type="application/ld+json">
   {
@@ -77,8 +77,8 @@
       "name": "2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る",
       "url" : "https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/",
       "headline": "2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る",
-      "description": "前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\nプロジェクトを作る まずバージョン確認\n\u003e mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: \/usr\/share\/maven Java version: 21.0.3, vendor: Amazon.com Inc., runtime: \/usr\/lib\/jvm\/java-21-amazon-corretto Default locale: en_US, platform encoding: UTF-8 OS name: \u0022linux\u0022, version: \u00225.15.146.1-microsoft-standard-wsl2\u0022, arch: \u0022amd64\u0022, family: \u0022unix\u0022 初期プロジェクト作成 1\nmvn archetype:generate \\ -DarchetypeArtifactId=maven-archetype-quickstart \\ -DinteractiveMode=false \\ -DartifactId=csvbatch \\ -DgroupId=app \\ -Dpackage=csvbatch.app このようなプロジェクトが作られます。\n. |-- LICENSE |-- README.md `-- csvbatch |-- pom.xml `-- src |-- main | `-- java | `-- csvbatch | `-- app | `-- App.",
-      "wordCount" : "127",
+      "description": "前回、2024年 Javaベースのバッチを作るなら その1 環境と初期設定 の続き。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\nプロジェクトを作る 依存ライブラリを追加 実行クラス プロジェクトを作る まずバージョン確認\n\u003e mvn --version Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae) Maven home: \/usr\/share\/maven Java version: 21.0.3, vendor: Amazon.com Inc., runtime: \/usr\/lib\/jvm\/java-21-amazon-corretto Default locale: en_US, platform encoding: UTF-8 OS name: \u0022linux\u0022, version: \u00225.15.146.1-microsoft-standard-wsl2\u0022, arch: \u0022amd64\u0022, family: \u0022unix\u0022 初期プロジェクト作成 1\nmvn archetype:generate \\ -DarchetypeArtifactId=maven-archetype-quickstart \\ -DinteractiveMode=false \\ -DartifactId=csvbatch \\ -DgroupId=app \\ -Dpackage=csvbatch.app このようなプロジェクトが作られます。\n. |-- LICENSE |-- README.md `-- csvbatch |-- pom.",
+      "wordCount" : "173",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -410,13 +410,27 @@
   href="../20240407_java_based_batch/"
 >2024年 Javaベースのバッチを作るなら その1 環境と初期設定</a> の続き。</p>
 <p>開発環境は、 VSCode と Rancher Desktop だけでやってみます。</p>
+<ul>
+<li><a
+  class="gblog-markdown__link"
+  href="#create_project"
+>プロジェクトを作る</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#add_libs"
+>依存ライブラリを追加</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#main_app_class"
+>実行クラス</a></li>
+</ul>
 <hr>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="プロジェクトを作る"
+    <h3 id="create_project"
     >
         プロジェクトを作る
     </h3>
-    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/#プロジェクトを作る" class="gblog-post__anchor clip flex align-center" aria-label="Anchor プロジェクトを作る" href="#%e3%83%97%e3%83%ad%e3%82%b8%e3%82%a7%e3%82%af%e3%83%88%e3%82%92%e4%bd%9c%e3%82%8b">
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/#create_project" class="gblog-post__anchor clip flex align-center" aria-label="Anchor プロジェクトを作る" href="#create_project">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -452,11 +466,11 @@
 </span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">`</span>-- app
 </span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">`</span>-- AppTest.java
 </span></span></code></pre></div><div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="以降"
+    <h3 id="add_libs"
     >
-        以降
+        依存ライブラリを追加
     </h3>
-    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/#以降" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 以降" href="#%e4%bb%a5%e9%99%8d">
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/#add_libs" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 依存ライブラリを追加" href="#add_libs">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -482,8 +496,34 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/project&gt;</span>
 </span></span></code></pre></div><p>基本スタックは以前書いた <a
   class="gblog-markdown__link"
-  href="../20220925_aws_lambda_guice/"
->AWS Lambda FunctionでJavaを採用したい</a> に準拠したいと思います。</p>
+  href="/techlog/posts/20220925_aws_lambda_guice/"
+>AWS Lambda FunctionでJavaを採用したい</a> に準拠したいと思います。 そして、依存ライブラリを粛々と足す、と言う運びです。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="main_app_class"
+    >
+        実行クラス
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240414_java_based_batch_create_project/#main_app_class" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 実行クラス" href="#main_app_class">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Singleton</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnyService</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">execute</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// do something and return something
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">App</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    Injector injector <span style="color:#f92672">=</span> Guice<span style="color:#f92672">.</span><span style="color:#a6e22e">createInjector</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> AppModule<span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    AnyService anyService <span style="color:#f92672">=</span> injector<span style="color:#f92672">.</span><span style="color:#a6e22e">getInstance</span><span style="color:#f92672">(</span>AnyService<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    anyService<span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>これ位シンプル方がメインアプリには良いですよね。</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
