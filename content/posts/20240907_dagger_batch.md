@@ -71,7 +71,7 @@ mvn dependency:tree
 上記参照。
 
 * APTで生成クラスを作るには、 `maven-compiler-plugin` に設定を加える
-* 自動正クラスをクラスパスに通すには `build-helper-maven-plugin` で解決する
+* 自動生成クラスをクラスパスに通すには `build-helper-maven-plugin` で解決する
 
 コレかな。
 

@@ -4,7 +4,7 @@
     <title>Quarkus on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/quarkus/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/quarkus/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-09-07T13:02:36+00:00</updated>
+    <updated>2024-09-07T15:20:02+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/quarkus/</id>
         <entry>
             <title>ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</title>
