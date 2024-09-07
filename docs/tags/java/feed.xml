@@ -4,7 +4,7 @@
     <title>Java on ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/tags/java/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/tags/java/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-09-07T08:21:30+00:00</updated>
+    <updated>2024-09-07T13:02:36+00:00</updated>
     <id>https://halflite.github.io/techlog/tags/java/</id>
         <entry>
             <title>2024年9月 Daggerでバッチを作りたいだけだった</title>
@@ -30,6 +30,14 @@
   class=&#34;gblog-markdown__link&#34;
   href=&#34;#comile_setting&#34;
 &gt;Maven設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;#jakarta_ee&#34;
+&gt;DaggerとJakarta EE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;#why_batch&#34;
+&gt;結局のところ&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
@@ -75,7 +83,12 @@
 [INFO] Total time:  3.952 s
 [INFO] Finished at: 2024-09-07T00:55:58Z
 [INFO] ------------------------------------------------------------------------
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;まぁ、&lt;code&gt;Java 17&lt;/code&gt; 位になると &lt;code&gt;commons-lang&lt;/code&gt; も &lt;code&gt;guava&lt;/code&gt; も要らなくなるし &lt;code&gt;jul-to-slf4j&lt;/code&gt; もケースによっては要らんかもね、と言うお話。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;DIの中心は Dagger&lt;/li&gt;
+&lt;li&gt;設定値取得は MicroProfile Confing/Apache Geronimo Config&lt;/li&gt;
+&lt;li&gt;ログ出力は Slf4j/Log4j2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;定番ですね。 まぁ、&lt;code&gt;Java 17&lt;/code&gt; 位になると &lt;code&gt;commons-lang&lt;/code&gt; も &lt;code&gt;guava&lt;/code&gt; も要らなくなるし &lt;code&gt;jul-to-slf4j&lt;/code&gt; もケースによっては要らんかもね、と言うお話。&lt;/p&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h3 id=&#34;comile_setting&#34;
     &gt;
@@ -135,7 +148,32 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;jakarta_ee&#34;
+    &gt;
+        DaggerとJakarta EE
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240907_dagger_batch/#jakarta_ee&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor DaggerとJakarta EE&#34; href=&#34;#jakarta_ee&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Daggerも最新のものになると &lt;code&gt;javax.*&lt;/code&gt; のパッケージが含まれるとコンパイルが通らないようです。
+&lt;code&gt;jakarta.*&lt;/code&gt; に書き換えれば大丈夫ですが、昔のソースを持ってくる時は、それなりに注意が必要です。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;why_batch&#34;
+    &gt;
+        結局のところ
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://halflite.github.io/techlog/posts/20240907_dagger_batch/#why_batch&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 結局のところ&#34; href=&#34;#why_batch&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;バッチ処理は、本当に小さくするべきだと思います。 Eclipse EE や Spring Batch がメジャーだと思って、それに従って作ると痛い目に会うでしょうね。&lt;/p&gt;
+&lt;p&gt;バッチのランチャーはOSSの&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.rundeck.com/&#34;title=&#34;Rundeck Runbook Automation&#34;
+&gt;Rundeck&lt;/a&gt;を筆頭に、色々あるので、リランとかリトライはそっちに任せた方が良いでしょうね。&lt;/p&gt;
+
             </content>   
                                 <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
         </entry>

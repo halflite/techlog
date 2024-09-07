@@ -14,6 +14,8 @@ tags:
 
 * [依存ライブラリ](#dependncy_library)
 * [Maven設定](#comile_setting)
+* [DaggerとJakarta EE](#jakarta_ee)
+* [結局のところ](#why_batch)
 
 _____
 
@@ -56,7 +58,11 @@ mvn dependency:tree
 [INFO] ------------------------------------------------------------------------
 ```
 
-まぁ、`Java 17` 位になると `commons-lang` も `guava` も要らなくなるし `jul-to-slf4j` もケースによっては要らんかもね、と言うお話。
+* DIの中心は Dagger
+* 設定値取得は MicroProfile Confing/Apache Geronimo Config
+* ログ出力は Slf4j/Log4j2 
+
+定番ですね。 まぁ、`Java 17` 位になると `commons-lang` も `guava` も要らなくなるし `jul-to-slf4j` もケースによっては要らんかもね、と言うお話。
 
 ### Maven設定 {#comile_setting}
 
@@ -109,3 +115,14 @@ mvn dependency:tree
     </plugins>
   </build>
 ```
+
+### DaggerとJakarta EE {#jakarta_ee}
+
+Daggerも最新のものになると `javax.*` のパッケージが含まれるとコンパイルが通らないようです。 
+`jakarta.*` に書き換えれば大丈夫ですが、昔のソースを持ってくる時は、それなりに注意が必要です。
+
+### 結局のところ {#why_batch}
+
+バッチ処理は、本当に小さくするべきだと思います。 Eclipse EE や Spring Batch がメジャーだと思って、それに従って作ると痛い目に会うでしょうね。
+
+バッチのランチャーはOSSの[Rundeck](https://www.rundeck.com/ "Rundeck Runbook Automation")を筆頭に、色々あるので、リランとかリトライはそっちに任せた方が良いでしょうね。 

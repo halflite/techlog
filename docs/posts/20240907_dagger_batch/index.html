@@ -14,7 +14,7 @@
     <meta name="robots" content="index, follow" />
     <meta name="description" content="https://github.com/halflite/batch-daggar-example 作りました。 単に標準出力にログを出すだけですが…。
 実は「Daggerでバッチプログラム」って全然サンプルないんですよ。 Daggerって、Android用のフレームワークだと思われているのかもしれませんが…。
-依存ライブラリ Maven設定 依存ライブラリ mvn dependency:tree …" />
+依存ライブラリ Maven設定 DaggerとJakarta EE 結局のところ 依存ラ …" />
 
     <title>2024年9月 Daggerでバッチを作りたいだけだった | ひとり開発日記。</title>
 
@@ -45,7 +45,7 @@
   <meta property="og:site_name" content="ひとり開発日記。" />
   <meta property="og:description" content="https://github.com/halflite/batch-daggar-example 作りました。 単に標準出力にログを出すだけですが…。
 実は「Daggerでバッチプログラム」って全然サンプルないんですよ。 Daggerって、Android用のフレームワークだと思われているのかもしれませんが…。
-依存ライブラリ Maven設定 依存ライブラリ mvn dependency:tree …" />
+依存ライブラリ Maven設定 DaggerとJakarta EE 結局のところ 依存ラ …" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240907_dagger_batch/" />
 
@@ -64,7 +64,7 @@
   <meta name="twitter:title" content="2024年9月 Daggerでバッチを作りたいだけだった" />
   <meta name="twitter:description" content="https://github.com/halflite/batch-daggar-example 作りました。 単に標準出力にログを出すだけですが…。
 実は「Daggerでバッチプログラム」って全然サンプルないんですよ。 Daggerって、Android用のフレームワークだと思われているのかもしれませんが…。
-依存ライブラリ Maven設定 依存ライブラリ mvn dependency:tree …" />
+依存ライブラリ Maven設定 DaggerとJakarta EE 結局のところ 依存ラ …" />
 
 <script type="application/ld+json">
   {
@@ -74,8 +74,8 @@
       "name": "2024年9月 Daggerでバッチを作りたいだけだった",
       "url" : "https://halflite.github.io/techlog/posts/20240907_dagger_batch/",
       "headline": "2024年9月 Daggerでバッチを作りたいだけだった",
-      "description": "https:\/\/github.com\/halflite\/batch-daggar-example 作りました。 単に標準出力にログを出すだけですが…。\n実は「Daggerでバッチプログラム」って全然サンプルないんですよ。 Daggerって、Android用のフレームワークだと思われているのかもしれませんが…。\n依存ライブラリ Maven設定 依存ライブラリ mvn dependency:tree [INFO] Scanning for projects... [INFO] [INFO] ---------------------\u003c batch.daggar.example:batch \u003e--------------------- [INFO] Building batch 1.0.0 [INFO] from pom.xml [INFO] --------------------------------[ jar ]--------------------------------- [INFO] [INFO] --- dependency:3.6.1:tree (default-cli) @ batch --- [INFO] batch.daggar.example:batch:jar:1.0.0 [INFO] \u002b- com.google.dagger:dagger:jar:2.52:compile [INFO] | \u002b- jakarta.inject:jakarta.inject-api:jar:2.0.1:compile [INFO] | \\- javax.inject:javax.inject:jar:1:compile [INFO] \u002b- org.apache.geronimo.config:geronimo-config-impl:jar:1.2.3:compile [INFO] | \\- org.eclipse.microprofile.config:microprofile-config-api:jar:1.4:compile [INFO] \u002b- org.apache.logging.log4j:log4j-slf4j2-impl:jar:2.23.1:compile [INFO] | \u002b- org.apache.logging.log4j:log4j-api:jar:2.23.1:compile [INFO] | \u002b- org.slf4j:slf4j-api:jar:2.0.9:compile [INFO] | \\- org.",
-      "wordCount" : "183",
+      "description": "https:\/\/github.com\/halflite\/batch-daggar-example 作りました。 単に標準出力にログを出すだけですが…。\n実は「Daggerでバッチプログラム」って全然サンプルないんですよ。 Daggerって、Android用のフレームワークだと思われているのかもしれませんが…。\n依存ライブラリ Maven設定 DaggerとJakarta EE 結局のところ 依存ライブラリ mvn dependency:tree [INFO] Scanning for projects... [INFO] [INFO] ---------------------\u003c batch.daggar.example:batch \u003e--------------------- [INFO] Building batch 1.0.0 [INFO] from pom.xml [INFO] --------------------------------[ jar ]--------------------------------- [INFO] [INFO] --- dependency:3.6.1:tree (default-cli) @ batch --- [INFO] batch.daggar.example:batch:jar:1.0.0 [INFO] \u002b- com.google.dagger:dagger:jar:2.52:compile [INFO] | \u002b- jakarta.inject:jakarta.inject-api:jar:2.0.1:compile [INFO] | \\- javax.inject:javax.inject:jar:1:compile [INFO] \u002b- org.apache.geronimo.config:geronimo-config-impl:jar:1.2.3:compile [INFO] | \\- org.eclipse.microprofile.config:microprofile-config-api:jar:1.4:compile [INFO] \u002b- org.apache.logging.log4j:log4j-slf4j2-impl:jar:2.23.1:compile [INFO] | \u002b- org.apache.logging.log4j:log4j-api:jar:2.23.1:compile [INFO] | \u002b- org.",
+      "wordCount" : "212",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -419,6 +419,14 @@
   class="gblog-markdown__link"
   href="#comile_setting"
 >Maven設定</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#jakarta_ee"
+>DaggerとJakarta EE</a></li>
+<li><a
+  class="gblog-markdown__link"
+  href="#why_batch"
+>結局のところ</a></li>
 </ul>
 <hr>
 <div class="flex align-center gblog-post__anchorwrap">
@@ -464,7 +472,12 @@
 [INFO] Total time:  3.952 s
 [INFO] Finished at: 2024-09-07T00:55:58Z
 [INFO] ------------------------------------------------------------------------
-</code></pre><p>まぁ、<code>Java 17</code> 位になると <code>commons-lang</code> も <code>guava</code> も要らなくなるし <code>jul-to-slf4j</code> もケースによっては要らんかもね、と言うお話。</p>
+</code></pre><ul>
+<li>DIの中心は Dagger</li>
+<li>設定値取得は MicroProfile Confing/Apache Geronimo Config</li>
+<li>ログ出力は Slf4j/Log4j2</li>
+</ul>
+<p>定番ですね。 まぁ、<code>Java 17</code> 位になると <code>commons-lang</code> も <code>guava</code> も要らなくなるし <code>jul-to-slf4j</code> もケースによっては要らんかもね、と言うお話。</p>
 <div class="flex align-center gblog-post__anchorwrap">
     <h3 id="comile_setting"
     >
@@ -524,7 +537,32 @@
 </span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/plugins&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/build&gt;</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="jakarta_ee"
+    >
+        DaggerとJakarta EE
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240907_dagger_batch/#jakarta_ee" class="gblog-post__anchor clip flex align-center" aria-label="Anchor DaggerとJakarta EE" href="#jakarta_ee">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>Daggerも最新のものになると <code>javax.*</code> のパッケージが含まれるとコンパイルが通らないようです。
+<code>jakarta.*</code> に書き換えれば大丈夫ですが、昔のソースを持ってくる時は、それなりに注意が必要です。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="why_batch"
+    >
+        結局のところ
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20240907_dagger_batch/#why_batch" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結局のところ" href="#why_batch">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>バッチ処理は、本当に小さくするべきだと思います。 Eclipse EE や Spring Batch がメジャーだと思って、それに従って作ると痛い目に会うでしょうね。</p>
+<p>バッチのランチャーはOSSの<a
+  class="gblog-markdown__link"
+  href="https://www.rundeck.com/"title="Rundeck Runbook Automation"
+>Rundeck</a>を筆頭に、色々あるので、リランとかリトライはそっちに任せた方が良いでしょうね。</p>
+
     </section>
   </article>
 
