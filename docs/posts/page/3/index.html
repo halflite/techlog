@@ -293,6 +293,86 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20200708_cognito_yahoo_integration/">2020年7月 Amazon Cognito経由でYahoo!Japanのユーザ認証をやりたかっただけだった。</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        TL;DR できません
+Amazon Cognitoの外部フェデレーテッドIDプロバイダとして、Yahoo!Japanを登録できますが、認証が通りません。 stateプロパティの値が長過ぎて、Yahoo!Japanからエラーで返ってきます。
+Amazon Cognito とは - Amazon Cognito AWSって、以前、S3をちょっと触ったレベルだったので、全く浦島太郎状態だったんですね。 最新技術のキャッチアップを兼ねて、ちょっと小さいプロジェクトで試すかな。 それなら、初っ端に必要になるログインとか認証である、Amazon Cognitoから触ってみるか～、って触ってみたんです。
+「…なるほど!! 全く分からん!!」
+[Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO 【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita 上記記事を参考に、ちまちまいじっていて、なんとなく分かった!! 「Amazon Cognitoってアカウント管理してくれて、外部プロバイダとの連携とも整合をとってくれて、一意なIDを払い出してくれる。」 「Amazon Cognitoそれ自体は、OpenID Connect/OAuth2のプロバイダとして振る舞ってくれる」 なんですね!!
+上記記事を参考に、試しにYahoo!JapanとのID連携やってみるかー、って思って、IDプロバイダの設定までは、サクサクできたんです。
+でも、実際のログイン画面が出てきて、クリックすると、コールバックにエラーが返ってきます。 &ldquo;state is too long value&rdquo; って何???
+Chromeのdev-toolで、リクエストとかを見ていると、確かにAmazon Cognitoが生成するstateって、1,200文字程度あります。 自分では、どっちが妥当か判断できないし、しゃーないので、Yahoo!デベロッパーネットワークのお問合せフォームから、質問投げちゃいましたよ…。
+結局「stateの長さは1024文字までの仕様となっており、長さを伸ばすことができません。(大意)」という回答でしたね。
+よくあるOpenID Connect/OAuth2のクライアントライブラリは、そこまで長いstateを生成しないのでしょう。 ですが、全世界で広く使われているAWSだと、そうもいかないのでしょうね…。
+久々、Yak Shavingで不毛な時間を過ごしちゃったよなー、でも、これやらないとダメなのが、我々の人生だよなー、と言う感想でしたね。
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2020-07-08T00:00:00&#43;09:00">
+      
+      Jul 8, 2020
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/aws/"
+      title="All posts tagged with 'aws'"
+    >
+      aws
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20200625_java_based_batch/">2020年 Javaベースのバッチを作るなら</a>
         </h1>
       </header>

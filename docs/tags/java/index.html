@@ -805,6 +805,82 @@ pom.xmlを何かする pom.xml に諸々を追加することになります。
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20230903_json/">JavaでJSONを扱う時</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        永遠の課題？なのですけど、「JavaでJSONを扱う時」ライブラリをどうするかですよね。
+Jackson Gson Jax-B 第一に、Jacksonですよね。 いろんなライブラリに依存で入るので、もし入ってるなら、それに従ったほうが良いでしょうか。 ただ、機能過多な気がしなくもないです。
+Gson。 処理早い(体感)1 APIも、出来ることが充分だけど、少々少ない。 逆に言うと、迷うことも少ないでしょう。
+Jax-B 参照実装の jaxb-runtime でやってみると、シンプルで良いですね。 あと、Eclipse EE/MichroProfile標準だし。
+上記で結論出しちゃったんですけど、自分の中ではこうです
+使っているライブラリで、依存で入っているのなら Jackson しがらみなく技術選定できるなら Gson 一応Java/Eclipse EE標準と言う縛りがあるなら Jax-B 処理速度とか機能面は全然問題ないのですが、実装参照のJARは Gson に比べて少々大きいです でしょうか。
+よくある、速度計測とか、あんまり意味はないんですよね。 ケースによって全然違う結果になるし。&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2023-09-03T00:00:00&#43;09:00">
+      
+      Sep 3, 2023
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20230602_jms_cosumer_apache_camel/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</a>
         </h1>
       </header>
@@ -1118,82 +1194,6 @@ public class App implements RequestHandler&lt;APIGatewayProxyRequestEvent, APIGa
     
       
         <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20210627_java_dev/">2021年6月 Javaプログラミングで &#34;Hello World&#34; を出したいだけだった</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        Javaのプログラミングで、 &ldquo;Hello World&rdquo; を出したいと思うでしょう?
-まぁ、惰性で以下のことをするでしょう。
-JDK(OracleとかOpenJDK)をインストール、パスを通す Mavenをインストール、パスを通す Eclipseをインストール、各種フォーマッターをインストール 今は、2021年6月です。 こう言うのは避けたいですよね。
-JDK/JREのバージョンを切り替えるのが難しい JDK/JREは後方互換を重視していたので、ちょっとしたことで対応が難しい 現在の Eclipse って、必要なJDK/JREって、15ですよね Java 11/15で後方互換が切り捨てられたのもあるので、対応はそれなりに必要でしょう 1 Windows10でJava開発環境整える それだけで、一体、いくらのソフトをダウンロードするんです? JDK/Maven/Eclipse のインストールは、大体において鬼門だったりしますね 隣の席の人と、Eclipseのバージョン合ってます？ Mavenでも、変な対応が入ることがありますよ 2 まぁ、結局、以下の如しですわ。
-まず世間のIT関連のPCはWindows10ベースなので、それを考える ローカル開発環境に、極力インストールさせない Gitからチェックアウトしたら、すぐ全員の環境と同じになる ここら辺、あなたならどう考えるでしょうね?
-JAXB対応 https://github.com/acroquest/javabook-support/issues/49&#160;&#x21a9;&#xfe0e;
-Maven 3.8.1 で mvn install 出来ない(maven-default-http-blocker)されたメモ https://qiita.com/bazoo/items/3b5cab094b25cbbd8019&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2021-06-27T00:00:00&#43;09:00">
-      
-      Jun 27, 2021
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
           
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a

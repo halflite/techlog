@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-09-07T15:20:02+00:00</updated>
+    <updated>2024-09-10T02:52:52+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>2024年9月 Daggerでバッチを作りたいだけだった</title>
@@ -1191,6 +1191,58 @@ RUN apt update &amp;amp;&amp;amp; apt -y install git &amp;amp;&amp;amp; \
   class=&#34;gblog-markdown__link&#34;
   href=&#34;https://www.slideshare.net/slideshow/maven-196821326/196821326&#34;
 &gt;Mavenの真実とウソ | PPT&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+            </content>   
+                                <category scheme="https://halflite.github.io/techlog/tags/java" term="java" label="java" />
+        </entry>
+        <entry>
+            <title>JavaでJSONを扱う時</title>
+            <link href="https://halflite.github.io/techlog/posts/20230903_json/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://halflite.github.io/techlog/posts/20230903_json/</id>
+            <published>2023-09-03T00:00:00+09:00</published>
+            <updated>2023-09-03T00:00:00+09:00</updated>
+            <content type="html">
+                &lt;p&gt;永遠の課題？なのですけど、「JavaでJSONを扱う時」ライブラリをどうするかですよね。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/FasterXML/jackson&#34;title=&#34;FasterXML/jackson: Main Portal page for the Jackson project&#34;
+&gt;Jackson&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://github.com/google/gson&#34;title=&#34;google/gson: A Java serialization/deserialization library to convert Java Objects into JSON and back&#34;
+&gt;Gson&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://javaee.github.io/jaxb-v2/&#34;title=&#34;JAXB&#34;
+&gt;Jax-B&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;第一に、Jacksonですよね。 いろんなライブラリに依存で入るので、もし入ってるなら、それに従ったほうが良いでしょうか。 ただ、機能過多な気がしなくもないです。&lt;/p&gt;
+&lt;p&gt;Gson。 処理早い(体感)&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; APIも、出来ることが充分だけど、少々少ない。 逆に言うと、迷うことも少ないでしょう。&lt;/p&gt;
+&lt;p&gt;Jax-B 参照実装の &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime&#34;title=&#34;Maven Repository: org.glassfish.jaxb » jaxb-runtime&#34;
+&gt;jaxb-runtime&lt;/a&gt; でやってみると、シンプルで良いですね。 あと、Eclipse EE/MichroProfile標準だし。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;上記で結論出しちゃったんですけど、自分の中ではこうです&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使っているライブラリで、依存で入っているのなら Jackson&lt;/li&gt;
+&lt;li&gt;しがらみなく技術選定できるなら Gson&lt;/li&gt;
+&lt;li&gt;一応Java/Eclipse EE標準と言う縛りがあるなら Jax-B
+&lt;ul&gt;
+&lt;li&gt;処理速度とか機能面は全然問題ないのですが、実装参照のJARは Gson に比べて少々大きいです&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;でしょうか。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;よくある、速度計測とか、あんまり意味はないんですよね。 ケースによって全然違う結果になるし。&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;

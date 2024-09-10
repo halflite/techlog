@@ -959,6 +959,82 @@ pom.xmlを何かする pom.xml に諸々を追加することになります。
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20230903_json/">JavaでJSONを扱う時</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        永遠の課題？なのですけど、「JavaでJSONを扱う時」ライブラリをどうするかですよね。
+Jackson Gson Jax-B 第一に、Jacksonですよね。 いろんなライブラリに依存で入るので、もし入ってるなら、それに従ったほうが良いでしょうか。 ただ、機能過多な気がしなくもないです。
+Gson。 処理早い(体感)1 APIも、出来ることが充分だけど、少々少ない。 逆に言うと、迷うことも少ないでしょう。
+Jax-B 参照実装の jaxb-runtime でやってみると、シンプルで良いですね。 あと、Eclipse EE/MichroProfile標準だし。
+上記で結論出しちゃったんですけど、自分の中ではこうです
+使っているライブラリで、依存で入っているのなら Jackson しがらみなく技術選定できるなら Gson 一応Java/Eclipse EE標準と言う縛りがあるなら Jax-B 処理速度とか機能面は全然問題ないのですが、実装参照のJARは Gson に比べて少々大きいです でしょうか。
+よくある、速度計測とか、あんまり意味はないんですよね。 ケースによって全然違う結果になるし。&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2023-09-03T00:00:00&#43;09:00">
+      
+      Sep 3, 2023
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20230602_jms_cosumer_apache_camel/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</a>
         </h1>
       </header>
@@ -988,125 +1064,6 @@ pom.xmlを何かする pom.xml に諸々を追加することになります。
     <time datetime="2023-06-02T00:00:00&#43;09:00">
       
       Jun 2, 2023
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/apache-camel/"
-      title="All posts tagged with 'apache-camel'"
-    >
-      apache-camel
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/quarkus/"
-      title="All posts tagged with 'quarkus'"
-    >
-      quarkus
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20230529_jms_producer/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        承前 ブラウザ-&gt;ウェブアプリ-&gt;ActiveMQ-&gt;ApacheCamel-&gt;AWS S3 と言うルートを考えてみましょう。 ウェブアプリでEXIF情報を消去したり、画像縮小を行ってS3にアップロードするには、少々重たい処理ですね。 非同期で、イベント駆動で処理したいですよね。 ウェブアプリはDockerで建てているのだから、ActiveMQ1 も Consumerである Apache Camel2 もDockerでインスタンス作って、メッセージ送信/受信したらいいよね。 …と、思ったら、意外と大変だった、と言う感じです。 JMS(Java Message Service) と Producer と Consumer JMSは歴史的経緯から、とにかく複雑な仕様で、正直に向き合うと、げんなりしてしまうのですけどね…。 まぁ、シンプルにProducer-&gt;ActiveMQ-&gt;Consumerで、送信元Producerが、受信元Consumerに向けて、オブジェクトをメッセージとして送る、オブジェクトのエンコード/デコードを簡単に(？)やってくれる、と、考えたら良いと思います。 今回はウェブアプリがProducerの役割ですね。 ウェブアプリケーションに画像アップロード 結局、ファイル名と拡張子を文字列で取れて、画像のデータをbyte[]か、InputStreamで取れれば良いと思います。 マルチパートでのRESTクライアントの使用 - Quarkus 依存関係に Quarkus RESTEasy Multipart Runtimeを忘れずに。 画像データをActiveMQに送信する JMSの使用 - Quarkus 依存関係に Quarkus Artemis JMS Runtimeを忘れずに。 application.propertiesにquarkus.artemis.***=を記述することを忘れないように。 そうすると、ConnectionFactoryもDI対象になりますよ。 public void uploadImage(String fileName, InputStream file) { try (JMSContext context = this.connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE); ByteArrayOutputStream out = new ByteArrayOutputStream()) { // ファイル読み込み file.transferTo(out); out.flush(); // メッセージ作成 BytesMessage message = context.
-      </section>
-      <div class="gblog-post__readmore">
-        
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/techlog/posts/20230529_jms_producer/"
-          >
-            Read full post
-            <i class="gblog-icon">gblog_arrow_right</i>
-          </a>
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2023-05-29T00:00:00&#43;09:00">
-      
-      May 29, 2023
     </time>
   </span>
 </span>
