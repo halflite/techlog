@@ -75,7 +75,7 @@
       "url" : "https://halflite.github.io/techlog/posts/20240825_java_hello_world/",
       "headline": "2024年8月 Javaプログラミングで \"Hello World\" を出したいだけだった",
       "description": "前回、2021年6月 Javaプログラミングで “Hello World” を出したいだけだった の続き。 と言うか、自分で何かしらの結果を出したいですしね。\n開発環境は、 VSCode と Rancher Desktop だけでやってみます。\n自分で作ってみた 結構面倒くさいポイントその1 Guice-Servlet初期化 結構面倒くさいポイントその2 FreemarkerServlet のパッケージ 結構面倒くさいポイントその3 FreemarkerServlet の設定値 結構面倒くさいポイントその4 java.util.logging(jul) 〆の感想 自分で作ってみた halflite\/guice-freemarker-servlet: Guice \/ Freemarker \/ Servlet で、自分で作ってみました。結構面倒くさい！\nこれに関しては、幾つかの縛りがあります。 例えば「“Hello World\u0022を出せるくらいの小さいアプリを…」と言われた時、大抵下記のような前提が言外にあると思っても良いでしょう。\nコンパイル＆ビルドに迷いたくないよね 立ち上げるのには、それなりの速さが欲しいよね 当然、仮想化が前提にあるよね それなりにDI出来るコンテナ欲しいよね 設定値をDI出来る仕組み欲しいよね HTMLテンプレートも欲しいよね APIとして使うことを考えてJSONも出力して欲しいよね ログを統一的に出す機構が欲しいよね (所謂) The Twelve-Factor App ですよね。 そこら辺を踏まえた上での、自分が考えるアーキテクチャは以下です。\nコンパイル＆ビルドは Maven サーバーは Jetty Embedded DIは Guice\/Guice-Servletに従う 設定値の取得は Apache Geronimo\/MicroProfile Config HTMLテンプレートは(多分)一番シンプルな FreeMarker JSON出力は、一番軽量で早い Gson ログは Slf4j\/Log4j2 JavaでWebアプリケーションで避けて通れないのが、Java EE -\u003e Jakarta EE への移行でしょう。 あれ、単にパッケージを変えただけでも大概OKなんですが、それでもソース書き換えて再ビルドは、相当きついかもですよ。",
-      "wordCount" : "247",
+      "wordCount" : "245",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -267,6 +267,17 @@
           <li>
             <a
               class="gblog-nav__entry"
+              href="/techlog/tags/docker/"
+            >
+              Docker
+            </a>
+          </li>
+        
+      
+        
+          <li>
+            <a
+              class="gblog-nav__entry"
               href="/techlog/tags/eclipse/"
             >
               Eclipse
@@ -314,17 +325,6 @@
               href="/techlog/tags/quarkus/"
             >
               Quarkus
-            </a>
-          </li>
-        
-      
-        
-          <li>
-            <a
-              class="gblog-nav__entry"
-              href="/techlog/tags/vagrant/"
-            >
-              Vagrant
             </a>
           </li>
         
@@ -542,7 +542,7 @@ freemarker.output_encoding = UTF-8
 freemarker.locale = ja_JP
 freemarker.number_format = 0.##########
 freemarker.time_zone = JST
-freemarker.date_format = yyyy/MM/dd HH:mm:ss
+freemarker.date_format = yyyy-MM-dd HH:mm:ssZ
 </code></pre><p>そして、DI設定の時に、こう書く <a
   class="gblog-markdown__link"
   href="https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/ConfigModule.java"
@@ -552,14 +552,11 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Singleton</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Named</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;freemarker.init.parameters&#34;</span><span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">prividesFreeMarker</span><span style="color:#f92672">(</span>Config config<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> params <span style="color:#f92672">=</span> StreamSupport<span style="color:#f92672">.</span><span style="color:#a6e22e">stream</span><span style="color:#f92672">(</span>config<span style="color:#f92672">.</span><span style="color:#a6e22e">getConfigSources</span><span style="color:#f92672">().</span><span style="color:#a6e22e">spliterator</span><span style="color:#f92672">(),</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>ConfigSource<span style="color:#f92672">::</span>getProperties<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">::</span>entrySet<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">flatMap</span><span style="color:#f92672">(</span>Set<span style="color:#f92672">::</span>stream<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>e <span style="color:#f92672">-&gt;</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">getKey</span><span style="color:#f92672">().</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;freemarker.&#34;</span><span style="color:#f92672">))</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>e <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">new</span> AbstractMap<span style="color:#f92672">.</span><span style="color:#a6e22e">SimpleImmutableEntry</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;(</span>
-</span></span><span style="display:flex;"><span>            e<span style="color:#f92672">.</span><span style="color:#a6e22e">getKey</span><span style="color:#f92672">().</span><span style="color:#a6e22e">replaceFirst</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;^freemarker\\.&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">),</span>
-</span></span><span style="display:flex;"><span>            e<span style="color:#f92672">.</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">()))</span>
+</span></span><span style="display:flex;"><span>    Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> params <span style="color:#f92672">=</span> StreamSupport<span style="color:#f92672">.</span><span style="color:#a6e22e">stream</span><span style="color:#f92672">(</span>config<span style="color:#f92672">.</span><span style="color:#a6e22e">getPropertyNames</span><span style="color:#f92672">().</span><span style="color:#a6e22e">spliterator</span><span style="color:#f92672">(),</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>key <span style="color:#f92672">-&gt;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;freemarker.&#34;</span><span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>key <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">new</span> AbstractMap<span style="color:#f92672">.</span><span style="color:#a6e22e">SimpleImmutableEntry</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;(</span>
+</span></span><span style="display:flex;"><span>            key<span style="color:#f92672">.</span><span style="color:#a6e22e">replaceFirst</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;^freemarker\\.&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">),</span>
+</span></span><span style="display:flex;"><span>            config<span style="color:#f92672">.</span><span style="color:#a6e22e">getValue</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> String<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)))</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">(</span>Collectors<span style="color:#f92672">.</span><span style="color:#a6e22e">toMap</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">.</span><span style="color:#a6e22e">Entry</span><span style="color:#f92672">::</span>getKey<span style="color:#f92672">,</span> Map<span style="color:#f92672">.</span><span style="color:#a6e22e">Entry</span><span style="color:#f92672">::</span>getValue<span style="color:#f92672">,</span> <span style="color:#f92672">(</span>e1<span style="color:#f92672">,</span> e2<span style="color:#f92672">)</span> <span style="color:#f92672">-&gt;</span> e1<span style="color:#f92672">));</span>
 </span></span><span style="display:flex;"><span>    LOG<span style="color:#f92672">.</span><span style="color:#a6e22e">debug</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;freemarker init params: {}&#34;</span><span style="color:#f92672">,</span> params<span style="color:#f92672">);</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> params<span style="color:#f92672">;</span>

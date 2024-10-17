@@ -214,6 +214,17 @@
           <li>
             <a
               class="gblog-nav__entry"
+              href="/techlog/tags/docker/"
+            >
+              Docker
+            </a>
+          </li>
+        
+      
+        
+          <li>
+            <a
+              class="gblog-nav__entry"
               href="/techlog/tags/eclipse/"
             >
               Eclipse
@@ -265,17 +276,6 @@
           </li>
         
       
-        
-          <li>
-            <a
-              class="gblog-nav__entry"
-              href="/techlog/tags/vagrant/"
-            >
-              Vagrant
-            </a>
-          </li>
-        
-      
     
     
   </ul>
@@ -289,6 +289,111 @@
   
 
   
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20241014_aws_lambda_log4j2/">AWS Lambda と Log4j2 で困った話</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        TD;TR maven-shade-plugin がハマりどころ 結構新しい問題だった AIも使いよう 何が起きたのか？ 久し振りに、 AWS Lambda を触ったんです。 AWS EventBridge と組み合わせて、簡易なバッチとして動かそうと。
+で、実際に Lambda Function を FatJARにしてデプロイしたら、あれ？ log4j2.xml のパースに失敗して、起動できない??? ローカルでは動くのに…。
+まず、 pom.xml に log4j2 の BOM を設定
+&lt;dependencyManagement&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt; &lt;artifactId&gt;log4j-bom&lt;/artifactId&gt; &lt;version&gt;2.23.1&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt; &lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/dependencyManagement&gt; 依存関係に log4j-slf4j2-impl と aws-lambda-java-log4j2 を足す。
+&lt;!-- Logging--&gt; &lt;dependency&gt; &lt;groupId&gt;com.amazonaws&lt;/groupId&gt; &lt;artifactId&gt;aws-lambda-java-log4j2&lt;/artifactId&gt; &lt;version&gt;1.6.0&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt; &lt;artifactId&gt;log4j-slf4j2-impl&lt;/artifactId&gt; &lt;/dependency&gt; log4j2.xml は、公式にある、一番シンプルなもの1 を置く。
+そうすれば slf4j → aws-lambda-java-log4j2 → log4j2 で行けるよね?? って思ってたら、上記の如く、起動しないのです。
+結局のところ これは、自分で検索したりしてもダメっぽいな…、と思ったので、Windows11付属のAIアシスタント、Copilotに質問したのですが、要領を得ない解答で少々困ってしまって。 ハレーションを起こさなかっただけマシかもですが。
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20241014_aws_lambda_log4j2/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-10-14T00:00:00&#43;09:00">
+      
+      Oct 14, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/aws/"
+      title="All posts tagged with 'aws'"
+    >
+      aws
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center gblog-post__meta--tag">
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
   
     <article class="gblog-post">
       <header class="gblog-post__header">
@@ -1014,126 +1119,6 @@ Jax-B 参照実装の jaxb-runtime でやってみると、シンプルで良い
       title="All posts tagged with 'java'"
     >
       java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20230602_jms_cosumer_apache_camel/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
-継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&#34;topic:upload.
-      </section>
-      <div class="gblog-post__readmore">
-        
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/techlog/posts/20230602_jms_cosumer_apache_camel/"
-          >
-            Read full post
-            <i class="gblog-icon">gblog_arrow_right</i>
-          </a>
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2023-06-02T00:00:00&#43;09:00">
-      
-      Jun 2, 2023
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/apache-camel/"
-      title="All posts tagged with 'apache-camel'"
-    >
-      apache-camel
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/quarkus/"
-      title="All posts tagged with 'quarkus'"
-    >
-      quarkus
     </a>
   </span>
 

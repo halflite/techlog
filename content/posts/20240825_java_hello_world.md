@@ -91,7 +91,7 @@ freemarker.output_encoding = UTF-8
 freemarker.locale = ja_JP
 freemarker.number_format = 0.##########
 freemarker.time_zone = JST
-freemarker.date_format = yyyy/MM/dd HH:mm:ss
+freemarker.date_format = yyyy-MM-dd HH:mm:ssZ
 ```
 
 そして、DI設定の時に、こう書く [ConfigModule.java](https://github.com/halflite/guice-freemarker-servlet/blob/main/app/src/main/java/app/inject/ConfigModule.java)
@@ -102,14 +102,11 @@ freemarker.date_format = yyyy/MM/dd HH:mm:ss
   @Singleton
   @Named("freemarker.init.parameters")
   public Map<String, String> prividesFreeMarker(Config config) {
-    Map<String, String> params = StreamSupport.stream(config.getConfigSources().spliterator(), false)
-        .map(ConfigSource::getProperties)
-        .map(Map::entrySet)
-        .flatMap(Set::stream)
-        .filter(e -> e.getKey().startsWith("freemarker."))
-        .map(e -> new AbstractMap.SimpleImmutableEntry<String, String>(
-            e.getKey().replaceFirst("^freemarker\\.", ""),
-            e.getValue()))
+    Map<String, String> params = StreamSupport.stream(config.getPropertyNames().spliterator(), false)
+        .filter(key -> key.startsWith("freemarker."))
+        .map(key -> new AbstractMap.SimpleImmutableEntry<String, String>(
+            key.replaceFirst("^freemarker\\.", ""),
+            config.getValue(key, String.class)))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1));
     LOG.debug("freemarker init params: {}", params);
     return params;

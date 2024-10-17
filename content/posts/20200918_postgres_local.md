@@ -4,7 +4,7 @@ date: 2020-09-18T00:00:00+09:00
 draft: false
 tags:
   - linux
-  - vagrant
+  - docker
 ---
 
 Heroku で、小さいアプリケーションを作りたいと思っていて。

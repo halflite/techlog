@@ -214,6 +214,17 @@
           <li>
             <a
               class="gblog-nav__entry"
+              href="/techlog/tags/docker/"
+            >
+              Docker
+            </a>
+          </li>
+        
+      
+        
+          <li>
+            <a
+              class="gblog-nav__entry"
               href="/techlog/tags/eclipse/"
             >
               Eclipse
@@ -265,17 +276,6 @@
           </li>
         
       
-        
-          <li>
-            <a
-              class="gblog-nav__entry"
-              href="/techlog/tags/vagrant/"
-            >
-              Vagrant
-            </a>
-          </li>
-        
-      
     
     
   </ul>
@@ -289,6 +289,103 @@
   
 
   
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20200728_eclipse_pe/">2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        TL;DR インストール用リポジトリーURLは、以下です
+https://propedit.osdn.jp/eclipse/updates/ 諸々など 現在、 Google Guice ベースで Bean Validation を入れようとしていて。 独自メッセージファイル ValidationMessages_ja.properties を作ろうかと思ったら、あれ、 Unicode でないとダメなのか…。 Spring-Boot だと、フツーに UTF-8 を読んでくれるんですけどね。
+Validator を DI する時に、設定を注入出来ないかな？って思ったのですが、どこにも情報が無い!! まぁ、仕方ないですわ。 Unicodeのまま実装しますかね。
+なので、Eclipse に PropertiesEditor をインストールしようと思って、 ぐぐって Eclipseで文字化けするプロパティファイルを編集する方法 を参考にインストール…、しようと思っても入らない!!
+まぁ、そういう事情もありましたよね 1 2 で、ドメイン/ホストを色々打ち替えて、上記のリポジトリーURLが分かった次第。
+本質的には、 JakartaEE / Hibernate が、メッセージファイルのフォーマットをUTF-8に公式対応してくれれば、それが良いのでしょうが…。
+ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&#160;&#x21a9;&#xfe0e;
+OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2020-07-28T00:00:00&#43;09:00">
+      
+      Jul 28, 2020
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/eclipse/"
+      title="All posts tagged with 'eclipse'"
+    >
+      eclipse
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center gblog-post__meta--tag">
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
   
     <article class="gblog-post">
       <header class="gblog-post__header">

@@ -220,6 +220,17 @@
           <li>
             <a
               class="gblog-nav__entry"
+              href="/techlog/tags/docker/"
+            >
+              Docker
+            </a>
+          </li>
+        
+      
+        
+          <li>
+            <a
+              class="gblog-nav__entry"
               href="/techlog/tags/eclipse/"
             >
               Eclipse
@@ -271,17 +282,6 @@
           </li>
         
       
-        
-          <li>
-            <a
-              class="gblog-nav__entry"
-              href="/techlog/tags/vagrant/"
-            >
-              Vagrant
-            </a>
-          </li>
-        
-      
     
     
   </ul>
@@ -297,6 +297,126 @@
   
 
   
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20230602_jms_cosumer_apache_camel/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        TL;DR Quarkus - Start coding with code.quarkus.redhat.com で、雛形を作ります。 camel-quarkus-sjms2 / quarkus-artemis-jms を依存関係に含めます。 ルート用のクラスは、DI対象に含めます。 ActiveMQ Altemis用の設定を、application.propertiesに記します。 前回 ActiveMQとQuarkus、ApacheCamelで、画像アップロード処理をしたい。 その1 Producer 編 Apache CamelとQuarkusの第一歩 Camel Extensions for Quarkus と Camel K の入門 - 赤帽エンジニアブログ はい、この通りに、Maven/Gradeleでプロジェクトを作って、実行してみましょう。1 Quarkus - Start coding with code.quarkus.redhat.com Routeの修正 上記のサンプルだと、少々使いづらい。 Routesクラスを以下のように修正します。
+継承する親クラスを EndpointRouteBuilder にします。2 タイプセーフで、「流れるようなインターフェース」でルートが書けるようになります。 クラスに @ApplicationScoped アノテーションを付けます。 RoutesクラスがDI対象に含まれます。 ActiveMQからのメッセージ受信 camel-quarkus-sjms2を依存関係に加えます。 諸々必要なコンポーネントが自動で入ります。 ActiveMQ/JMSを通じて、メッセージを受信するためのコンポーネントには、camel-activemq / camel-jmsがあります。 このコンポーネントには、Spring Frameworkのライブラリが依存で入ってしまうのです。 ネット上のサンプルプログラムは、Spring-BootベースのConsumerが多いからでしょうね。 quarkus-artemis-jmsを依存関係に加えます camel-quarkus-sjms2には、ActiveMQとの通信をする、ConnectionFactoryの実装クラスが入ってないのです。 Artemis JMSの記述のようにapplication.propertiesに設定を記述すると、ConnectionFactoryもDI対象になります。 Quarkus Artemis BOMは、Quarkusと違うので、別途依存関係に追加します。 @ApplicationScoped public class Routes extends EndpointRouteBuilder { private final ConnectionFactory connectionFactory; @Override public void configure() throws Exception { from(sjms2(&#34;topic:upload.
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20230602_jms_cosumer_apache_camel/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2023-06-02T00:00:00&#43;09:00">
+      
+      Jun 2, 2023
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/apache-camel/"
+      title="All posts tagged with 'apache-camel'"
+    >
+      apache-camel
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center gblog-post__meta--tag">
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+    
+    
+      
+        <span class="flex align-center gblog-post__meta--tag">
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/quarkus/"
+      title="All posts tagged with 'quarkus'"
+    >
+      quarkus
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
   
     <article class="gblog-post">
       <header class="gblog-post__header">
@@ -996,10 +1116,10 @@ ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a
       class="gblog-button__link"
-      href="/techlog/tags/linux/"
-      title="All posts tagged with 'linux'"
+      href="/techlog/tags/docker/"
+      title="All posts tagged with 'docker'"
     >
-      linux
+      docker
     </a>
   </span>
 
@@ -1016,10 +1136,10 @@ ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a
       class="gblog-button__link"
-      href="/techlog/tags/vagrant/"
-      title="All posts tagged with 'vagrant'"
+      href="/techlog/tags/linux/"
+      title="All posts tagged with 'linux'"
     >
-      vagrant
+      linux
     </a>
   </span>
 
@@ -1092,103 +1212,6 @@ ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
       title="All posts tagged with 'etc'"
     >
       etc
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200728_eclipse_pe/">2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        TL;DR インストール用リポジトリーURLは、以下です
-https://propedit.osdn.jp/eclipse/updates/ 諸々など 現在、 Google Guice ベースで Bean Validation を入れようとしていて。 独自メッセージファイル ValidationMessages_ja.properties を作ろうかと思ったら、あれ、 Unicode でないとダメなのか…。 Spring-Boot だと、フツーに UTF-8 を読んでくれるんですけどね。
-Validator を DI する時に、設定を注入出来ないかな？って思ったのですが、どこにも情報が無い!! まぁ、仕方ないですわ。 Unicodeのまま実装しますかね。
-なので、Eclipse に PropertiesEditor をインストールしようと思って、 ぐぐって Eclipseで文字化けするプロパティファイルを編集する方法 を参考にインストール…、しようと思っても入らない!!
-まぁ、そういう事情もありましたよね 1 2 で、ドメイン/ホストを色々打ち替えて、上記のリポジトリーURLが分かった次第。
-本質的には、 JakartaEE / Hibernate が、メッセージファイルのフォーマットをUTF-8に公式対応してくれれば、それが良いのでしょうが…。
-ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&#160;&#x21a9;&#xfe0e;
-OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-07-28T00:00:00&#43;09:00">
-      
-      Jul 28, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/eclipse/"
-      title="All posts tagged with 'eclipse'"
-    >
-      eclipse
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
     </a>
   </span>
 

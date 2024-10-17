@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://halflite.github.io/techlog/posts/20240907_dagger_batch/</loc>
-    <lastmod>2024-09-07T00:00:00+09:00</lastmod>
+    <loc>https://halflite.github.io/techlog/posts/20241014_aws_lambda_log4j2/</loc>
+    <lastmod>2024-10-14T00:00:00+09:00</lastmod>
   </url>
   <url>
     <loc>https://halflite.github.io/techlog/</loc>
+    <lastmod>2024-10-14T00:00:00+09:00</lastmod>
+  </url>
+  <url>
+    <loc>https://halflite.github.io/techlog/posts/20240907_dagger_batch/</loc>
     <lastmod>2024-09-07T00:00:00+09:00</lastmod>
   </url>
   <url>
