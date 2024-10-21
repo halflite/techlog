@@ -12,8 +12,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Hugo 0.111.3">
     <meta name="robots" content="index, follow" />
+    <meta name="description" content="TR;TD WSLのディストリビューションを消すだけで解決するよ 先達には感謝ですね 何が起きたのか？ ある日、PCを再起動したら、RancherDesktopがエラーで起動しなくて。
+Error: wsl.exe exited with code 4294967295
+こう言うのは、PCを再起動すれば、概ね解決…、しない！
+解決策 でも、先に踏んで解決して下さった方がいたんです！ …" />
 
-    <title>ひとり開発日記。</title>
+    <title>RancherDesktopが &#34;Error: wsl.exe exited with code 429496729&#34; で起動できなくて困った話 | ひとり開発日記。</title>
 
     <link
   rel="icon"
@@ -35,25 +39,71 @@
     
 
     
+  <meta
+    property="og:title"
+    content="RancherDesktopが \"Error: wsl.exe exited with code 429496729\" で起動できなくて困った話"
+  />
   <meta property="og:site_name" content="ひとり開発日記。" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://halflite.github.io/techlog/" />
+  <meta property="og:description" content="TR;TD WSLのディストリビューションを消すだけで解決するよ 先達には感謝ですね 何が起きたのか？ ある日、PCを再起動したら、RancherDesktopがエラーで起動しなくて。
+Error: wsl.exe exited with code 4294967295
+こう言うのは、PCを再起動すれば、概ね解決…、しない！
+解決策 でも、先に踏んで解決して下さった方がいたんです！ …" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/" />
 
-
+<meta property="article:section" content="Posts" />
+    <meta
+      property="article:published_time"
+      content="2024-10-12T00:00:00+09:00"
+    />
+    <meta
+      property="article:modified_time"
+      content="2024-10-12T00:00:00+09:00"
+    />
 
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="ひとり開発日記。" />
+  <meta name="twitter:title" content="RancherDesktopが \"Error: wsl.exe exited with code 429496729\" で起動できなくて困った話" />
+  <meta name="twitter:description" content="TR;TD WSLのディストリビューションを消すだけで解決するよ 先達には感謝ですね 何が起きたのか？ ある日、PCを再起動したら、RancherDesktopがエラーで起動しなくて。
+Error: wsl.exe exited with code 4294967295
+こう言うのは、PCを再起動すれば、概ね解決…、しない！
+解決策 でも、先に踏んで解決して下さった方がいたんです！ …" />
 
-
-  <script type="application/ld+json">
+<script type="application/ld+json">
   {
       "@context": "http://schema.org",
-      "@type": "WebSite",
-      
-      "name": "ひとり開発日記。",
-      "url": "https://halflite.github.io/techlog/",
-      "inLanguage": "en"
+      "@type": "BlogPosting",
+      "articleSection": "Posts",
+      "name": "RancherDesktopが \"Error: wsl.exe exited with code 429496729\" で起動できなくて困った話",
+      "url" : "https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/",
+      "headline": "RancherDesktopが \"Error: wsl.exe exited with code 429496729\" で起動できなくて困った話",
+      "description": "TR;TD WSLのディストリビューションを消すだけで解決するよ 先達には感謝ですね 何が起きたのか？ ある日、PCを再起動したら、RancherDesktopがエラーで起動しなくて。\nError: wsl.exe exited with code 4294967295\nこう言うのは、PCを再起動すれば、概ね解決…、しない！\n解決策 でも、先に踏んで解決して下さった方がいたんです！\n【Docker】Windows10でRancher Desktopを起動するとエラーになる #kubernetes - Qiita Error Starting Rancher-desktop on Win10 with wsl error · Issue #2256 · rancher-sandbox\/rancher-desktop で、自分で試して分かったんですけど、結局、WSLのディストリビューションを消すだけで解決しましたね。\nRancherDesktopを終了させる WSLのディストリビューションを確認後、それを消し、WSLをシャットダウン \u003e wsl -l -v * rancher-desktop Stopped 2 * rancher-desktop-data Stopped 2 \u003e wsl --unregister rancher-desktop \u003e wsl --unregister rancher-desktop-data \u003e wsl --shutdown その後、RancherDesktop再起動 これで解決しました。 ただ、Dockerイメージをpullする時のレイヤーのキャッシュとか全部消えちゃうんで、再度コンテナを立ち上げる時は時間がかかりますね。\n結局のところ 「少しのことにも、先達はあらまほしき事なり」1 とは昔からの伝えでしたよね。\n徒然草第52段 ↩︎",
+      "wordCount" : "65",
+      "inLanguage": "en",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/"
+      },
+      "keywords" : [ "docker" ],
+      "author" : [
+      ],
+      "copyrightHolder" : "ひとり開発日記。",
+      "copyrightYear" : "2024",
+      "dateCreated": "2024-10-12T00:00:00.00Z",
+      "datePublished": "2024-10-12T00:00:00.00Z",
+      "dateModified": "2024-10-12T00:00:00.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "ひとり開発日記。",
+          "url": "https://halflite.github.io/techlog/",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https://halflite.github.io/techlog/brand.svg",
+              "width":"32",
+              "height":"32"
+          }
+      }
   }
   </script>
 
@@ -127,7 +177,7 @@
   href="/techlog/custom.css"
   media="all"
 />
-  <link href="https://halflite.github.io/techlog/" rel="canonical" type="text/html" />
+  <link href="https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/" rel="canonical" type="text/html" />
     <link href="https://halflite.github.io/techlog/feed.xml" rel="alternate" type="application/atom+xml" title="ひとり開発日記。 Atom Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
@@ -291,37 +341,22 @@
 
       <main class="gblog-page container">
         
-  
-  
-    
-  
+  <article class="gblog-post">
+    <header class="gblog-post__header">
+      
+      
 
-  
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200831_imgbb/">imgbb.comのテスト</a>
-        </h1>
-      </header>
 
-      <section class="gblog-markdown">
-        ImgBB — フリーなスマイリー / アニメエモコン たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
-という事で、適当にググって、適当にアップロードして、上記サイトを試してみることにしました。 1
-まぁ、削除されても、そんなに重要な画像でもないし…。&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
+      <h1 class="gblog-post__title">RancherDesktopが &#34;Error: wsl.exe exited with code 429496729&#34; で起動できなくて困った話</h1>
 
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
+      
+        <div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head">
           <span class="flex align-center no-wrap gblog-post__meta--update">
   <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
   <span class="gblog-post__tag">
-    <time datetime="2020-08-31T01:00:00&#43;09:00">
+    <time datetime="2024-10-12T00:00:00&#43;09:00">
       
-      Aug 31, 2020
+      Oct 12, 2024
     </time>
   </span>
 </span>
@@ -348,10 +383,10 @@
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a
       class="gblog-button__link"
-      href="/techlog/tags/etc/"
-      title="All posts tagged with 'etc'"
+      href="/techlog/tags/docker/"
+      title="All posts tagged with 'docker'"
     >
-      etc
+      docker
     </a>
   </span>
 
@@ -367,753 +402,101 @@
 
 
         </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200728_eclipse_pe/">2020年7月 EclipseにPropertiesEditorプラグインをインストールしたいだけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        TL;DR インストール用リポジトリーURLは、以下です
-https://propedit.osdn.jp/eclipse/updates/ 諸々など 現在、 Google Guice ベースで Bean Validation を入れようとしていて。 独自メッセージファイル ValidationMessages_ja.properties を作ろうかと思ったら、あれ、 Unicode でないとダメなのか…。 Spring-Boot だと、フツーに UTF-8 を読んでくれるんですけどね。
-Validator を DI する時に、設定を注入出来ないかな？って思ったのですが、どこにも情報が無い!! まぁ、仕方ないですわ。 Unicodeのまま実装しますかね。
-なので、Eclipse に PropertiesEditor をインストールしようと思って、 ぐぐって Eclipseで文字化けするプロパティファイルを編集する方法 を参考にインストール…、しようと思っても入らない!!
-まぁ、そういう事情もありましたよね 1 2 で、ドメイン/ホストを色々打ち替えて、上記のリポジトリーURLが分かった次第。
-本質的には、 JakartaEE / Hibernate が、メッセージファイルのフォーマットをUTF-8に公式対応してくれれば、それが良いのでしょうが…。
-ニュース: OSDNにおけるアドウェア、不適切な広告についてのポリシーの現状について - OSDN運営・管理 - OSDN&#160;&#x21a9;&#xfe0e;
-OSSサイトの「SourceForge」が改称へ　「OSDN」に - ITmedia エンタープライズ&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-07-28T00:00:00&#43;09:00">
       
-      Jul 28, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/eclipse/"
-      title="All posts tagged with 'eclipse'"
+    </header>
+    <section class="gblog-markdown">
+      <div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="td_tr"
     >
-      eclipse
+        TR;TD
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/#td_tr" class="gblog-post__anchor clip flex align-center" aria-label="Anchor TR;TD" href="#td_tr">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
+</div>
+<ul>
+<li>WSLのディストリビューションを消すだけで解決するよ</li>
+<li>先達には感謝ですね</li>
+</ul>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="whats_happening"
     >
-      java
+        何が起きたのか？
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/#whats_happening" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 何が起きたのか？" href="#whats_happening">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200708_cognito_yahoo_integration/">2020年7月 Amazon Cognito経由でYahoo!Japanのユーザ認証をやりたかっただけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        TL;DR できません
-Amazon Cognitoの外部フェデレーテッドIDプロバイダとして、Yahoo!Japanを登録できますが、認証が通りません。 stateプロパティの値が長過ぎて、Yahoo!Japanからエラーで返ってきます。
-Amazon Cognito とは - Amazon Cognito AWSって、以前、S3をちょっと触ったレベルだったので、全く浦島太郎状態だったんですね。 最新技術のキャッチアップを兼ねて、ちょっと小さいプロジェクトで試すかな。 それなら、初っ端に必要になるログインとか認証である、Amazon Cognitoから触ってみるか～、って触ってみたんです。
-「…なるほど!! 全く分からん!!」
-[Amazon Cognito] Facebook / Google / Amazon だけじゃない！独自の認証システムも利用可能になりました！ | Developers.IO 【サーバーレスなユーザ管理基盤】Amazon Cognito ユーザープールにOpenID Connectを使ってLINEアカウントを連携させてみる | Developers.IO AWS CognitoにGoogleとYahooとLINEアカウントを連携させる - Qiita 上記記事を参考に、ちまちまいじっていて、なんとなく分かった!! 「Amazon Cognitoってアカウント管理してくれて、外部プロバイダとの連携とも整合をとってくれて、一意なIDを払い出してくれる。」 「Amazon Cognitoそれ自体は、OpenID Connect/OAuth2のプロバイダとして振る舞ってくれる」 なんですね!!
-上記記事を参考に、試しにYahoo!JapanとのID連携やってみるかー、って思って、IDプロバイダの設定までは、サクサクできたんです。
-でも、実際のログイン画面が出てきて、クリックすると、コールバックにエラーが返ってきます。 &ldquo;state is too long value&rdquo; って何???
-Chromeのdev-toolで、リクエストとかを見ていると、確かにAmazon Cognitoが生成するstateって、1,200文字程度あります。 自分では、どっちが妥当か判断できないし、しゃーないので、Yahoo!デベロッパーネットワークのお問合せフォームから、質問投げちゃいましたよ…。
-結局「stateの長さは1024文字までの仕様となっており、長さを伸ばすことができません。(大意)」という回答でしたね。
-よくあるOpenID Connect/OAuth2のクライアントライブラリは、そこまで長いstateを生成しないのでしょう。 ですが、全世界で広く使われているAWSだと、そうもいかないのでしょうね…。
-久々、Yak Shavingで不毛な時間を過ごしちゃったよなー、でも、これやらないとダメなのが、我々の人生だよなー、と言う感想でしたね。
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-07-08T00:00:00&#43;09:00">
-      
-      Jul 8, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/aws/"
-      title="All posts tagged with 'aws'"
+</div>
+<p>ある日、PCを再起動したら、RancherDesktopがエラーで起動しなくて。</p>
+<blockquote>
+<p>Error: wsl.exe exited with code 4294967295</p>
+</blockquote>
+<p>こう言うのは、PCを再起動すれば、概ね解決…、しない！</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="solution"
     >
-      aws
+        解決策
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/#solution" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 解決策" href="#solution">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
-  </span>
+</div>
+<p>でも、先に踏んで解決して下さった方がいたんです！</p>
+<ul>
+<li><a
+  class="gblog-markdown__link"
+  href="https://qiita.com/takanori-azegami-jp/items/0ba7d456f40eb963c994"title="【Docker】Windows10でRancher Desktopを起動するとエラーになる #kubernetes - Qiita"
+>【Docker】Windows10でRancher Desktopを起動するとエラーになる #kubernetes - Qiita</a>
+<ul>
+<li><a
+  class="gblog-markdown__link"
+  href="https://github.com/rancher-sandbox/rancher-desktop/issues/2256"title="Error Starting Rancher-desktop on Win10 with wsl error · Issue #2256 · rancher-sandbox/rancher-desktop"
+>Error Starting Rancher-desktop on Win10 with wsl error · Issue #2256 · rancher-sandbox/rancher-desktop</a></li>
+</ul>
+</li>
+</ul>
+<p>で、自分で試して分かったんですけど、結局、WSLのディストリビューションを消すだけで解決しましたね。</p>
+<ol>
+<li>RancherDesktopを終了させる</li>
+<li>WSLのディストリビューションを確認後、それを消し、WSLをシャットダウン</li>
+</ol>
+<pre tabindex="0"><code class="language-ch" data-lang="ch">&gt; wsl -l -v
+* rancher-desktop         Stopped         2
+* rancher-desktop-data    Stopped         2
 
-        </span>
-      
-    
-    
-  
+&gt; wsl --unregister rancher-desktop
+&gt; wsl --unregister rancher-desktop-data
 
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200625_java_based_batch/">2020年 Javaベースのバッチを作るなら</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        前々回位の現場で、Javaベースのバッチ処理を作ることがあって。 「オンプレ環境で、そこまで厳格な条件ではないけど、ある程度安定して動いて欲しい」 「DBに接続して、データを取得後加工、CSVに出力して、それをメールに添付して送付」 位の要件でしたね。1
-そこでは、アーキテクチャを選択できる立場になかったので、以前からあるバッチの仕組みを、ちょろっといじってサーバに置いたんですが。2 でも、今、自分が作るとしたら、どんな仕組みにするかなぁ、って、ちょっと考えてみました。
-ある程度ポータブルなものにしたいよね オンプレとは言え、不定期にサーバーの統廃合があったりする サーバーの統廃合時に、cronタブの設定忘れたり サーバーごとに 秘伝のタレ の設定/シェルがあったり ある程度複雑なロジックを伴うから、TDDとかやりたいよね ちょっとした変更だって、やっぱり確認しながらやりたい デプロイ時に漏れとか防ぎたいよね ソース管理もGitとかのVCSでやりたいよね たまーに機能追加しようとすると、もういない担当者のPCの中にしかソースが… …あれ? 結構条件ありますね。
-今、自分で作るとするなら、こんな感じかな
-ある程度枯れた、よく使われる軽量ライブラリの組合せで作る GraalVMとか、まだ人類には早すぎるのでは… Jdbi のような軽量OR/M 変数を、環境変数や実行時変数から注入できる仕組みを組み込む VCSで管理する以上、DB接続情報、メールサーバー接続情報等々をコミットするのは、アンチパターンでしょう Typesafe Config MicroProfile Configuration ビジネスロジックをTDDで作るために、モックとか差し替えしたい 軽量DIコンテナを採用する Dagger Maven/Gradleで、依存関係やバージョン情報を明示 実行可能なFatJarを作成して java --jar batch.jar だけで実行可能 実行は、cronではなく、バッチ実行の仕組みを別に用意する Rundeck そんなに頻繁な更新でなくとも、CI/CDの仕組みに乗せる 意外とやらないといけないこと多いですわ。
-参考 Serverless時代のJavaについて あるある案件&#160;&#x21a9;&#xfe0e;
-惰性とも言う&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-06-25T12:00:00&#43;09:00">
-      
-      Jun 25, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
+&gt; wsl --shutdown
+</code></pre><ol start="3">
+<li>その後、RancherDesktop再起動</li>
+</ol>
+<p>これで解決しました。
+ただ、Dockerイメージをpullする時のレイヤーのキャッシュとか全部消えちゃうんで、再度コンテナを立ち上げる時は時間がかかりますね。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="at_last"
     >
-      java
+        結局のところ
+    </h3>
+    <a data-clipboard-text="https://halflite.github.io/techlog/posts/20241012_rancher_desktop_error/#at_last" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 結局のところ" href="#at_last">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200504_eclipse_setting_utf8/">MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        WindowsマシンでEclipse使っていると、いつの間にか、ソースの文字コードがMS932になっていて、イラッとしません？
-Eclipseの設定から直しても、プロジェクトのクラスパス修正しようと、mvnコマンドで.settingsファイルを初期化したら、文字コード設定が、元に戻ってしまったりして…。
-解決策としては、プロジェクトのpom.xmlを、以下のように記述/変更します。
-&lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;build&gt; &lt;plugins&gt; &lt;!-- Eclipse --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt; &lt;version&gt;2.10&lt;/version&gt; &lt;configuration&gt; &lt;downloadSources&gt;true&lt;/downloadSources&gt; &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt; &lt;additionalConfig&gt; &lt;file&gt; &lt;name&gt;.settings/org.eclipse.core.resources.prefs&lt;/name&gt; &lt;content&gt; &lt;![CDATA[eclipse.preferences.version=1${line.separator}encoding/&lt;project&gt;=${project.build.sourceEncoding}${line.separator}]]&gt; &lt;/content&gt; &lt;/file&gt; &lt;/additionalConfig&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/build&gt; で、Eclipse用の.settingsファイルを作り直すと、次からは、ソースコードの文字コードは、UTF-8になっています。
-mvn eclipse:clean eclipse:eclipse 元ネタ Define Eclipse project encoding as UTF-8 from Maven - Stack Overflow 旧blog 2018/10/12 の記事に加筆訂正して再掲しました。
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-05-04T00:00:00&#43;09:00">
-      
-      May 4, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/eclipse/"
-      title="All posts tagged with 'eclipse'"
-    >
-      eclipse
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200222_temporary_file_delete_on_close/">Java NIO2 で一時ファイルを作成、処理後に削除</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 上記のような処理で、「一時ファイルを作成、処理後に削除」って、どうやるんだっけ、って、思い出すのに四苦八苦してしまったので…。1
-public static Closeable deleteOnClose(final Path tempFilePath) { return new Closeable() { @Override public void close() throws IOException { Files.deleteIfExists(tempFilePath); } }; } public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Closeable closeable = deleteOnClose(tempFilePath); Writer writer = Files.
-      </section>
-      <div class="gblog-post__readmore">
-        
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/techlog/posts/20200222_temporary_file_delete_on_close/"
-          >
-            Read full post
-            <i class="gblog-icon">gblog_arrow_right</i>
-          </a>
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-02-22T00:00:00&#43;09:00">
-      
-      Feb 22, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200214_maven_copy_dependencies/">Mavenで依存関係あるライブラリをダウンロードしたいだけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        また、以前blogに書いていたのに、すっかり忘れてググってしまったので。
-mvn dependency:copy-dependencies -DincludeScope=test 上記を実行すると、プロジェクト配下の target/dependency に、テストスコープのものも含めて、 *.jar ファイルがダウンロードされます。1
-書いている時点のmavenバージョン 3.6.3&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-02-13T00:00:00&#43;09:00">
-      
-      Feb 13, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200120_maven_cmd/">Windowsのcmd.exeで、Mavenを使って新規プロジェクトを作る時、複数行に分けて書きたかっただけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        新しいライブラリやフレームワークを試す時、素振りも兼ねて、小さいJavaプロジェクトを作ってみるんですが、毎回Maven Archetypeの書き方を忘れて、自分のblogを読み返してしまったり。
-この度、blog移設なので、ここでも書き記しておく次第です。
-mvn archetype:generate ^-DarchetypeArtifactId=maven-archetype-quickstart ^-DinteractiveMode=false ^-DgroupId=net.halflite ^-DartifactId=testapp ^-Dpackage=net.halflite.testapp もとねた
-Maven Quickstart Archetype – Maven Quickstart Archetype cmdのバッチファイルで、1コマンドを複数行にわたって記述したい場合 - Qiita 
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-01-20T00:00:00&#43;09:00">
-      
-      Jan 20, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200117_git_ver/">2020年1月、CentOS7にgit2.xをyumで入れたかっただけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-         CentOS7環境で、gitのリポジトリからダウンロードして環境構築を一発で構築したいなぁ!!! Vagrant/VirtalBoxでテスト環境作ってやってみっかな!!! git --version って、まだ1.x系なの? しゃーない、一旦アンインストールして、リポジトリIUSを入れてして再度インスール… え&hellip;??? 依存ライブラリが無いの…??? sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install git --enablerepo=ius --disablerepo=base 上記ではダメなのです…!!! 依存ライブラリが入らないっ…!!!
-結局、こうなりますわ。
-sudo yum -y remove gitsudo yum -y install https://centos7.iuscommunity.org/ius-release.rpmsudo yum -y install perl-TermReadKey emacs-filesystem perl-Errorsudo yum -y install git --enablerepo=ius --disablerepo=base,epel,extras,updates 
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-01-17T01:00:00&#43;09:00">
-      
-      Jan 17, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/linux/"
-      title="All posts tagged with 'linux'"
-    >
-      linux
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/buildwithhugo/">Hugo/GitHubPagesでブログ再作成</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        一瞬、LivedoorBlogで作った時期もあるんですけど、やっぱり技術ブログなので…。
-Markdownで書きたい シンタックスハイライトが欲しい ブログパーツとかいらない やはり、上記3条件は必須ですかねぇ。
-毎度忘れてしまうので、hugoの操作メモ
-新規記事作成
-hugo new posts/article.md ローカルサーバーで確認
-hugo server 記事書き出し
-hugo -D 以下、参考にした記事
-Hugo + GitHub Pages + 無料で洒落たブログを30分で作る - Qiita 【2018年版】Hugoとgithub pagesでブログ作る方法【Circle CIも回します】 - Qiita Hugoのテーマ「Theer」を作成しました – qqhann すっきり見やすいHugoテーマ。 ありがたく使ってます 
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-01-16T00:00:00&#43;09:00">
-      
-      Jan 16, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/etc/"
-      title="All posts tagged with 'etc'"
-    >
-      etc
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-  
-
-
-<nav class="gblog-paging flex flex-even align-center" role="navigation">
-  <div class="gblog-paging__item gblog-paging__item--prev">
-    
-      <a class="flex-inline align-center fake-link no-wrap" href="/techlog/page/2/">
-        <i class="gblog-icon">gblog_keyboard_arrow_left</i>
-        PREV
-      </a>
-    
-  </div>
-  <div class="gblog-paging__state">Page 3 of 4</div>
-  <div class="gblog-paging__item gblog-paging__item--next">
-    
-      <a class="flex-inline align-center fake-link no-wrap" href="/techlog/page/4/">
-        NEXT
-        <i class="gblog-icon">gblog_keyboard_arrow_right</i>
-      </a>
-    
-  </div>
-</nav>
-
+</div>
+<p>「少しのことにも、先達はあらまほしき事なり」<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> とは昔からの伝えでしたよね。</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a
+  class="gblog-markdown__link"
+  href="https://www2.yamanashi-ken.ac.jp/~itoyo/tsuredure/turedure050_099/turedure052.htm"title="徒然草第52段"
+>徒然草第52段</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+    </section>
+  </article>
 
       </main>
 

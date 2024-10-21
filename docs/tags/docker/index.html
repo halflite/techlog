@@ -295,6 +295,83 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20241012_rancher_desktop_error/">RancherDesktopが &#34;Error: wsl.exe exited with code 429496729&#34; で起動できなくて困った話</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        TR;TD WSLのディストリビューションを消すだけで解決するよ 先達には感謝ですね 何が起きたのか？ ある日、PCを再起動したら、RancherDesktopがエラーで起動しなくて。
+Error: wsl.exe exited with code 4294967295
+こう言うのは、PCを再起動すれば、概ね解決…、しない！
+解決策 でも、先に踏んで解決して下さった方がいたんです！
+【Docker】Windows10でRancher Desktopを起動するとエラーになる #kubernetes - Qiita Error Starting Rancher-desktop on Win10 with wsl error · Issue #2256 · rancher-sandbox/rancher-desktop で、自分で試して分かったんですけど、結局、WSLのディストリビューションを消すだけで解決しましたね。
+RancherDesktopを終了させる WSLのディストリビューションを確認後、それを消し、WSLをシャットダウン &gt; wsl -l -v * rancher-desktop Stopped 2 * rancher-desktop-data Stopped 2 &gt; wsl --unregister rancher-desktop &gt; wsl --unregister rancher-desktop-data &gt; wsl --shutdown その後、RancherDesktop再起動 これで解決しました。 ただ、Dockerイメージをpullする時のレイヤーのキャッシュとか全部消えちゃうんで、再度コンテナを立ち上げる時は時間がかかりますね。
+結局のところ 「少しのことにも、先達はあらまほしき事なり」1 とは昔からの伝えでしたよね。
+徒然草第52段&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-10-12T00:00:00&#43;09:00">
+      
+      Oct 12, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/docker/"
+      title="All posts tagged with 'docker'"
+    >
+      docker
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20200918_postgres_local/">2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</a>
         </h1>
       </header>

@@ -293,6 +293,82 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20230903_json/">JavaでJSONを扱う時</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        永遠の課題？なのですけど、「JavaでJSONを扱う時」ライブラリをどうするかですよね。
+Jackson Gson Jax-B 第一に、Jacksonですよね。 いろんなライブラリに依存で入るので、もし入ってるなら、それに従ったほうが良いでしょうか。 ただ、機能過多な気がしなくもないです。
+Gson。 処理早い(体感)1 APIも、出来ることが充分だけど、少々少ない。 逆に言うと、迷うことも少ないでしょう。
+Jax-B 参照実装の jaxb-runtime でやってみると、シンプルで良いですね。 あと、Eclipse EE/MichroProfile標準だし。
+上記で結論出しちゃったんですけど、自分の中ではこうです
+使っているライブラリで、依存で入っているのなら Jackson しがらみなく技術選定できるなら Gson 一応Java/Eclipse EE標準と言う縛りがあるなら Jax-B 処理速度とか機能面は全然問題ないのですが、実装参照のJARは Gson に比べて少々大きいです でしょうか。
+よくある、速度計測とか、あんまり意味はないんですよね。 ケースによって全然違う結果になるし。&#160;&#x21a9;&#xfe0e;
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2023-09-03T00:00:00&#43;09:00">
+      
+      Sep 3, 2023
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20230602_jms_cosumer_apache_camel/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その2 Consumer/Apache Camel編</a>
         </h1>
       </header>
@@ -1150,78 +1226,6 @@ ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
       </footer>
     </article>
   
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200831_imgbb/">imgbb.comのテスト</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        ImgBB — フリーなスマイリー / アニメエモコン たまにスクショとかを貼りたい時があって。 図解とか細かい記事だと、 Qiita や Zenn の方が良いんでしょうけど、ここは個人の日記サイトだしね…。
-という事で、適当にググって、適当にアップロードして、上記サイトを試してみることにしました。 1
-まぁ、削除されても、そんなに重要な画像でもないし…。&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-08-31T01:00:00&#43;09:00">
-      
-      Aug 31, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/etc/"
-      title="All posts tagged with 'etc'"
-    >
-      etc
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
   
 
 
@@ -1234,7 +1238,7 @@ ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
       </a>
     
   </div>
-  <div class="gblog-paging__state">Page 2 of 3</div>
+  <div class="gblog-paging__state">Page 2 of 4</div>
   <div class="gblog-paging__item gblog-paging__item--next">
     
       <a class="flex-inline align-center fake-link no-wrap" href="/techlog/posts/page/3/">
