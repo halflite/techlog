@@ -4,7 +4,7 @@
     <title>ひとり開発日記。</title>
             <link href="https://halflite.github.io/techlog/" rel="alternate" type="text/html" title="HTML" />
             <link href="https://halflite.github.io/techlog/feed.xml" rel="self" type="application/atom+xml" title="Atom" />
-    <updated>2024-10-22T06:39:57+00:00</updated>
+    <updated>2024-10-22T07:01:14+00:00</updated>
     <id>https://halflite.github.io/techlog/</id>
         <entry>
             <title>AWS Lambda と Log4j2 で困った話</title>
@@ -593,7 +593,7 @@ freemarker.date_format = yyyy-MM-dd HH:mm:ssZ
                 &lt;ul&gt;
 &lt;li&gt;&lt;a
   class=&#34;gblog-markdown__link&#34;
-  href=&#34;/techlog/20200222_temporary_file_delete_on_close/&#34;title=&#34;Java NIO2 で一時ファイルを作成、処理後に削除 | ひとり開発日記。&#34;
+  href=&#34;/techlog/posts/20200222_temporary_file_delete_on_close/&#34;title=&#34;Java NIO2 で一時ファイルを作成、処理後に削除 | ひとり開発日記。&#34;
 &gt;前回&lt;/a&gt;の修正版です&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;

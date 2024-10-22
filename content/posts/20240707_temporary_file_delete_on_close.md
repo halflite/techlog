@@ -6,7 +6,7 @@ tags:
   - java
 ---
 
-* [前回](/techlog/20200222_temporary_file_delete_on_close/ "Java NIO2 で一時ファイルを作成、処理後に削除 | ひとり開発日記。")の修正版です
+* [前回](/techlog/posts/20200222_temporary_file_delete_on_close/ "Java NIO2 で一時ファイルを作成、処理後に削除 | ひとり開発日記。")の修正版です
 
 ```java
   public void doSomething() {
