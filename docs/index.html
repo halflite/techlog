@@ -648,6 +648,78 @@ RancherDesktopを終了させる WSLのディストリビューションを確�
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20240707_temporary_file_delete_on_close/">続：Java NIO2 で一時ファイルを作成、処理後に削除</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        前回の修正版です public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // 終わった後に一時ファイルを削除したい } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } 前回書いた Files.newBufferedWriter(tempFilePath, StandardOpenOption.DELETE_ON_CLOSE) って、OSや権限で効かない場合もある、って知りました。 って言うか、自分で地雷を踏んでしまったんですけどね。
+で、簡易的な解決だと、以下のようにしたら良いと思います。
+public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Closeable closeable = () -&gt; Files.deleteIfExists(tempFilePath); Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. } } catch (IOException e) { // ログとか出したり、または、別の例外再スロー } } Closeable の匿名クラスを作って、try-with-resources 構文の中で、一時ファイルを削除する、と言う処理ですね。 Java 17 で書きましたが、 Java SE 8 でも動くと思います。
+      </section>
+      <div class="gblog-post__readmore">
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-07-07T00:00:00&#43;09:00">
+      
+      Jul 7, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20240414_java_based_batch_create_project/">2024年 Javaベースのバッチを作るなら その2 プロジェクトを作る</a>
         </h1>
       </header>
@@ -1043,91 +1115,6 @@ Favicon覚え書き。
       title="All posts tagged with 'etc'"
     >
       etc
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20231010_java_project_created/">2023年 Javaベースのプロジェクトを作る</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        単に、自分の備忘録です。
-ローカル開発環境は Windows11 / WSL2 / VSCode / RancherDesktop です。
-リポジトリ作成 初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 リポジトリ作成 GitHub や BitBUcket にリポジトリを作る VSCode でチェックアウト devcontainerの設定を作る。1 初期プロジェクト作成 mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ -Dpackage=app cd app mvn clean compile 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。
-pom.xmlを何かする pom.xml に諸々を追加することになります。
-初期はこんなものが自動生成されます
-&lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;web_app_example&lt;/groupId&gt; &lt;artifactId&gt;app&lt;/artifactId&gt; &lt;packaging&gt;jar&lt;/packaging&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;name&gt;app&lt;/name&gt; &lt;url&gt;http://maven.apache.org&lt;/url&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;3.8.1&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt; ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。2
-コンパルのJavaバージョン &lt;properties&gt; &lt;maven.
-      </section>
-      <div class="gblog-post__readmore">
-        
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/techlog/posts/20231010_java_project_created/"
-          >
-            Read full post
-            <i class="gblog-icon">gblog_arrow_right</i>
-          </a>
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2023-10-10T00:00:00&#43;09:00">
-      
-      Oct 10, 2023
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/java/"
-      title="All posts tagged with 'java'"
-    >
-      java
     </a>
   </span>
 

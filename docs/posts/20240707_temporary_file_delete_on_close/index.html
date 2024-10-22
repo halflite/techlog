@@ -11,9 +11,10 @@
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Hugo 0.111.3">
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="前回の修正版です public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // …" />
 
-    <title>Tags | ひとり開発日記。</title>
+    <title>続：Java NIO2 で一時ファイルを作成、処理後に削除 | ひとり開発日記。</title>
 
     <link
   rel="icon"
@@ -37,19 +38,65 @@
     
   <meta
     property="og:title"
-    content="Tags"
+    content="続：Java NIO2 で一時ファイルを作成、処理後に削除"
   />
   <meta property="og:site_name" content="ひとり開発日記。" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://halflite.github.io/techlog/tags/" />
+  <meta property="og:description" content="前回の修正版です public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // …" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://halflite.github.io/techlog/posts/20240707_temporary_file_delete_on_close/" />
 
-
+<meta property="article:section" content="Posts" />
+    <meta
+      property="article:published_time"
+      content="2024-07-07T00:00:00+09:00"
+    />
+    <meta
+      property="article:modified_time"
+      content="2024-07-07T00:00:00+09:00"
+    />
 
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Tags" />
+  <meta name="twitter:title" content="続：Java NIO2 で一時ファイルを作成、処理後に削除" />
+  <meta name="twitter:description" content="前回の修正版です public void doSomething() { try { Path tempFilePath = Files.createTempFile(&#34;id&#34;, &#34;.tmp&#34;); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { // do something. // …" />
 
-
+<script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "articleSection": "Posts",
+      "name": "続：Java NIO2 で一時ファイルを作成、処理後に削除",
+      "url" : "https://halflite.github.io/techlog/posts/20240707_temporary_file_delete_on_close/",
+      "headline": "続：Java NIO2 で一時ファイルを作成、処理後に削除",
+      "description": "前回の修正版です public void doSomething() { try { Path tempFilePath = Files.createTempFile(\u0022id\u0022, \u0022.tmp\u0022); try (Writer writer = Files.newBufferedWriter(tempFilePath)) { \/\/ do something. \/\/ 終わった後に一時ファイルを削除したい } } catch (IOException e) { \/\/ ログとか出したり、または、別の例外再スロー } } 前回書いた Files.newBufferedWriter(tempFilePath, StandardOpenOption.DELETE_ON_CLOSE) って、OSや権限で効かない場合もある、って知りました。 って言うか、自分で地雷を踏んでしまったんですけどね。\nで、簡易的な解決だと、以下のようにしたら良いと思います。\npublic void doSomething() { try { Path tempFilePath = Files.createTempFile(\u0022id\u0022, \u0022.tmp\u0022); try (Closeable closeable = () -\u003e Files.deleteIfExists(tempFilePath); Writer writer = Files.newBufferedWriter(tempFilePath)) { \/\/ do something. } } catch (IOException e) { \/\/ ログとか出したり、または、別の例外再スロー } } Closeable の匿名クラスを作って、try-with-resources 構文の中で、一時ファイルを削除する、と言う処理ですね。 Java 17 で書きましたが、 Java SE 8 でも動くと思います。",
+      "wordCount" : "85",
+      "inLanguage": "en",
+      "isFamilyFriendly": "true",
+      "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://halflite.github.io/techlog/posts/20240707_temporary_file_delete_on_close/"
+      },
+      "keywords" : [ "java" ],
+      "author" : [
+      ],
+      "copyrightHolder" : "ひとり開発日記。",
+      "copyrightYear" : "2024",
+      "dateCreated": "2024-07-07T00:00:00.00Z",
+      "datePublished": "2024-07-07T00:00:00.00Z",
+      "dateModified": "2024-07-07T00:00:00.00Z",
+      "publisher":{
+          "@type":"Organization",
+          "name": "ひとり開発日記。",
+          "url": "https://halflite.github.io/techlog/",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https://halflite.github.io/techlog/brand.svg",
+              "width":"32",
+              "height":"32"
+          }
+      }
+  }
+  </script>
 
 
     
@@ -121,7 +168,7 @@
   href="/techlog/custom.css"
   media="all"
 />
-  <link href="https://halflite.github.io/techlog/tags/" rel="canonical" type="text/html" />
+  <link href="https://halflite.github.io/techlog/posts/20240707_temporary_file_delete_on_close/" rel="canonical" type="text/html" />
     <link href="https://halflite.github.io/techlog/feed.xml" rel="alternate" type="application/atom+xml" title="ひとり開発日記。 Atom Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
@@ -285,277 +332,105 @@
 
       <main class="gblog-page container">
         
+  <article class="gblog-post">
+    <header class="gblog-post__header">
+      
+      
+
+
+      <h1 class="gblog-post__title">続：Java NIO2 で一時ファイルを作成、処理後に削除</h1>
+
+      
+        <div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2024-07-07T00:00:00&#43;09:00">
+      
+      Jul 7, 2024
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
   
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/apache-camel/">Apache Camel</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            2
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/20230529_jms_producer/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/aws/">Aws</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            3
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/20200708_cognito_yahoo_integration/">2020年7月 Amazon Cognito経由でYahoo!Japanのユーザ認証をやりたかっただけだった。</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/docker/">Docker</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            2
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/20200918_postgres_local/">2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/eclipse/">Eclipse</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            3
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/20200504_eclipse_setting_utf8/">MavenでEclipseプロジェクトを更新した際に、ソースコードの文字コードをUTF-8にする</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/etc/">Etc</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            7
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/about/">About Me.</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/java/">Java</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            20
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/20200120_maven_cmd/">Windowsのcmd.exeで、Mavenを使って新規プロジェクトを作る時、複数行に分けて書きたかっただけだった。</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/linux/">Linux</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            4
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/20200117_git_ver/">2020年1月、CentOS7にgit2.xをyumで入れたかっただけだった。</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/tags/quarkus/">Quarkus</a>
-        </h1>
-      </header>
-
-      <footer class="gblog-post__meta flex align-center">
-        <span class="flex align-center no-wrap">
-          
-          <svg class="gblog-icon gblog_tag"><use xlink:href="#gblog_tag"></use></svg>
-          <span class="gblog-post__tag">
-            2
-            posts
-          </span>
-        </span>
-
-        <span class="flex align-center no-wrap">
-          <svg class="gblog-icon gblog_star"><use xlink:href="#gblog_star"></use></svg>
-          <span>
-            
-            
-              <a href="/techlog/posts/20230529_jms_producer/">ActiveMQとQuarkus、Apache Camelで、画像アップロード処理をしたい。 その1 Producer 編</a>
-            
-            <i>by</i>
-            
-            
-          </span>
-        </span>
-      </footer>
-    </article>
-  
-  
-
-
-<nav class="gblog-paging flex flex-even align-center" role="navigation">
-  <div class="gblog-paging__item gblog-paging__item--prev">
     
-  </div>
-  <div class="gblog-paging__state">Page 1 of 1</div>
-  <div class="gblog-paging__item gblog-paging__item--next">
     
-  </div>
-</nav>
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
 
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      
+    </header>
+    <section class="gblog-markdown">
+      <ul>
+<li><a
+  class="gblog-markdown__link"
+  href="/techlog/20200222_temporary_file_delete_on_close/"title="Java NIO2 で一時ファイルを作成、処理後に削除 | ひとり開発日記。"
+>前回</a>の修正版です</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doSomething</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      Path tempFilePath <span style="color:#f92672">=</span> Files<span style="color:#f92672">.</span><span style="color:#a6e22e">createTempFile</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;.tmp&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> <span style="color:#f92672">(</span>Writer writer <span style="color:#f92672">=</span> Files<span style="color:#f92672">.</span><span style="color:#a6e22e">newBufferedWriter</span><span style="color:#f92672">(</span>tempFilePath<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// do something.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 終わった後に一時ファイルを削除したい
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// ログとか出したり、または、別の例外再スロー
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>前回書いた <code>Files.newBufferedWriter(tempFilePath, StandardOpenOption.DELETE_ON_CLOSE)</code> って、OSや権限で効かない場合もある、って知りました。 って言うか、自分で地雷を踏んでしまったんですけどね。</p>
+<p>で、簡易的な解決だと、以下のようにしたら良いと思います。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doSomething</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      Path tempFilePath <span style="color:#f92672">=</span> Files<span style="color:#f92672">.</span><span style="color:#a6e22e">createTempFile</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;.tmp&#34;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> <span style="color:#f92672">(</span>Closeable closeable <span style="color:#f92672">=</span> <span style="color:#f92672">()</span> <span style="color:#f92672">-&gt;</span> Files<span style="color:#f92672">.</span><span style="color:#a6e22e">deleteIfExists</span><span style="color:#f92672">(</span>tempFilePath<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        Writer writer <span style="color:#f92672">=</span> Files<span style="color:#f92672">.</span><span style="color:#a6e22e">newBufferedWriter</span><span style="color:#f92672">(</span>tempFilePath<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// do something.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// ログとか出したり、または、別の例外再スロー
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><code>Closeable</code> の匿名クラスを作って、try-with-resources 構文の中で、一時ファイルを削除する、と言う処理ですね。
+<code>Java 17</code> で書きましたが、 <code>Java SE 8</code> でも動くと思います。</p>
+
+    </section>
+  </article>
 
       </main>
 

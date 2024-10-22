@@ -301,6 +301,91 @@
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
+          <a href="/techlog/posts/20231010_java_project_created/">2023年 Javaベースのプロジェクトを作る</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        単に、自分の備忘録です。
+ローカル開発環境は Windows11 / WSL2 / VSCode / RancherDesktop です。
+リポジトリ作成 初期プロジェクト作成 pom.xmlを何かする コンパルのJavaバージョン FatJar/UberJar 作成設定 リポジトリ作成 GitHub や BitBUcket にリポジトリを作る VSCode でチェックアウト devcontainerの設定を作る。1 初期プロジェクト作成 mvn archetype:generate \ -DarchetypeArtifactId=maven-archetype-quickstart \ -DinteractiveMode=false \ -DgroupId=web_app_example \ -DartifactId=app \ -Dpackage=app cd app mvn clean compile 単にバッチや単独ウェブアプリなら、パッケージは浅いほうが良いでしょうね。
+pom.xmlを何かする pom.xml に諸々を追加することになります。
+初期はこんなものが自動生成されます
+&lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;web_app_example&lt;/groupId&gt; &lt;artifactId&gt;app&lt;/artifactId&gt; &lt;packaging&gt;jar&lt;/packaging&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;name&gt;app&lt;/name&gt; &lt;url&gt;http://maven.apache.org&lt;/url&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;3.8.1&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt; ここからライブラリを足していくと、手組みで作っているなぁ！と言う感じになります。2
+コンパルのJavaバージョン &lt;properties&gt; &lt;maven.
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/techlog/posts/20231010_java_project_created/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2023-10-10T00:00:00&#43;09:00">
+      
+      Oct 10, 2023
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">1 min read</span>
+</span>
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+        <span class="flex align-center no-wrap gblog-post__meta--tag">
+          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
+          
+  <span class="gblog-post__tag gblog-button gblog-button--regular">
+    <a
+      class="gblog-button__link"
+      href="/techlog/tags/java/"
+      title="All posts tagged with 'java'"
+    >
+      java
+    </a>
+  </span>
+
+        </span>
+      
+    
+    
+  
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
           <a href="/techlog/posts/20230903_json/">JavaでJSONを扱う時</a>
         </h1>
       </header>
@@ -1114,100 +1199,6 @@ iusの最新リンクが変更になったので注意 - Qiita CentOS7にGit2系
       
         <span class="flex align-center no-wrap gblog-post__meta--tag">
           <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/linux/"
-      title="All posts tagged with 'linux'"
-    >
-      linux
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
-          <a href="/techlog/posts/20200918_postgres_local/">2020年9月 ローカル環境に Postgres 12 を立てたいだけだった。</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        Heroku で、小さいアプリケーションを作りたいと思っていて。
-MySQL も出来ない訳じゃないんですけど1 まぁ、順当に言って Postgres でしょう。 とは言え、今の時代は、Windowsマシンに Postgres を直接インストールするのはアンチパターンですよね…。
-という事で、 Vagrant / VirtualBox 上に CentOS7 のインスタンスを作り、それに Ansible で Docker / Docker-Compose をインストール。 その上で、 Docker-Compose を使って、 Postgres を立てる、と言うスクリプトを書いてみました。
-https://github.com/halflite/postgresql-win-local こう言う環境を一つ作っておくと、 docker-compose.yml をいじるだけで、 MySQL だったり Redis だったりを簡単に(??)立てられるので、まぁ、ありがたいですねー…。
-ClearDB MySQL - Add-ons - Heroku Elements&#160;&#x21a9;&#xfe0e;
-      </section>
-      <div class="gblog-post__readmore">
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2020-09-18T00:00:00&#43;09:00">
-      
-      Sep 18, 2020
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-  
-    
-    
-      
-        <span class="flex align-center no-wrap gblog-post__meta--tag">
-          <svg class="gblog-icon gblog_bookmark"><use xlink:href="#gblog_bookmark"></use></svg>
-          
-  <span class="gblog-post__tag gblog-button gblog-button--regular">
-    <a
-      class="gblog-button__link"
-      href="/techlog/tags/docker/"
-      title="All posts tagged with 'docker'"
-    >
-      docker
-    </a>
-  </span>
-
-        </span>
-      
-    
-    
-  
-    
-    
-      
-        <span class="flex align-center gblog-post__meta--tag">
           
   <span class="gblog-post__tag gblog-button gblog-button--regular">
     <a
